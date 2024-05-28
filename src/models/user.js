@@ -23,6 +23,14 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.ENUM('admin','siswa'),
       allowNull: false,
       defaultValue: "siswa"
+    },
+    code: {
+      type: DataTypes.STRING(5),
+      allowNull: false
+    },
+    email: {
+      type: DataTypes.STRING(255),
+      allowNull: false
     }
   }, {
     sequelize,
