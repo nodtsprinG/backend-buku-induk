@@ -2,6 +2,7 @@ const { Router } = require("express");
 const { Models } = require("../models");
 const { v4: uuidv4 } = require("uuid");
 const { where } = require("sequelize");
+const { loginRequest, generateTokenRequest } = require("../DTO/login-request");
 
 const router = Router();
 
@@ -15,7 +16,7 @@ function makeRandomString(length) {
   return result;
 }
 
-router.post("/login", async (req, res) => {
+router.post("/login", loginRequest, async (req, res) => {
   const { email, password } = req.body;
   const data = await Models.user.findOne({
     where: {
@@ -45,7 +46,7 @@ router.post("/login", async (req, res) => {
   res.json({ code });
 });
 
-router.post("/generate-code", async (req, res) => {
+router.post("/generate-code", generateTokenRequest, async (req, res) => {
   const { code } = req.body;
   const data = await Models.user.findOne({
     where: {

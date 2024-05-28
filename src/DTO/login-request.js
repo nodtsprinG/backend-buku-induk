@@ -13,7 +13,7 @@ const loginRequest = [
   },
 ];
 
-const generateToken = [
+const generateTokenRequest = [
   body("code").notEmpty().withMessage("password is required"),
   (req, res, next) => {
     const errors = validationResult(req);
@@ -24,3 +24,5 @@ const generateToken = [
     next();
   },
 ];
+
+module.exports = { loginRequest, generateTokenRequest };
