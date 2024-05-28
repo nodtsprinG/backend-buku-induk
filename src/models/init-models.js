@@ -9,6 +9,7 @@ var _keterangan_perkembangan = require("./keterangan_perkembangan");
 var _keterangan_setelah_pendidikan = require("./keterangan_setelah_pendidikan");
 var _keterangan_tempat_tinggal = require("./keterangan_tempat_tinggal");
 var _keterangan_wali = require("./keterangan_wali");
+var _pesan = require("./pesan");
 var _user = require("./user");
 
 function initModels(sequelize) {
@@ -22,6 +23,7 @@ function initModels(sequelize) {
   var keterangan_setelah_pendidikan = _keterangan_setelah_pendidikan(sequelize, DataTypes);
   var keterangan_tempat_tinggal = _keterangan_tempat_tinggal(sequelize, DataTypes);
   var keterangan_wali = _keterangan_wali(sequelize, DataTypes);
+  var pesan = _pesan(sequelize, DataTypes);
   var user = _user(sequelize, DataTypes);
 
   keterangan_ayah_kandung.belongsTo(user, { as: "user", foreignKey: "user_id"});
@@ -44,6 +46,8 @@ function initModels(sequelize) {
   user.hasMany(keterangan_tempat_tinggal, { as: "keterangan_tempat_tinggals", foreignKey: "user_id"});
   keterangan_wali.belongsTo(user, { as: "user", foreignKey: "user_id"});
   user.hasMany(keterangan_wali, { as: "keterangan_walis", foreignKey: "user_id"});
+  pesan.belongsTo(user, { as: "user", foreignKey: "user_id"});
+  user.hasMany(pesan, { as: "pesans", foreignKey: "user_id"});
 
   return {
     keterangan_ayah_kandung,
@@ -56,6 +60,7 @@ function initModels(sequelize) {
     keterangan_setelah_pendidikan,
     keterangan_tempat_tinggal,
     keterangan_wali,
+    pesan,
     user,
   };
 }
