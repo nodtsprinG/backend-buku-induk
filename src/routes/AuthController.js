@@ -83,7 +83,7 @@ router.get("/me", getMeRequest, async (req, res) => {
     where: {
       id: req.user_id,
     },
-    attribute: ["id", "username", "role", "email"],
+    attributes: ["id", "username", "role", "email"],
   });
   res.json(data);
 });
