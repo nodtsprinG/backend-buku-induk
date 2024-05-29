@@ -1,12 +1,12 @@
 const express = require("express");
 const cors = require("cors");
 const { Model } = require("sequelize");
+const bodyParser = require("body-parser");
 
 const app = express();
 
 // route
 const authControllers = require("./routes/AuthController");
-const bodyParser = require("body-parser");
 
 app.use(cors());
 app.use(bodyParser.json());
