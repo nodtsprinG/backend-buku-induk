@@ -1,17 +1,21 @@
 const express = require("express");
 const cors = require("cors");
-const { Model } = require("sequelize");
+const bodyParser = require("body-parser");
 
 const app = express();
 
 // route
 const authControllers = require("./routes/AuthController");
-const bodyParser = require("body-parser");
+const userControllers = require("./routes/UserControllers");
+
+// middleware
+const { AuthMiddlewareSiswa } = require("./middleware/AuthMiddleware");
 
 app.use(cors());
 app.use(bodyParser.json());
 
-app.use("/Auth", authControllers);
+app.use("/auth", authControllers);
+app.use("/siswa", AuthMiddlewareSiswa, userControllers);
 
 app.listen(8080, async () => {
   console.log("App listen on port 8080");

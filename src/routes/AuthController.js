@@ -1,8 +1,7 @@
 const { Router } = require("express");
 const { Models } = require("../models");
 const { v4: uuidv4 } = require("uuid");
-const { where } = require("sequelize");
-const { loginRequest, generateTokenRequest } = require("../DTO/login-request");
+const { loginRequest, generateTokenRequest, getMeRequest } = require("../DTO/login-request");
 
 const router = Router();
 
@@ -77,6 +76,16 @@ router.post("/generate-code", generateTokenRequest, async (req, res) => {
     role: data.role,
     token: token,
   });
+});
+
+router.get("/me", getMeRequest, async (req, res) => {
+  const data = await Models.user.findOne({
+    where: {
+      id: req.user_id,
+    },
+    attributes: ["id", "username", "role", "email"],
+  });
+  res.json(data);
 });
 
 module.exports = router;
