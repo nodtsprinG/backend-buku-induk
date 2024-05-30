@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const { Models } = require("../models");
-const { dataDiriRequest, waliRequest } = require("../DTO/user-request");
+const { dataDiriRequest } = require("../DTO/user-request");
 
 const routes = Router();
 
@@ -15,11 +15,48 @@ routes.get("/status", async (req, res) => {
 });
 
 routes.post("/data-diri", dataDiriRequest, async (req, res) => {
-  req.body.user_id = req.user_id;
-  await Models.keterangan_data_diri.create(req.body);
+  const dataDiri = req.body.data_diri;
+  const hobi = req.body.hobi;
+  const ayahKandung = req.body.ayah_kandung;
+  const ibuKandung = req.body.ibu_kandung;
+  const kesehatan = req.body.kesehatan;
+  const pendidikan = req.body.pendidikan;
+  const perkembangan = req.body.perkembangan;
+  const setelahPendidikan = req.body.setelah_pendidikan;
+  const tempatTinggal = req.body.tempat_tinggal;
+  const wali = req.body.wali;
 
-  req.body.user_id = null;
-  res.json(req.body);
+  dataDiri.user_id = req.user_id;
+  await Models.keterangan_data_diri.create(dataDiri);
+
+  hobi.user_id = req.user_id;
+  await Models.keterangan_hobi_siswa.create(hobi);
+
+  ayahKandung.user_id = req.user_id;
+  await Models.keterangan_ayah_kandung.create(ayahKandung);
+
+  ibuKandung.user_id = req.user_id;
+  await Models.keterangan_ibu_kandung.create(ibuKandung);
+
+  kesehatan.user_id = req.user_id;
+  await Models.keterangan_kesehatan.create(kesehatan);
+
+  pendidikan.user_id = req.user_id;
+  await Models.keterangan_pendidikan.create(pendidikan);
+
+  perkembangan.user_id = req.user_id;
+  await Models.keterangan_perkembangan.create(perkembangan);
+
+  setelahPendidikan.user_id = req.user_id;
+  await Models.keterangan_setelah_pendidikan.create(setelahPendidikan);
+
+  tempatTinggal.user_id = req.user_id;
+  await Models.keterangan_tempat_tinggal.create(tempatTinggal);
+
+  wali.user_id = req.user_id;
+  await Models.keterangan_wali.create(wali);
+
+  res.status(201).json(req.body);
 });
 
 routes.get("/data-diri", async (req, res) => {
@@ -45,25 +82,6 @@ routes.get("/data-diri", async (req, res) => {
     ],
   });
   return res.json(data);
-});
-
-routes.post("/wali", waliRequest, async (req, res) => {
-  req.body.user_id = req.user_id;
-  await Models.keterangan_wali.create(req.body);
-
-  req.body.user_id = null;
-  return res.json(req.body);
-});
-
-routes.get("/wali", async (req, res) => {
-  const data = await Models.keterangan_wali.findOne({
-    where: {
-      user_id: req.user_id,
-    },
-    attributes: ["nama", "tempat_lahir", "tanggal_lahir", "agama", "kewarganegaraan", "pendidikan", "pekerjaan", "pengeluaran_per_bulan", "alamat_dan_no_telepon"],
-  });
-
-  res.json(data);
 });
 
 module.exports = routes;
