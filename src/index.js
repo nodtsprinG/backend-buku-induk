@@ -10,10 +10,12 @@ const userControllers = require("./routes/UserControllers");
 const akunControllers = require("./routes/Admin/AdminAccountController");
 
 // middleware
-const { AuthMiddlewareSiswa, AuthMiddlewareAdmin } = require("./middleware/AuthMiddleware");
+const { AuthMiddlewareSiswa } = require("./middleware/AuthMiddleware");
+const morgan = require("morgan");
 
 app.use(cors());
 app.use(bodyParser.json());
+app.use(morgan("dev"));
 
 app.use("/auth", authControllers);
 app.use("/siswa", AuthMiddlewareSiswa, userControllers);

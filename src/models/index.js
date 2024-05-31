@@ -10,6 +10,7 @@ module.exports = {
       dialect: "mysql",
       password : "BigBlueApple",
       port: 3306,
+      logging: false,
     })
   ),
 };
