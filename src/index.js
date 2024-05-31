@@ -8,9 +8,10 @@ const app = express();
 const authControllers = require("./routes/AuthController");
 const userControllers = require("./routes/UserControllers");
 const akunControllers = require("./routes/Admin/AdminAccountController");
+const dataSiswaController = require("./routes/Admin/AdminDataSiswaController")
 
 // middleware
-const { AuthMiddlewareSiswa } = require("./middleware/AuthMiddleware");
+const { AuthMiddlewareSiswa, AuthMiddlewareAdmin } = require("./middleware/AuthMiddleware");
 const morgan = require("morgan");
 
 app.use(cors());
@@ -20,6 +21,7 @@ app.use(morgan("dev"));
 app.use("/auth", authControllers);
 app.use("/siswa", AuthMiddlewareSiswa, userControllers);
 app.use("/admin", AuthMiddlewareAdmin, akunControllers);
+app.use("/admin", AuthMiddlewareAdmin, dataSiswaController);
 
 app.listen(8080, async () => {
   console.log("App listen on port 8080");
