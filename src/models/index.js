@@ -9,6 +9,7 @@ module.exports = {
       username: "root",
       dialect: "mysql",
       port: 3306,
+      logging: false,
     })
   ),
 };
