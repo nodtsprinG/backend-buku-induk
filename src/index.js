@@ -10,9 +10,11 @@ const userControllers = require("./routes/UserControllers");
 
 // middleware
 const { AuthMiddlewareSiswa } = require("./middleware/AuthMiddleware");
+const morgan = require("morgan");
 
 app.use(cors());
 app.use(bodyParser.json());
+app.use(morgan("dev"));
 
 app.use("/auth", authControllers);
 app.use("/siswa", AuthMiddlewareSiswa, userControllers);
