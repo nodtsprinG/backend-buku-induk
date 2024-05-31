@@ -16,7 +16,7 @@ routes.get("/status", async (req, res) => {
 
 routes.post("/data-diri", dataDiriRequest, async (req, res) => {
   req.body.user_id = req.user_id;
-  await Models.keterangan_data_diri.create(req.body);
+  await Models.keterangan_data_diri.create(req.body.data_diri);
 
   req.body.user_id = null;
   res.json(req.body);
