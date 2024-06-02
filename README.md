@@ -21,7 +21,7 @@ Install dependencies
 alankan server
 
 ```bash
-  npm run start
+  npm start
 ```
 
 ## Dibuat oleh
