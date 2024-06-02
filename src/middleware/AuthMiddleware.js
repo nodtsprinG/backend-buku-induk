@@ -3,7 +3,7 @@ const { Models } = require("../models");
 const AuthMiddlewareAdmin = async (req, res, next) => {
   const authorization = req.headers["authorization"];
   if (authorization == null || authorization == undefined) {
-    res.status(401).json({ message: "give me your token" });
+    res.status(401).json({ message: "your token is missing" });
     return;
   }
 
@@ -14,7 +14,7 @@ const AuthMiddlewareAdmin = async (req, res, next) => {
     },
   });
   if (data == undefined || data == null) {
-    res.status(401).json({ message: "give me your token" });
+    res.status(401).json({ message: "your token is missing" });
     return;
   }
 
