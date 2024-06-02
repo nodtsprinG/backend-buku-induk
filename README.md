@@ -9,7 +9,7 @@ Copy project
 Pergi ke directory
 
 ```bash
-  cd bbackend-buku-induk
+  cd backend-buku-induk
 ```
 
 Install dependencies
@@ -18,7 +18,7 @@ Install dependencies
   npm install
 ```
 
-alankan server
+jalankan server
 
 ```bash
   npm start
