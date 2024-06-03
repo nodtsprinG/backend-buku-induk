@@ -19,9 +19,11 @@ app.use(bodyParser.json());
 app.use(morgan("dev"));
 
 app.use("/auth", authControllers);
+
 app.use("/siswa", AuthMiddlewareSiswa, userControllers);
 app.use("/admin", AuthMiddlewareAdmin, akunControllers);
 app.use("/admin", AuthMiddlewareAdmin, dataSiswaController);
+
 
 app.listen(8080, async () => {
   console.log("App listen on port 8080");
