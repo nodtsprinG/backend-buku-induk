@@ -1,5 +1,6 @@
 const { Router } = require("express");
 const { Models } = require("../../models");
+const { where } = require("sequelize");
 
 const router = Router()
 
@@ -27,6 +28,29 @@ router.put("/data-diri/:id", async (req, res) => {
       return res.status(500).json({ error: "An error occurred while updating the data" });
     }
     
+})
+
+router.get("/dashboard", async (req, res) => {
+  const count_siswa = await Models.user.count()
+  const count_laki = await Models.keterangan_data_diri.count({
+    where: {
+      jenis_kelamin : "laki-laki"
+    }
+  })
+
+  const count_perempuan = await Models.keterangan_data_diri.count({
+
+    where: {
+      jenis_kelamin : "perempuan"
+    }
+
+  })
+
+  const count_datainputed = await Models.keterangan_data_diri.count()
+  
+  res.status(200).json({
+    count_datainputed, count_laki, count_perempuan, count_siswa
+  })
 })
 
 module.exports = router
