@@ -1,22 +1,26 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('keterangan_ayah_kandung', {
+  return sequelize.define('data_diri', {
     id: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
     },
-    nama: {
+    nama_lengkap: {
       type: DataTypes.STRING(255),
+      allowNull: false
+    },
+    nama_panggilan: {
+      type: DataTypes.STRING(255),
+      allowNull: false
+    },
+    jenis_kelamin: {
+      type: DataTypes.ENUM('laki-laki','perempuan'),
       allowNull: false
     },
     tempat_lahir: {
       type: DataTypes.STRING(255),
-      allowNull: false
-    },
-    tanggal_lahir: {
-      type: DataTypes.DATEONLY,
       allowNull: false
     },
     agama: {
@@ -27,24 +31,28 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(255),
       allowNull: false
     },
-    pendidikan: {
-      type: DataTypes.STRING(255),
+    anak_ke: {
+      type: DataTypes.INTEGER,
       allowNull: false
     },
-    pekerjaan: {
-      type: DataTypes.STRING(255),
+    jml_saudara_kandung: {
+      type: DataTypes.INTEGER,
+      allowNull: true
+    },
+    jml_saudara_tiri: {
+      type: DataTypes.INTEGER,
+      allowNull: true
+    },
+    jml_saudara_angkat: {
+      type: DataTypes.INTEGER,
+      allowNull: true
+    },
+    kelengkapan_ortu: {
+      type: DataTypes.ENUM('yatim','piatu','yatim piatu','lengkap'),
       allowNull: false
     },
-    pengeluaran_per_bulan: {
+    bahasa_sehari_hari: {
       type: DataTypes.STRING(255),
-      allowNull: false
-    },
-    alamat_dan_no_telepon: {
-      type: DataTypes.STRING(255),
-      allowNull: false
-    },
-    status: {
-      type: DataTypes.ENUM('masih hidup','meninggal','',''),
       allowNull: false
     },
     user_id: {
@@ -57,7 +65,7 @@ module.exports = function(sequelize, DataTypes) {
     }
   }, {
     sequelize,
-    tableName: 'keterangan_ayah_kandung',
+    tableName: 'data_diri',
     timestamps: false,
     indexes: [
       {
@@ -69,7 +77,7 @@ module.exports = function(sequelize, DataTypes) {
         ]
       },
       {
-        name: "user_fk_keterangan_ayah_kandung",
+        name: "user_fk_keterangan_data_diri",
         using: "BTREE",
         fields: [
           { name: "user_id" },

@@ -1,25 +1,25 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('keterangan_setelah_pendidikan', {
+  return sequelize.define('tempat_tinggal', {
     id: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
     },
-    melanjutkan_ke: {
+    alamat: {
       type: DataTypes.STRING(255),
-      allowNull: true
+      allowNull: false
     },
-    bekerja_nama_perusahaan: {
+    no_telepon: {
       type: DataTypes.STRING(255),
-      allowNull: true
+      allowNull: false
     },
-    bekerja_tanggal_mulai: {
-      type: DataTypes.DATEONLY,
-      allowNull: true
+    tinggal_dengan: {
+      type: DataTypes.ENUM('ortu','saudara','lainnya',''),
+      allowNull: false
     },
-    bekerja_penghasilan: {
+    jarak_ke_sekolah: {
       type: DataTypes.STRING(255),
       allowNull: true
     },
@@ -33,7 +33,7 @@ module.exports = function(sequelize, DataTypes) {
     }
   }, {
     sequelize,
-    tableName: 'keterangan_setelah_pendidikan',
+    tableName: 'tempat_tinggal',
     timestamps: false,
     indexes: [
       {
@@ -45,7 +45,7 @@ module.exports = function(sequelize, DataTypes) {
         ]
       },
       {
-        name: "user_fk_keterangan_setelah_pendidikan",
+        name: "user_fk_keterangan_tempat_tinggal",
         using: "BTREE",
         fields: [
           { name: "user_id" },
