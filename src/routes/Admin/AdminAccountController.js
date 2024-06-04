@@ -5,9 +5,20 @@ const { akunRequest } = require("../../DTO/akun-request");
 
 const routes = Router();
 
+routes.get("/jurusan", async (req, res) => {
+  const data = await Models.jurusan.findAll();
+  res.json(data);
+});
+
+routes.get("/angkatan", async (req, res) => {
+  const data = await Models.angkatan.findAll();
+  res.json(data);
+});
+
 routes.get("/akun", async (req, res) => {
   const { jurusan, angkatan } = req.query;
-  const data = await Models.user.findAll({
+
+  const userData = await Models.user.findAll({
     include: [
       {
         model: Models.jurusan,
@@ -22,18 +33,21 @@ routes.get("/akun", async (req, res) => {
     ],
   });
 
-  return res.json(
-    data.map((res) => {
-      return {
-        id: res.id,
-        nisn: res.nisn,
-        tanggal_lahir: res.tanggal_lahir,
-        nama: res.nama,
-        jurusan: res.jurusan.nama,
-        angkatan: res.angkatan.tahun,
-      };
-    })
-  );
+  let data = userData.map((user) => {
+    return {
+      id: user.id,
+      nisn: user.nisn,
+      tanggal_lahir: user.tanggal_lahir,
+      nama: user.nama,
+      jurusan: user.jurusan.nama,
+      angkatan: user.angkatan.tahun,
+    };
+  });
+
+  if (jurusan) data = data.filter((e) => e.jurusan == jurusan);
+  if (angkatan) data = data.filter((e) => e.angkatan == angkatan);
+
+  return res.json(data);
 });
 
 routes.post("/akun", akunRequest, async (req, res) => {
@@ -43,11 +57,30 @@ routes.post("/akun", akunRequest, async (req, res) => {
 
 routes.get("/akun/:id", async (req, res) => {
   const data = await Models.user.findOne({
+    include: [
+      {
+        model: Models.jurusan,
+        as: "jurusan",
+        attributes: ["nama"],
+      },
+      {
+        model: Models.angkatan,
+        as: "angkatan",
+        attributes: ["tahun"],
+      },
+    ],
     where: {
       id: req.params.id,
     },
   });
-  return res.json(data);
+  return res.json({
+    id: data.id,
+    nisn: data.nisn,
+    tanggal_lahir: data.tanggal_lahir,
+    nama: data.nama,
+    jurusan: data.jurusan.nama,
+    angkatan: data.angkatan.tahun,
+  });
 });
 
 routes.put("/akun/:id", async (req, res) => {
