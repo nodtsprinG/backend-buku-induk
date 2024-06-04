@@ -6,19 +6,39 @@ const { akunRequest } = require("../../DTO/akun-request");
 const routes = Router();
 
 routes.get("/akun", async (req, res) => {
+  const { jurusan, angkatan } = req.query;
   const data = await Models.user.findAll({
-    where: {
-      role: "siswa",
-    },
-    attributes: ["id", "username", "role", "email"],
+    include: [
+      {
+        model: Models.jurusan,
+        as: "jurusan",
+        attributes: ["nama"],
+      },
+      {
+        model: Models.angkatan,
+        as: "angkatan",
+        attributes: ["tahun"],
+      },
+    ],
   });
 
-  return res.json(data);
+  return res.json(
+    data.map((res) => {
+      return {
+        id: res.id,
+        nisn: res.nisn,
+        tanggal_lahir: res.tanggal_lahir,
+        nama: res.nama,
+        jurusan: res.jurusan.nama,
+        angkatan: res.angkatan.tahun,
+      };
+    })
+  );
 });
 
 routes.post("/akun", akunRequest, async (req, res) => {
   const data = await Models.user.create(req.body);
-  return res.json(data);
+  return res.status(201).json(data);
 });
 
 routes.get("/akun/:id", async (req, res) => {

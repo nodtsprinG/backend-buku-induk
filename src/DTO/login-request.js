@@ -1,5 +1,4 @@
 const { body, validationResult, header } = require("express-validator");
-const { Models } = require("../models");
 
 const loginRequest = [
   body("username").notEmpty().withMessage("username is required"),

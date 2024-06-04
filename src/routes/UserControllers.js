@@ -17,34 +17,34 @@ routes.post("/data-diri", dataDiriRequest, async (req, res) => {
   const wali = req.body.wali;
 
   dataDiri.user_id = req.user_id;
-  await Models.keterangan_data_diri.create(dataDiri);
+  await Models.data_diri.create(dataDiri);
 
   hobi.user_id = req.user_id;
-  await Models.keterangan_hobi_siswa.create(hobi);
+  await Models.hobi_siswa.create(hobi);
 
   ayahKandung.user_id = req.user_id;
-  await Models.keterangan_ayah_kandung.create(ayahKandung);
+  await Models.ayah_kandung.create(ayahKandung);
 
   ibuKandung.user_id = req.user_id;
-  await Models.keterangan_ibu_kandung.create(ibuKandung);
+  await Models.ibu_kandung.create(ibuKandung);
 
   kesehatan.user_id = req.user_id;
-  await Models.keterangan_kesehatan.create(kesehatan);
+  await Models.kesehatan.create(kesehatan);
 
   pendidikan.user_id = req.user_id;
-  await Models.keterangan_pendidikan.create(pendidikan);
+  await Models.pendidikan.create(pendidikan);
 
   perkembangan.user_id = req.user_id;
-  await Models.keterangan_perkembangan.create(perkembangan);
+  await Models.perkembangan.create(perkembangan);
 
   setelahPendidikan.user_id = req.user_id;
-  await Models.keterangan_setelah_pendidikan.create(setelahPendidikan);
+  await Models.setelah_pendidikan.create(setelahPendidikan);
 
   tempatTinggal.user_id = req.user_id;
-  await Models.keterangan_tempat_tinggal.create(tempatTinggal);
+  await Models.tempat_tinggal.create(tempatTinggal);
 
   wali.user_id = req.user_id;
-  await Models.keterangan_wali.create(wali);
+  await Models.wali.create(wali);
 
   res.status(201).json(req.body);
 });

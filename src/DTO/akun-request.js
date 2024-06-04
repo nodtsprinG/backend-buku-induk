@@ -1,12 +1,11 @@
 const { body, validationResult } = require("express-validator");
 
 const akunRequest = [
-  body("username").notEmpty().withMessage("Username tidak boleh kosong").isLength({ max: 255 }).withMessage("Username tidak boleh lebih dari 255 karakter"),
-  
-  body("password").notEmpty().withMessage("Password tidak boleh kosong").isLength({ max: 255 }).withMessage("Password tidak boleh lebih dari 255 karakter"),
-    
-  body("email").notEmpty().withMessage("Email tidak boleh kosong").isEmail().withMessage("Email harus dalam format yang benar"),
-  
+  body("nisn").notEmpty().withMessage("NISN tidak boleh kosong").isLength({ max: 255 }).withMessage("NISN must be at most 255 characters long").isString().withMessage("NISN must be a string"),
+  body("tanggal_lahir").notEmpty().withMessage("Tanggal Lahir tidak boleh kosong").isISO8601().withMessage("Tanggal Lahir must be a valid date"),
+  body("angkatan_id").isNumeric().notEmpty().withMessage("angkatan_id tidak boleh kosong"),
+  body("jurusan_id").isNumeric().notEmpty().withMessage("jurusan_id tidak boleh kosong"),
+
   (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {

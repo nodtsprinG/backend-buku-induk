@@ -1,4 +1,4 @@
-const { body, validationResult, check } = require("express-validator");
+const { validationResult, check } = require("express-validator");
 
 const validateAyahKandung = () => [
   check("ayah_kandung.nama").isString().notEmpty().withMessage("Nama harus diisi"),
