@@ -19,6 +19,26 @@ module.exports = function(sequelize, DataTypes) {
     token: {
       type: DataTypes.STRING(255),
       allowNull: true
+    },
+    nama: {
+      type: DataTypes.STRING(255),
+      allowNull: false
+    },
+    angkatan_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'angkatan',
+        key: 'id'
+      }
+    },
+    jurusan_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'jurusan',
+        key: 'id'
+      }
     }
   }, {
     sequelize,
@@ -39,6 +59,20 @@ module.exports = function(sequelize, DataTypes) {
         using: "BTREE",
         fields: [
           { name: "nisn" },
+        ]
+      },
+      {
+        name: "angkatan_user",
+        using: "BTREE",
+        fields: [
+          { name: "angkatan_id" },
+        ]
+      },
+      {
+        name: "jurusan_user",
+        using: "BTREE",
+        fields: [
+          { name: "jurusan_id" },
         ]
       },
     ]

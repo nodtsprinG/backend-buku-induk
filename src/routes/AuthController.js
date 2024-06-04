@@ -1,91 +1,113 @@
 const { Router } = require("express");
 const { Models } = require("../models");
 const { v4: uuidv4 } = require("uuid");
-const { loginRequest, generateTokenRequest, getMeRequest } = require("../DTO/login-request");
+const { loginRequest, getMeRequest, loginSiswaRequest } = require("../DTO/login-request");
 
 const router = Router();
 
-function makeRandomString(length) {
-  const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-  let result = "";
-  for (let i = 0; i < length; i++) {
-    const randomIndex = Math.floor(Math.random() * characters.length);
-    result += characters[randomIndex];
-  }
-  return result;
-}
+router.post("/login-admin", loginRequest, async (req, res) => {
+  const { username, password } = req.body;
 
-router.post("/login", loginRequest, async (req, res) => {
-  const { email, password } = req.body;
-  const data = await Models.user.findOne({
+  const data = await Models.admin.findOne({
     where: {
-      email,
+      username,
       password,
     },
   });
 
   if (data == undefined) {
-    res.status(400).json({ message: "not found user" });
+    res.status(404).json({ message: "not found admin" });
     return;
   }
 
-  const code = makeRandomString(5);
+  data.token = uuidv4();
+  await data.save();
 
-  await Models.user.update(
-    {
-      code: code,
-    },
-    {
-      where: {
-        id: data.id,
-      },
-    }
-  );
-
-  res.json({ code });
+  res.json({
+    id: data.id,
+    username: data.username,
+    token: data.token,
+  });
 });
 
-router.post("/generate-code", generateTokenRequest, async (req, res) => {
-  const { code } = req.body;
+router.post("/login-siswa", loginSiswaRequest, async (req, res) => {
+  const { nisn, tanggal_lahir } = req.body;
+
   const data = await Models.user.findOne({
+    include: [
+      {
+        model: Models.jurusan,
+        as: "jurusan",
+      },
+      {
+        model: Models.angkatan,
+        as: "angkatan",
+      },
+    ],
     where: {
-      code: code,
+      nisn,
+      tanggal_lahir,
     },
   });
 
   if (data == undefined) {
-    res.status(400).json({ message: "not found user" });
+    res.status(404).json({ message: "not found Siswa" });
     return;
   }
 
-  const token = uuidv4();
-  await Models.user.update(
-    {
-      token,
-      code: null,
-    },
-    {
-      where: {
-        id: data.id,
-      },
-    }
-  );
+  data.token = uuidv4();
+  await data.save();
+
   res.json({
-    email: data.email,
-    username: data.username,
-    role: data.role,
-    token: token,
+    id: data.id,
+    nisn: data.nisn,
+    tanggal_lahir: data.tanggal_lahir,
+    nama: data.nama,
+    jurusan: data.jurusan.nama,
+    angkatan: data.angkatan.tahun,
+    token: data.token,
   });
 });
 
 router.get("/me", getMeRequest, async (req, res) => {
-  const data = await Models.user.findOne({
+  const token = req.headers["authorization"].split(" ")[1];
+  const admin = await Models.admin.findOne({
     where: {
-      id: req.user_id,
+      token,
     },
-    attributes: ["id", "username", "role", "email"],
+    attributes: ["id", "username", "token"],
   });
-  res.json(data);
+  const siswa = await Models.user.findOne({
+    include: [
+      {
+        model: Models.jurusan,
+        as: "jurusan",
+      },
+      {
+        model: Models.angkatan,
+        as: "angkatan",
+      },
+    ],
+    where: {
+      token,
+    },
+  });
+
+  if (admin != undefined) {
+    res.json(admin);
+    return;
+  } else if (siswa != undefined) {
+    res.json({
+      id: siswa.id,
+      nisn: siswa.nisn,
+      tanggal_lahir: siswa.tanggal_lahir,
+      nama: siswa.nama,
+      jurusan: siswa.jurusan.nama,
+      angkatan: siswa.angkatan.tahun,
+      token: siswa.token,
+    });
+    return;
+  } else res.status(401).json({ message: "Unauthorised" });
 });
 
 module.exports = router;

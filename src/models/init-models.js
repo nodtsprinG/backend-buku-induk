@@ -1,9 +1,11 @@
 var DataTypes = require("sequelize").DataTypes;
 var _admin = require("./admin");
+var _angkatan = require("./angkatan");
 var _ayah_kandung = require("./ayah_kandung");
 var _data_diri = require("./data_diri");
 var _hobi_siswa = require("./hobi_siswa");
 var _ibu_kandung = require("./ibu_kandung");
+var _jurusan = require("./jurusan");
 var _kesehatan = require("./kesehatan");
 var _pendidikan = require("./pendidikan");
 var _perkembangan = require("./perkembangan");
@@ -14,10 +16,12 @@ var _wali = require("./wali");
 
 function initModels(sequelize) {
   var admin = _admin(sequelize, DataTypes);
+  var angkatan = _angkatan(sequelize, DataTypes);
   var ayah_kandung = _ayah_kandung(sequelize, DataTypes);
   var data_diri = _data_diri(sequelize, DataTypes);
   var hobi_siswa = _hobi_siswa(sequelize, DataTypes);
   var ibu_kandung = _ibu_kandung(sequelize, DataTypes);
+  var jurusan = _jurusan(sequelize, DataTypes);
   var kesehatan = _kesehatan(sequelize, DataTypes);
   var pendidikan = _pendidikan(sequelize, DataTypes);
   var perkembangan = _perkembangan(sequelize, DataTypes);
@@ -26,6 +30,10 @@ function initModels(sequelize) {
   var user = _user(sequelize, DataTypes);
   var wali = _wali(sequelize, DataTypes);
 
+  user.belongsTo(angkatan, { as: "angkatan", foreignKey: "angkatan_id"});
+  angkatan.hasMany(user, { as: "users", foreignKey: "angkatan_id"});
+  user.belongsTo(jurusan, { as: "jurusan", foreignKey: "jurusan_id"});
+  jurusan.hasMany(user, { as: "users", foreignKey: "jurusan_id"});
   ayah_kandung.belongsTo(user, { as: "user", foreignKey: "user_id"});
   user.hasMany(ayah_kandung, { as: "ayah_kandungs", foreignKey: "user_id"});
   data_diri.belongsTo(user, { as: "user", foreignKey: "user_id"});
@@ -49,10 +57,12 @@ function initModels(sequelize) {
 
   return {
     admin,
+    angkatan,
     ayah_kandung,
     data_diri,
     hobi_siswa,
     ibu_kandung,
+    jurusan,
     kesehatan,
     pendidikan,
     perkembangan,
