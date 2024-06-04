@@ -4,102 +4,6 @@ const { dataDiriRequest } = require("../DTO/user-request");
 
 const routes = Router();
 
-routes.get("/status", async (req, res) => {
-  const data = await Models.keterangan_data_diri.findOne({
-    where: {
-      user_id: req.user_id,
-    },
-  });
-  if (data == undefined) return res.status(400).json({ status: "belum mengisis data" });
-  return res.json({ status: "telah mengisi" });
-});
-
-routes.get("/data", async (req, res) => {
-  const data = {
-    ayah_kandung: await Models.keterangan_ayah_kandung.findOne({
-      where: {
-        user_id: req.user_id,
-      },
-      attributes: {
-        exclude: ["user_id"],
-      },
-    }),
-    ibu_kandung: await Models.keterangan_ibu_kandung.findOne({
-      where: {
-        user_id: req.user_id,
-      },
-      attributes: {
-        exclude: ["user_id"],
-      },
-    }),
-    data_diri: await Models.keterangan_data_diri.findOne({
-      where: {
-        user_id: req.user_id,
-      },
-      attributes: {
-        exclude: ["user_id"],
-      },
-    }),
-    hobi: await Models.keterangan_hobi_siswa.findOne({
-      where: {
-        user_id: req.user_id,
-      },
-      attributes: {
-        exclude: ["user_id"],
-      },
-    }),
-    kesehatan: await Models.keterangan_kesehatan.findOne({
-      where: {
-        user_id: req.user_id,
-      },
-      attributes: {
-        exclude: ["user_id"],
-      },
-    }),
-    pendidikan: await Models.keterangan_pendidikan.findOne({
-      where: {
-        user_id: req.user_id,
-      },
-      attributes: {
-        exclude: ["user_id"],
-      },
-    }),
-    perkembangan: await Models.keterangan_perkembangan.findOne({
-      where: {
-        user_id: req.user_id,
-      },
-      attributes: {
-        exclude: ["user_id"],
-      },
-    }),
-    setelah_pendidikan: await Models.keterangan_setelah_pendidikan.findOne({
-      where: {
-        user_id: req.user_id,
-      },
-      attributes: {
-        exclude: ["user_id"],
-      },
-    }),
-    tempat_tinggal: await Models.keterangan_tempat_tinggal.findOne({
-      where: {
-        user_id: req.user_id,
-      },
-      attributes: {
-        exclude: ["user_id"],
-      },
-    }),
-    wali: await Models.keterangan_wali.findOne({
-      where: {
-        user_id: req.user_id,
-      },
-      attributes: {
-        exclude: ["user_id"],
-      },
-    }),
-  };
-  return res.json(data);
-});
-
 routes.post("/data-diri", dataDiriRequest, async (req, res) => {
   const dataDiri = req.body.data_diri;
   const hobi = req.body.hobi;
@@ -146,7 +50,7 @@ routes.post("/data-diri", dataDiriRequest, async (req, res) => {
 });
 
 routes.get("/ayah-kandung", async (req, res) => {
-  const data = await Models.keterangan_ayah_kandung.findOne({
+  const data = await Models.ayah_kandung.findOne({
     where: {
       user_id: req.user_id,
     },
@@ -158,7 +62,7 @@ routes.get("/ayah-kandung", async (req, res) => {
 });
 
 routes.get("/data-diri", async (req, res) => {
-  const data = await Models.keterangan_data_diri.findOne({
+  const data = await Models.data_diri.findOne({
     where: {
       user_id: req.user_id,
     },
@@ -170,7 +74,7 @@ routes.get("/data-diri", async (req, res) => {
 });
 
 routes.get("/hobi", async (req, res) => {
-  const data = await Models.keterangan_hobi_siswa.findOne({
+  const data = await Models.hobi_siswa.findOne({
     where: {
       user_id: req.user_id,
     },
@@ -182,7 +86,7 @@ routes.get("/hobi", async (req, res) => {
 });
 
 routes.get("/ibu-kandung", async (req, res) => {
-  const data = await Models.keterangan_ibu_kandung.findOne({
+  const data = await Models.ibu_kandung.findOne({
     where: {
       user_id: req.user_id,
     },
@@ -194,7 +98,7 @@ routes.get("/ibu-kandung", async (req, res) => {
 });
 
 routes.get("/kesehatan", async (req, res) => {
-  const data = await Models.keterangan_kesehatan.findOne({
+  const data = await Models.kesehatan.findOne({
     where: {
       user_id: req.user_id,
     },
@@ -206,7 +110,7 @@ routes.get("/kesehatan", async (req, res) => {
 });
 
 routes.get("/pendidikan", async (req, res) => {
-  const data = await Models.keterangan_pendidikan.findOne({
+  const data = await Models.pendidikan.findOne({
     where: {
       user_id: req.user_id,
     },
@@ -218,7 +122,7 @@ routes.get("/pendidikan", async (req, res) => {
 });
 
 routes.get("/perkembangan", async (req, res) => {
-  const data = await Models.keterangan_perkembangan.findOne({
+  const data = await Models.perkembangan.findOne({
     where: {
       user_id: req.user_id,
     },
@@ -230,7 +134,7 @@ routes.get("/perkembangan", async (req, res) => {
 });
 
 routes.get("/setelah-pendidikan", async (req, res) => {
-  const data = await Models.keterangan_setelah_pendidikan.findOne({
+  const data = await Models.setelah_pendidikan.findOne({
     where: {
       user_id: req.user_id,
     },
@@ -242,7 +146,7 @@ routes.get("/setelah-pendidikan", async (req, res) => {
 });
 
 routes.get("/tempat-tinggal", async (req, res) => {
-  const data = await Models.keterangan_tempat_tinggal.findOne({
+  const data = await Models.tempat_tinggal.findOne({
     where: {
       user_id: req.user_id,
     },
@@ -254,7 +158,7 @@ routes.get("/tempat-tinggal", async (req, res) => {
 });
 
 routes.get("/wali", async (req, res) => {
-  const data = await Models.keterangan_wali.findOne({
+  const data = await Models.wali.findOne({
     where: {
       user_id: req.user_id,
     },
