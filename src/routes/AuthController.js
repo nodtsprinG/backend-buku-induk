@@ -4,6 +4,7 @@ const { v4: uuidv4 } = require("uuid");
 const { loginRequest, getMeRequest, loginSiswaRequest, codeAdminRequest } = require("../DTO/login-request");
 const nodemailer = require("nodemailer");
 const dotEnv = require("dotenv");
+const { where } = require("sequelize");
 dotEnv.config();
 
 const router = Router();
@@ -193,6 +194,12 @@ router.post("/login-siswa", loginSiswaRequest, async (req, res) => {
   data.token = uuidv4();
   await data.save();
 
+  const dataDiri = await Models.data_diri.findOne({
+    where: {
+      user_id: data.id,
+    },
+  });
+
   res.json({
     id: data.id,
     nisn: data.nisn,
@@ -201,6 +208,7 @@ router.post("/login-siswa", loginSiswaRequest, async (req, res) => {
     jurusan: data.jurusan.nama,
     angkatan: data.angkatan.tahun,
     token: data.token,
+    status: dataDiri != undefined,
   });
 });
 
@@ -210,7 +218,7 @@ router.get("/me", getMeRequest, async (req, res) => {
     where: {
       token,
     },
-    attributes: ["id", "username", "token"],
+    attributes: ["id", "username", "email", "token"],
   });
   const siswa = await Models.user.findOne({
     include: [
