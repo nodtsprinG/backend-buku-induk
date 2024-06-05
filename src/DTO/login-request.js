@@ -1,7 +1,7 @@
 const { body, validationResult, header } = require("express-validator");
 
 const loginRequest = [
-  body("username").notEmpty().withMessage("username is required"),
+  body("email").notEmpty().withMessage("username is required"),
   body("password").notEmpty().withMessage("password is required"),
   (req, res, next) => {
     const errors = validationResult(req);
@@ -47,4 +47,16 @@ const getMeRequest = [
   },
 ];
 
-module.exports = { loginRequest, loginSiswaRequest, getMeRequest };
+const codeAdminRequest = [
+  body("code").notEmpty().isLength({ max: 5, min: 5 }).withMessage("code tidak boleh kosong dan harus 5"),
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      const errorMessages = errors.array().map((err) => err.msg);
+      return res.status(400).json({ message: errorMessages[0] });
+    }
+    next();
+  },
+];
+
+module.exports = { loginRequest, loginSiswaRequest, getMeRequest, codeAdminRequest };

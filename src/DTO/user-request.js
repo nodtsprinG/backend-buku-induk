@@ -121,7 +121,6 @@ const dataDiriRequest = [
   ...validateKesehatan(),
   ...validateAyahKandung(),
   ...validateIbuKandung(),
-  ...validatePerkembangan(),
   ...validatePendidikan(),
   ...validateSetelahPendidikan(),
   (req, res, next) => {

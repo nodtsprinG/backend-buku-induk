@@ -11,7 +11,6 @@ routes.post("/data-diri", dataDiriRequest, async (req, res) => {
   const ibuKandung = req.body.ibu_kandung;
   const kesehatan = req.body.kesehatan;
   const pendidikan = req.body.pendidikan;
-  const perkembangan = req.body.perkembangan;
   const setelahPendidikan = req.body.setelah_pendidikan;
   const tempatTinggal = req.body.tempat_tinggal;
   const wali = req.body.wali;
@@ -33,9 +32,6 @@ routes.post("/data-diri", dataDiriRequest, async (req, res) => {
 
   pendidikan.user_id = req.user_id;
   await Models.pendidikan.create(pendidikan);
-
-  perkembangan.user_id = req.user_id;
-  await Models.perkembangan.create(perkembangan);
 
   setelahPendidikan.user_id = req.user_id;
   await Models.setelah_pendidikan.create(setelahPendidikan);
