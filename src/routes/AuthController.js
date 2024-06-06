@@ -141,7 +141,7 @@ router.post("/login-admin", loginRequest, async (req, res) => {
   res.json({ code: data.code });
 });
 
-router.get("/code-admin", codeAdminRequest, async (req, res) => {
+router.post("/code-admin", codeAdminRequest, async (req, res) => {
   const { code } = req.body;
   const data = await Models.admin.findOne({
     where: {
