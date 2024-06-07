@@ -71,11 +71,20 @@ routes.get("/akun/:id", async (req, res) => {
         as: "angkatan",
         attributes: ["tahun"],
       },
+      {
+        model: Models.data_diri,
+        as: "data_diris",
+      },
+      {
+        model: Models.perkembangan,
+        as: "perkembangans",
+      },
     ],
     where: {
       id: req.params.id,
     },
   });
+
   return res.json({
     id: data.id,
     nisn: data.nisn,
@@ -83,6 +92,8 @@ routes.get("/akun/:id", async (req, res) => {
     nama: data.nama,
     jurusan: data.jurusan.nama,
     angkatan: data.angkatan.tahun,
+    status: data.data_diris.length != 0,
+    status_perkembangan: data.perkembangans.length != 0,
   });
 });
 

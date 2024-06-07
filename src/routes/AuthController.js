@@ -220,21 +220,28 @@ router.get("/me", getMeRequest, async (req, res) => {
     },
     attributes: ["id", "username", "email", "token"],
   });
-  const siswa = await Models.user.findOne({
-    include: [
-      {
-        model: Models.jurusan,
-        as: "jurusan",
+  var siswa = undefined;
+  try {
+     siswa = await Models.user.findOne({
+      include: [
+        {
+          model: Models.jurusan,
+          as: "jurusan",
+        },
+        {
+          model: Models.angkatan,
+          as: "angkatan",
+        },
+        {
+          model: Models.data_diri,
+          as: "data_disris",
+        },
+      ],
+      where: {
+        token,
       },
-      {
-        model: Models.angkatan,
-        as: "angkatan",
-      },
-    ],
-    where: {
-      token,
-    },
-  });
+    });
+  } catch (ex) {}
 
   if (admin != undefined) {
     res.json(admin);
@@ -244,7 +251,7 @@ router.get("/me", getMeRequest, async (req, res) => {
       id: siswa.id,
       nisn: siswa.nisn,
       tanggal_lahir: siswa.tanggal_lahir,
-      nama: siswa.nama,
+      nama: siswa.data_diris[0].nama_lengkap ?? siswa.nama,
       jurusan: siswa.jurusan.nama,
       angkatan: siswa.angkatan.tahun,
       token: siswa.token,
