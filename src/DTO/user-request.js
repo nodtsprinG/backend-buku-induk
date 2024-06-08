@@ -78,12 +78,25 @@ const validatePendidikan = () => [
 ];
 
 const validatePerkembangan = () => [
-  check("perkembangan.menerima_bea_siswa_tahun_kelas_dari").optional().isString().withMessage("Menerima beasiswa tahun/kelas dari harus berupa string"),
-  check("perkembangan.meninggalkan_sekolah_ini_tanggal").optional().isDate({ format: "YYYY-MM-DD" }).withMessage("Tanggal meninggalkan sekolah ini harus diisi dengan format YYYY-MM-DD"),
-  check("perkembangan.meninggalkan_sekolah_ini_alasan").optional().isString().withMessage("Alasan meninggalkan sekolah ini harus berupa string"),
-  check("perkembangan.akhir_pendidikan_tamat_belajar_lulus_tahun").optional().isString().withMessage("Tahun tamat belajar/lulus harus berupa string"),
-  check("perkembangan.akhir_pendidikan_no_tanggal_ijazah").optional().isString().withMessage("Nomor dan tanggal ijazah harus berupa string"),
-  check("perkembangan.akhir_pendidikan_no_tanggal_skhun").optional().isString().withMessage("Nomor dan tanggal SKHUN harus berupa string"),
+  check("menerima_bea_siswa_tahun_kelas_dari").optional().isString().withMessage("Menerima beasiswa tahun/kelas dari harus berupa string"),
+
+  check("meninggalkan_sekolah_ini_tanggal").optional().isDate({ format: "YYYY-MM-DD" }).withMessage("Tanggal meninggalkan sekolah ini harus diisi dengan format YYYY-MM-DD"),
+
+  check("meninggalkan_sekolah_ini_alasan").optional().isString().withMessage("Alasan meninggalkan sekolah ini harus berupa string"),
+
+  check("akhir_pendidikan_tamat_belajar_lulus_tahun").optional().isString().withMessage("Tahun tamat belajar/lulus harus berupa string"),
+
+  check("akhir_pendidikan_no_tanggal_ijazah").optional().isString().withMessage("Nomor dan tanggal ijazah harus berupa string"),
+
+  check("akhir_pendidikan_no_tanggal_skhun").optional().isString().withMessage("Nomor dan tanggal SKHUN harus berupa string"),
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      const errorMessages = errors.array().map((err) => err.msg);
+      return res.status(400).json({ message: errorMessages[0] });
+    }
+    next();
+  },
 ];
 
 const validateSetelahPendidikan = () => [
@@ -133,4 +146,4 @@ const dataDiriRequest = [
   },
 ];
 
-module.exports = { dataDiriRequest };
+module.exports = { dataDiriRequest, validatePerkembangan };

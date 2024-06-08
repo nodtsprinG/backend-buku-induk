@@ -92,6 +92,7 @@ routes.get("/akun/:id", async (req, res) => {
     nama: data.nama,
     jurusan: data.jurusan.nama,
     angkatan: data.angkatan.tahun,
+    token: data.token,
     status: data.data_diris.length != 0,
     status_perkembangan: data.perkembangans.length != 0,
   });

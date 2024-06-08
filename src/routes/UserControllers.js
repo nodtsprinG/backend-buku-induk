@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const { Models } = require("../models");
-const { dataDiriRequest } = require("../DTO/user-request");
+const { dataDiriRequest, validatePerkembangan } = require("../DTO/user-request");
 
 const routes = Router();
 
@@ -163,6 +163,14 @@ routes.get("/wali", async (req, res) => {
     },
   });
   res.json(data);
+});
+
+routes.post("/perkembangan", validatePerkembangan, async (req, res) => {
+  const body = req.body;
+  body.user_id = req.params.id;
+  const response = await Models.perkembangan.create(body);
+
+  res.status(201).json(response);
 });
 
 module.exports = routes;
