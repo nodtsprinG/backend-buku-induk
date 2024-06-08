@@ -35,11 +35,6 @@ const validateHobi = () => [
   check("hobi.olahraga").optional().isString().withMessage("Olahraga harus berupa string"),
   check("hobi.organisasi").optional().isString().withMessage("Organisasi harus berupa string"),
   check("hobi.lain_lain").optional().isString().withMessage("Lain-lain harus berupa string"),
-  check("hobi.gol_darah").optional().isIn(["A", "B", "O", "AB"]).withMessage("Golongan darah harus salah satu dari A, B, O, atau AB"),
-  check("hobi.penyakit_pernah_diderita").optional().isString().withMessage("Penyakit pernah diderita harus berupa string"),
-  check("hobi.kelainan_jasmani").optional().isString().withMessage("Kelainan jasmani harus berupa string"),
-  check("hobi.tinggi").isString().notEmpty().withMessage("Tinggi harus diisi dan berupa string"),
-  check("hobi.berat_badan").isString().notEmpty().withMessage("Berat badan harus diisi dan berupa string"),
 ];
 
 const validateIbuKandung = () => [
