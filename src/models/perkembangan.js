@@ -1,51 +1,35 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('keterangan_ibu_kandung', {
+  return sequelize.define('perkembangan', {
     id: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
     },
-    nama: {
+    menerima_bea_siswa_tahun_kelas_dari: {
       type: DataTypes.STRING(255),
-      allowNull: false
+      allowNull: true
     },
-    tempat_lahir: {
-      type: DataTypes.STRING(255),
-      allowNull: false
-    },
-    tanggal_lahir: {
+    meninggalkan_sekolah_ini_tanggal: {
       type: DataTypes.DATEONLY,
-      allowNull: false
+      allowNull: true
     },
-    agama: {
+    meninggalkan_sekolah_ini_alasan: {
+      type: DataTypes.TEXT,
+      allowNull: true
+    },
+    akhir_pendidikan_tamat_belajar_lulus_tahun: {
       type: DataTypes.STRING(255),
-      allowNull: false
+      allowNull: true
     },
-    kewarganegaraan: {
+    akhir_pendidikan_no_tanggal_ijazah: {
       type: DataTypes.STRING(255),
-      allowNull: false
+      allowNull: true
     },
-    pendidikan: {
+    akhir_pendidikan_no_tanggal_skhun: {
       type: DataTypes.STRING(255),
-      allowNull: false
-    },
-    pekerjaan: {
-      type: DataTypes.STRING(255),
-      allowNull: false
-    },
-    pengeluaran_per_bulan: {
-      type: DataTypes.STRING(255),
-      allowNull: false
-    },
-    alamat_dan_no_telepon: {
-      type: DataTypes.STRING(255),
-      allowNull: false
-    },
-    status: {
-      type: DataTypes.ENUM('masih hidup','meninggal','',''),
-      allowNull: false
+      allowNull: true
     },
     user_id: {
       type: DataTypes.INTEGER,
@@ -57,7 +41,7 @@ module.exports = function(sequelize, DataTypes) {
     }
   }, {
     sequelize,
-    tableName: 'keterangan_ibu_kandung',
+    tableName: 'perkembangan',
     timestamps: false,
     indexes: [
       {
@@ -69,7 +53,7 @@ module.exports = function(sequelize, DataTypes) {
         ]
       },
       {
-        name: "user_fk_keterangan_ibu_kandung",
+        name: "user_fk_keterangan_perkembangan",
         using: "BTREE",
         fields: [
           { name: "user_id" },

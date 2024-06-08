@@ -1,46 +1,54 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('keterangan_wali', {
+  return sequelize.define('pendidikan', {
     id: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
     },
-    nama: {
+    sebelumnya_tamatan_dari: {
       type: DataTypes.STRING(255),
       allowNull: false
     },
-    tempat_lahir: {
+    sebelumnya_tanggal_dan_ijazah: {
       type: DataTypes.STRING(255),
       allowNull: false
     },
-    tanggal_lahir: {
+    sebelumnya_tanggal_skhun_dan_: {
+      type: DataTypes.STRING(255),
+      allowNull: false
+    },
+    sebelumnya_lama_belajar: {
+      type: DataTypes.STRING(255),
+      allowNull: false
+    },
+    pindahan_dari_sekolah: {
+      type: DataTypes.STRING(255),
+      allowNull: true
+    },
+    pindahan_alasan: {
+      type: DataTypes.TEXT,
+      allowNull: true
+    },
+    diterima_di_kelas: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    diterima_di_bidang_keahlian: {
+      type: DataTypes.STRING(255),
+      allowNull: false
+    },
+    diterima_di_program_keahlian: {
+      type: DataTypes.STRING(255),
+      allowNull: false
+    },
+    diterima_di_paket_keahlian: {
+      type: DataTypes.STRING(255),
+      allowNull: false
+    },
+    diterima_tanggal: {
       type: DataTypes.DATEONLY,
-      allowNull: false
-    },
-    agama: {
-      type: DataTypes.STRING(255),
-      allowNull: false
-    },
-    kewarganegaraan: {
-      type: DataTypes.STRING(255),
-      allowNull: false
-    },
-    pendidikan: {
-      type: DataTypes.STRING(255),
-      allowNull: false
-    },
-    pekerjaan: {
-      type: DataTypes.STRING(255),
-      allowNull: false
-    },
-    pengeluaran_per_bulan: {
-      type: DataTypes.STRING(255),
-      allowNull: false
-    },
-    alamat_dan_no_telepon: {
-      type: DataTypes.STRING(255),
       allowNull: false
     },
     user_id: {
@@ -53,7 +61,7 @@ module.exports = function(sequelize, DataTypes) {
     }
   }, {
     sequelize,
-    tableName: 'keterangan_wali',
+    tableName: 'pendidikan',
     timestamps: false,
     indexes: [
       {
@@ -65,7 +73,7 @@ module.exports = function(sequelize, DataTypes) {
         ]
       },
       {
-        name: "user_fk_keterangan_wali",
+        name: "user_fk_keterangan_pendidikan",
         using: "BTREE",
         fields: [
           { name: "user_id" },

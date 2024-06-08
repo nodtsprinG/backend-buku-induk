@@ -1,33 +1,25 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('keterangan_perkembangan', {
+  return sequelize.define('setelah_pendidikan', {
     id: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
     },
-    menerima_bea_siswa_tahun_kelas_dari: {
+    melanjutkan_ke: {
       type: DataTypes.STRING(255),
       allowNull: true
     },
-    meninggalkan_sekolah_ini_tanggal: {
+    bekerja_nama_perusahaan: {
+      type: DataTypes.STRING(255),
+      allowNull: true
+    },
+    bekerja_tanggal_mulai: {
       type: DataTypes.DATEONLY,
       allowNull: true
     },
-    meninggalkan_sekolah_ini_alasan: {
-      type: DataTypes.TEXT,
-      allowNull: true
-    },
-    akhir_pendidikan_tamat_belajar_lulus_tahun: {
-      type: DataTypes.STRING(255),
-      allowNull: true
-    },
-    akhir_pendidikan_no_tanggal_ijazah: {
-      type: DataTypes.STRING(255),
-      allowNull: true
-    },
-    akhir_pendidikan_no_tanggal_skhun: {
+    bekerja_penghasilan: {
       type: DataTypes.STRING(255),
       allowNull: true
     },
@@ -41,7 +33,7 @@ module.exports = function(sequelize, DataTypes) {
     }
   }, {
     sequelize,
-    tableName: 'keterangan_perkembangan',
+    tableName: 'setelah_pendidikan',
     timestamps: false,
     indexes: [
       {
@@ -53,7 +45,7 @@ module.exports = function(sequelize, DataTypes) {
         ]
       },
       {
-        name: "user_fk_keterangan_perkembangan",
+        name: "user_fk_keterangan_setelah_pendidikan",
         using: "BTREE",
         fields: [
           { name: "user_id" },

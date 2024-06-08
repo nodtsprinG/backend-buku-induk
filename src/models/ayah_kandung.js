@@ -1,30 +1,50 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('keterangan_kesehatan', {
+  return sequelize.define('ayah_kandung', {
     id: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
     },
-    gol_darah: {
-      type: DataTypes.ENUM('A','B','O','AB'),
-      allowNull: true
-    },
-    penyakit_pernah_diderita: {
-      type: DataTypes.STRING(255),
-      allowNull: true
-    },
-    kelainan_jasmani: {
-      type: DataTypes.STRING(255),
-      allowNull: true
-    },
-    tinggi: {
+    nama: {
       type: DataTypes.STRING(255),
       allowNull: false
     },
-    berat_badan: {
+    tempat_lahir: {
       type: DataTypes.STRING(255),
+      allowNull: false
+    },
+    tanggal_lahir: {
+      type: DataTypes.DATEONLY,
+      allowNull: false
+    },
+    agama: {
+      type: DataTypes.STRING(255),
+      allowNull: false
+    },
+    kewarganegaraan: {
+      type: DataTypes.STRING(255),
+      allowNull: false
+    },
+    pendidikan: {
+      type: DataTypes.STRING(255),
+      allowNull: false
+    },
+    pekerjaan: {
+      type: DataTypes.STRING(255),
+      allowNull: false
+    },
+    pengeluaran_per_bulan: {
+      type: DataTypes.STRING(255),
+      allowNull: false
+    },
+    alamat_dan_no_telepon: {
+      type: DataTypes.STRING(255),
+      allowNull: false
+    },
+    status: {
+      type: DataTypes.ENUM('masih hidup','meninggal','',''),
       allowNull: false
     },
     user_id: {
@@ -37,7 +57,7 @@ module.exports = function(sequelize, DataTypes) {
     }
   }, {
     sequelize,
-    tableName: 'keterangan_kesehatan',
+    tableName: 'ayah_kandung',
     timestamps: false,
     indexes: [
       {
@@ -49,7 +69,7 @@ module.exports = function(sequelize, DataTypes) {
         ]
       },
       {
-        name: "user_fk_keterangan_kesehatan",
+        name: "user_fk_keterangan_ayah_kandung",
         using: "BTREE",
         fields: [
           { name: "user_id" },

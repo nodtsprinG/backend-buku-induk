@@ -1,22 +1,14 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('keterangan_data_diri', {
+  return sequelize.define('ibu_kandung', {
     id: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
     },
-    nama_lengkap: {
+    nama: {
       type: DataTypes.STRING(255),
-      allowNull: false
-    },
-    nama_panggilan: {
-      type: DataTypes.STRING(255),
-      allowNull: false
-    },
-    jenis_kelamin: {
-      type: DataTypes.ENUM('laki-laki','perempuan'),
       allowNull: false
     },
     tempat_lahir: {
@@ -35,32 +27,24 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(255),
       allowNull: false
     },
-    anak_ke: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
-    jml_saudara_kandung: {
-      type: DataTypes.INTEGER,
-      allowNull: true
-    },
-    jml_saudara_tiri: {
-      type: DataTypes.INTEGER,
-      allowNull: true
-    },
-    jml_saudara_angkat: {
-      type: DataTypes.INTEGER,
-      allowNull: true
-    },
-    kelengkapan_ortu: {
-      type: DataTypes.ENUM('yatim','piatu','yatim piatu','lengkap'),
-      allowNull: false
-    },
-    bahasa_sehari_hari: {
+    pendidikan: {
       type: DataTypes.STRING(255),
       allowNull: false
     },
-    nisn: {
+    pekerjaan: {
       type: DataTypes.STRING(255),
+      allowNull: false
+    },
+    pengeluaran_per_bulan: {
+      type: DataTypes.STRING(255),
+      allowNull: false
+    },
+    alamat_dan_no_telepon: {
+      type: DataTypes.STRING(255),
+      allowNull: false
+    },
+    status: {
+      type: DataTypes.ENUM('masih hidup','meninggal','',''),
       allowNull: false
     },
     user_id: {
@@ -73,7 +57,7 @@ module.exports = function(sequelize, DataTypes) {
     }
   }, {
     sequelize,
-    tableName: 'keterangan_data_diri',
+    tableName: 'ibu_kandung',
     timestamps: false,
     indexes: [
       {
@@ -85,7 +69,7 @@ module.exports = function(sequelize, DataTypes) {
         ]
       },
       {
-        name: "user_fk_keterangan_data_diri",
+        name: "user_fk_keterangan_ibu_kandung",
         using: "BTREE",
         fields: [
           { name: "user_id" },

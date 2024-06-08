@@ -1,4 +1,4 @@
-const { body, validationResult, check } = require("express-validator");
+const { validationResult, check } = require("express-validator");
 
 const validateAyahKandung = () => [
   check("ayah_kandung.nama").isString().notEmpty().withMessage("Nama harus diisi"),
@@ -35,11 +35,6 @@ const validateHobi = () => [
   check("hobi.olahraga").optional().isString().withMessage("Olahraga harus berupa string"),
   check("hobi.organisasi").optional().isString().withMessage("Organisasi harus berupa string"),
   check("hobi.lain_lain").optional().isString().withMessage("Lain-lain harus berupa string"),
-  check("hobi.gol_darah").optional().isIn(["A", "B", "O", "AB"]).withMessage("Golongan darah harus salah satu dari A, B, O, atau AB"),
-  check("hobi.penyakit_pernah_diderita").optional().isString().withMessage("Penyakit pernah diderita harus berupa string"),
-  check("hobi.kelainan_jasmani").optional().isString().withMessage("Kelainan jasmani harus berupa string"),
-  check("hobi.tinggi").isString().notEmpty().withMessage("Tinggi harus diisi dan berupa string"),
-  check("hobi.berat_badan").isString().notEmpty().withMessage("Berat badan harus diisi dan berupa string"),
 ];
 
 const validateIbuKandung = () => [
@@ -77,13 +72,26 @@ const validatePendidikan = () => [
   check("pendidikan.diterima_tanggal").isDate({ format: "YYYY-MM-DD" }).withMessage("Tanggal diterima harus diisi dengan format YYYY-MM-DD"),
 ];
 
-const validatePerkembangan = () => [
-  check("perkembangan.menerima_bea_siswa_tahun_kelas_dari").optional().isString().withMessage("Menerima beasiswa tahun/kelas dari harus berupa string"),
-  check("perkembangan.meninggalkan_sekolah_ini_tanggal").optional().isDate({ format: "YYYY-MM-DD" }).withMessage("Tanggal meninggalkan sekolah ini harus diisi dengan format YYYY-MM-DD"),
-  check("perkembangan.meninggalkan_sekolah_ini_alasan").optional().isString().withMessage("Alasan meninggalkan sekolah ini harus berupa string"),
-  check("perkembangan.akhir_pendidikan_tamat_belajar_lulus_tahun").optional().isString().withMessage("Tahun tamat belajar/lulus harus berupa string"),
-  check("perkembangan.akhir_pendidikan_no_tanggal_ijazah").optional().isString().withMessage("Nomor dan tanggal ijazah harus berupa string"),
-  check("perkembangan.akhir_pendidikan_no_tanggal_skhun").optional().isString().withMessage("Nomor dan tanggal SKHUN harus berupa string"),
+const validatePerkembangan = [
+  check("menerima_bea_siswa_tahun_kelas_dari").optional().isString().withMessage("Menerima beasiswa tahun/kelas dari harus berupa string"),
+
+  check("meninggalkan_sekolah_ini_tanggal").optional().isDate({ format: "YYYY-MM-DD" }).withMessage("Tanggal meninggalkan sekolah ini harus diisi dengan format YYYY-MM-DD"),
+
+  check("meninggalkan_sekolah_ini_alasan").optional().isString().withMessage("Alasan meninggalkan sekolah ini harus berupa string"),
+
+  check("akhir_pendidikan_tamat_belajar_lulus_tahun").optional().isString().withMessage("Tahun tamat belajar/lulus harus berupa string"),
+
+  check("akhir_pendidikan_no_tanggal_ijazah").optional().isString().withMessage("Nomor dan tanggal ijazah harus berupa string"),
+
+  check("akhir_pendidikan_no_tanggal_skhun").optional().isString().withMessage("Nomor dan tanggal SKHUN harus berupa string"),
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      const errorMessages = errors.array().map((err) => err.msg);
+      return res.status(400).json({ message: errorMessages[0] });
+    }
+    next();
+  },
 ];
 
 const validateSetelahPendidikan = () => [
@@ -121,7 +129,6 @@ const dataDiriRequest = [
   ...validateKesehatan(),
   ...validateAyahKandung(),
   ...validateIbuKandung(),
-  ...validatePerkembangan(),
   ...validatePendidikan(),
   ...validateSetelahPendidikan(),
   (req, res, next) => {
@@ -134,4 +141,4 @@ const dataDiriRequest = [
   },
 ];
 
-module.exports = { dataDiriRequest };
+module.exports = { dataDiriRequest, validatePerkembangan };
