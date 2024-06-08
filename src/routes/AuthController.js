@@ -220,9 +220,7 @@ router.get("/me", getMeRequest, async (req, res) => {
     },
     attributes: ["id", "username", "email", "token"],
   });
-  var siswa = undefined;
-  try {
-     siswa = await Models.user.findOne({
+  const siswa = await Models.user.findOne({
       include: [
         {
           model: Models.jurusan,
@@ -234,14 +232,13 @@ router.get("/me", getMeRequest, async (req, res) => {
         },
         {
           model: Models.data_diri,
-          as: "data_disris",
+          as: "data_diris",
         },
       ],
       where: {
         token,
       },
     });
-  } catch (ex) {}
 
   if (admin != undefined) {
     res.json(admin);
