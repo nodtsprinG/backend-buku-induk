@@ -4,15 +4,7 @@ const { akunRequest } = require("../../DTO/akun-request");
 
 const routes = Router();
 
-routes.get("/jurusan", async (req, res) => {
-  const data = await Models.jurusan.findAll();
-  res.json(data);
-});
 
-routes.get("/angkatan", async (req, res) => {
-  const data = await Models.angkatan.findAll();
-  res.json(data);
-});
 
 routes.get("/akun", async (req, res) => {
   const { jurusan, angkatan, search } = req.query;
@@ -60,7 +52,7 @@ routes.post("/akun", akunRequest, async (req, res) => {
 });
 
 routes.get("/akun/:id", async (req, res) => {
-  const data = await Models.user.findOne({
+  const userInstance = await Models.user.findOne({
     include: [
       {
         model: Models.jurusan,
@@ -74,29 +66,56 @@ routes.get("/akun/:id", async (req, res) => {
       },
       {
         model: Models.data_diri,
-        as: "data_diris",
+        as: "data_diri",
       },
       {
         model: Models.perkembangan,
-        as: "perkembangans",
+        as: "perkembangan",
       },
+      // Add the new associations below
+      {
+        model: Models.ayah_kandung,
+        as: "ayah_kandung",
+      },
+      {
+        model: Models.ibu_kandung,
+        as: "ibu_kandung",
+      },
+      {
+        model: Models.kesehatan,
+        as: "kesehatan",
+      },
+      {
+        model: Models.pendidikan,
+        as: "pendidikan",
+      },
+      {
+        model: Models.setelah_pendidikan,
+        as: "setelah_pendidikan",
+      },
+      {
+        model: Models.tempat_tinggal,
+        as: "tempat_tinggal",
+      },
+      {
+        model: Models.wali,
+        as: "wali",
+      },
+      {
+        model: Models.hobi_siswa,
+        as: "hobi_siswa",
+      }
     ],
     where: {
       id: req.params.id,
     },
   });
 
-  return res.json({
-    id: data.id,
-    nisn: data.nisn,
-    tanggal_lahir: data.tanggal_lahir,
-    nama: data.nama,
-    jurusan: data.jurusan.nama,
-    angkatan: data.angkatan.tahun,
-    token: data.token,
-    status: data.data_diris.length != 0,
-    status_perkembangan: data.perkembangans.length != 0,
-  });
+  const data = userInstance.get({plain : true})
+
+  data["status_perkembangan"] = data.perkembangan != null
+
+  return res.json(data);
 });
 
 routes.put("/akun/:id", async (req, res) => {
@@ -133,4 +152,4 @@ routes.delete("/akun/:id", async (req, res) => {
   return res.json({ message: "user Deleted Successfully" });
 });
 
-module.exports = routes;
+module.exports = routes; 

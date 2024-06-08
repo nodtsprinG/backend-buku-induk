@@ -34,27 +34,42 @@ function initModels(sequelize) {
   angkatan.hasMany(user, { as: "users", foreignKey: "angkatan_id"});
   user.belongsTo(jurusan, { as: "jurusan", foreignKey: "jurusan_id"});
   jurusan.hasMany(user, { as: "users", foreignKey: "jurusan_id"});
-  ayah_kandung.belongsTo(user, { as: "user", foreignKey: "user_id"});
-  user.hasMany(ayah_kandung, { as: "ayah_kandungs", foreignKey: "user_id"});
-  data_diri.belongsTo(user, { as: "user", foreignKey: "user_id"});
-  user.hasMany(data_diri, { as: "data_diris", foreignKey: "user_id"});
-  hobi_siswa.belongsTo(user, { as: "user", foreignKey: "user_id"});
-  user.hasMany(hobi_siswa, { as: "hobi_siswas", foreignKey: "user_id"});
-  ibu_kandung.belongsTo(user, { as: "user", foreignKey: "user_id"});
-  user.hasMany(ibu_kandung, { as: "ibu_kandungs", foreignKey: "user_id"});
-  kesehatan.belongsTo(user, { as: "user", foreignKey: "user_id"});
-  user.hasMany(kesehatan, { as: "kesehatans", foreignKey: "user_id"});
-  pendidikan.belongsTo(user, { as: "user", foreignKey: "user_id"});
-  user.hasMany(pendidikan, { as: "pendidikans", foreignKey: "user_id"});
-  perkembangan.belongsTo(user, { as: "user", foreignKey: "user_id"});
-  user.hasMany(perkembangan, { as: "perkembangans", foreignKey: "user_id"});
-  setelah_pendidikan.belongsTo(user, { as: "user", foreignKey: "user_id"});
-  user.hasMany(setelah_pendidikan, { as: "setelah_pendidikans", foreignKey: "user_id"});
-  tempat_tinggal.belongsTo(user, { as: "user", foreignKey: "user_id"});
-  user.hasMany(tempat_tinggal, { as: "tempat_tinggals", foreignKey: "user_id"});
-  wali.belongsTo(user, { as: "user", foreignKey: "user_id"});
-  user.hasMany(wali, { as: "walis", foreignKey: "user_id"});
 
+
+  ayah_kandung.belongsTo(user, { as: "user", foreignKey: "user_id" });
+  user.hasOne(ayah_kandung, { as: "ayah_kandung", foreignKey: "user_id" });
+  
+  data_diri.belongsTo(user, { as: "user", foreignKey: "user_id" });
+  user.hasOne(data_diri, { as: "data_diri", foreignKey: "user_id" });
+  
+  hobi_siswa.belongsTo(user, { as: "user", foreignKey: "user_id" });
+  user.hasOne(hobi_siswa, { as: "hobi_siswa", foreignKey: "user_id" });
+  
+  ibu_kandung.belongsTo(user, { as: "user", foreignKey: "user_id" });
+  user.hasOne(ibu_kandung, { as: "ibu_kandung", foreignKey: "user_id" });
+  
+  kesehatan.belongsTo(user, { as: "user", foreignKey: "user_id" });
+  user.hasOne(kesehatan, { as: "kesehatan", foreignKey: "user_id" });
+  
+  pendidikan.belongsTo(user, { as: "user", foreignKey: "user_id" });
+  user.hasOne(pendidikan, { as: "pendidikan", foreignKey: "user_id" });
+  
+  perkembangan.belongsTo(user, { as: "user", foreignKey: "user_id" });
+  user.hasOne(perkembangan, { as: "perkembangan", foreignKey: "user_id" });
+  
+  setelah_pendidikan.belongsTo(user, { as: "user", foreignKey: "user_id" });
+  user.hasOne(setelah_pendidikan, { as: "setelah_pendidikan", foreignKey: "user_id" });
+  
+  tempat_tinggal.belongsTo(user, { as: "user", foreignKey: "user_id" });
+  user.hasOne(tempat_tinggal, { as: "tempat_tinggal", foreignKey: "user_id" });
+  
+  wali.belongsTo(user, { as: "user", foreignKey: "user_id" });
+  user.hasOne(wali, { as: "wali", foreignKey: "user_id" });
+  
+
+
+
+  
   return {
     admin,
     angkatan,
