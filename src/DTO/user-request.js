@@ -77,7 +77,7 @@ const validatePendidikan = () => [
   check("pendidikan.diterima_tanggal").isDate({ format: "YYYY-MM-DD" }).withMessage("Tanggal diterima harus diisi dengan format YYYY-MM-DD"),
 ];
 
-const validatePerkembangan = () => [
+const validatePerkembangan = [
   check("menerima_bea_siswa_tahun_kelas_dari").optional().isString().withMessage("Menerima beasiswa tahun/kelas dari harus berupa string"),
 
   check("meninggalkan_sekolah_ini_tanggal").optional().isDate({ format: "YYYY-MM-DD" }).withMessage("Tanggal meninggalkan sekolah ini harus diisi dengan format YYYY-MM-DD"),

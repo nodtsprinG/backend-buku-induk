@@ -15,7 +15,7 @@ routes.get("/angkatan", async (req, res) => {
 });
 
 routes.get("/akun", async (req, res) => {
-  const { jurusan, angkatan } = req.query;
+  const { jurusan, angkatan, search } = req.query;
 
   const userData = await Models.user.findAll({
     include: [
@@ -45,6 +45,7 @@ routes.get("/akun", async (req, res) => {
 
   if (jurusan) data = data.filter((e) => e.jurusan == jurusan);
   if (angkatan) data = data.filter((e) => e.angkatan == angkatan);
+  if (search) data = data.filter((e) => e.nama.toLowerCase().includes(search.toLowerCase()));
 
   return res.json(data);
 });

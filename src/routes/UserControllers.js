@@ -166,11 +166,15 @@ routes.get("/wali", async (req, res) => {
 });
 
 routes.post("/perkembangan", validatePerkembangan, async (req, res) => {
-  const body = req.body;
-  body.user_id = req.user_id;
-  const response = await Models.perkembangan.create(body);
+  try {
+    const body = req.body;
+    body.user_id = req.user_id;
+    const response = await Models.perkembangan.create(body);
 
-  res.status(201).json(response);
+    res.status(201).json(response);
+  } catch (ex) {
+    res.status(500);
+  }
 });
 
 module.exports = routes;
