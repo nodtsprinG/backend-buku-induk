@@ -11,6 +11,8 @@ const authControllers = require("./routes/AuthController");
 const userControllers = require("./routes/UserControllers");
 const akunControllers = require("./routes/Admin/AdminAccountController");
 const dataSiswaController = require("./routes/Admin/AdminDataSiswaController");
+const jurusanController = require("./routes/Admin/AdminJurusan");
+const angkatanController = require("./routes/Admin/AdminAngkatan");
 
 // middleware
 const { AuthMiddlewareSiswa, AuthMiddlewareAdmin } = require("./middleware/AuthMiddleware");
@@ -25,6 +27,8 @@ app.use("/auth", authControllers);
 app.use("/siswa", AuthMiddlewareSiswa, userControllers);
 app.use("/admin", AuthMiddlewareAdmin, akunControllers);
 app.use("/admin", AuthMiddlewareAdmin, dataSiswaController);
+app.use("/admin", AuthMiddlewareAdmin, jurusanController);
+app.use("/admin", AuthMiddlewareAdmin, angkatanController);
 
 app.listen(8080, async () => {
   console.log("App listen on port 8080");
