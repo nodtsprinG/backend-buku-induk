@@ -142,47 +142,44 @@ router.post("/login-admin", loginRequest, async (req, res) => {
 });
 
 router.post("/code-admin", codeAdminRequest, async (req, res) => {
-  const { code } = req.body;
-  const data = await Models.admin.findOne({
-    where: {
-      code,
-    },
-  });
+  try {
+    const { code } = req.body;
+    const data = await Models.admin.findOne({
+      where: {
+        code,
+      },
+    });
 
-  if (data == undefined) {
-    res.status(404).json({ message: "not found admin" });
-    return;
-  }
+    if (data == undefined) {
+      res.status(404).json({ message: "not found admin" });
+      return;
+    }
 
-  data.token = uuidv4();
-  data.code = null;
-  await data.save();
+    data.token = uuidv4();
+    data.code = null;
+    await data.save();
 
-  res.json({
-    id: data.id,
-    username: data.username,
-    email: data.email,
-    token: data.token,
-  });
+    res.json({
+      id: data.id,
+      username: data.username,
+      email: data.email,
+      token: data.token,
+    });
+  } catch (ex) {}
 });
 
 router.post("/login-siswa", loginSiswaRequest, async (req, res) => {
-  const { nisn, tanggal_lahir } = req.body;
+  const { nisn } = req.body;
 
   const data = await Models.user.findOne({
     include: [
       {
-        model: Models.jurusan,
-        as: "jurusan",
-      },
-      {
-        model: Models.angkatan,
-        as: "angkatan",
+        model: Models.data_diri,
+        as: "data_diri",
       },
     ],
     where: {
       nisn,
-      tanggal_lahir,
     },
   });
 
@@ -191,24 +188,9 @@ router.post("/login-siswa", loginSiswaRequest, async (req, res) => {
     return;
   }
 
-  data.token = uuidv4();
-  await data.save();
-
-  const dataDiri = await Models.data_diri.findOne({
-    where: {
-      user_id: data.id,
-    },
-  });
-
   res.json({
     id: data.id,
-    nisn: data.nisn,
-    tanggal_lahir: data.tanggal_lahir,
-    nama: data.nama,
-    jurusan: data.jurusan.nama,
-    angkatan: data.angkatan.tahun,
-    token: data.token,
-    status: dataDiri != undefined,
+    full_name: data.data_diri.nama_lengkap,
   });
 });
 
@@ -221,24 +203,24 @@ router.get("/me", getMeRequest, async (req, res) => {
     attributes: ["id", "username", "email", "token"],
   });
   const siswa = await Models.user.findOne({
-      include: [
-        {
-          model: Models.jurusan,
-          as: "jurusan",
-        },
-        {
-          model: Models.angkatan,
-          as: "angkatan",
-        },
-        {
-          model: Models.data_diri,
-          as: "data_diris",
-        },
-      ],
-      where: {
-        token,
+    include: [
+      {
+        model: Models.jurusan,
+        as: "jurusan",
       },
-    });
+      {
+        model: Models.angkatan,
+        as: "angkatan",
+      },
+      {
+        model: Models.data_diri,
+        as: "data_diri",
+      },
+    ],
+    where: {
+      token,
+    },
+  });
 
   if (admin != undefined) {
     res.json(admin);
@@ -248,7 +230,7 @@ router.get("/me", getMeRequest, async (req, res) => {
       id: siswa.id,
       nisn: siswa.nisn,
       tanggal_lahir: siswa.tanggal_lahir,
-      nama: siswa.data_diris[0].nama_lengkap ?? siswa.nama,
+      nama: siswa.data_diri[0].nama_lengkap ?? siswa.nama,
       jurusan: siswa.jurusan.nama,
       angkatan: siswa.angkatan.tahun,
       token: siswa.token,

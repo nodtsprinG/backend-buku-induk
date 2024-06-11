@@ -65,11 +65,7 @@ function initModels(sequelize) {
   
   wali.belongsTo(user, { as: "user", foreignKey: "user_id" });
   user.hasOne(wali, { as: "wali", foreignKey: "user_id" });
-  
 
-
-
-  
   return {
     admin,
     angkatan,

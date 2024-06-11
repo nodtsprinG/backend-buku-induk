@@ -24,7 +24,8 @@ app.use(morgan("dev"));
 
 app.use("/auth", authControllers);
 
-app.use("/siswa", AuthMiddlewareSiswa, userControllers);
+app.use("/siswa",  userControllers);
+
 app.use("/admin", AuthMiddlewareAdmin, akunControllers);
 app.use("/admin", AuthMiddlewareAdmin, dataSiswaController);
 app.use("/admin", AuthMiddlewareAdmin, jurusanController);

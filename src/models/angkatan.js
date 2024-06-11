@@ -8,7 +8,7 @@ module.exports = function(sequelize, DataTypes) {
       primaryKey: true
     },
     tahun: {
-      type: DataTypes.DATE(4),
+      type: DataTypes.INTEGER,
       allowNull: false
     }
   }, {
