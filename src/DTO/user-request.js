@@ -3,7 +3,6 @@ const { validationResult, check } = require("express-validator");
 const validateAyahKandung = () => [
   check("ayah_kandung.nama").isString().notEmpty().withMessage("Nama harus diisi"),
   check("ayah_kandung.tempat_lahir").isString().notEmpty().withMessage("Tempat lahir harus diisi"),
-  check("ayah_kandung.tanggal_lahir").isDate({ format: "YYYY-MM-DD" }).withMessage("Tanggal lahir harus diisi dengan format YYYY-MM-DD"),
   check("ayah_kandung.agama").isString().notEmpty().withMessage("Agama harus diisi"),
   check("ayah_kandung.kewarganegaraan").isString().notEmpty().withMessage("Kewarganegaraan harus diisi"),
   check("ayah_kandung.pendidikan").isString().notEmpty().withMessage("Pendidikan harus diisi"),
@@ -18,7 +17,6 @@ const validateDataDiri = () => [
   check("data_diri.nama_panggilan").isString().notEmpty().withMessage("Nama panggilan harus diisi"),
   check("data_diri.jenis_kelamin").isIn(["laki-laki", "perempuan"]).withMessage("Jenis kelamin harus diisi dengan laki-laki atau perempuan"),
   check("data_diri.tempat_lahir").isString().notEmpty().withMessage("Tempat lahir harus diisi"),
-  check("data_diri.tanggal_lahir").isDate({ format: "YYYY-MM-DD" }).withMessage("Tanggal lahir harus diisi dengan format YYYY-MM-DD"),
   check("data_diri.agama").isString().notEmpty().withMessage("Agama harus diisi"),
   check("data_diri.kewarganegaraan").isString().notEmpty().withMessage("Kewarganegaraan harus diisi"),
   check("data_diri.anak_ke").isInt({ min: 1 }).withMessage("Anak ke harus diisi dan berupa angka positif"),
@@ -40,7 +38,6 @@ const validateHobi = () => [
 const validateIbuKandung = () => [
   check("ibu_kandung.nama").isString().notEmpty().withMessage("Nama harus diisi"),
   check("ibu_kandung.tempat_lahir").isString().notEmpty().withMessage("Tempat lahir harus diisi"),
-  check("ibu_kandung.tanggal_lahir").isDate({ format: "YYYY-MM-DD" }).withMessage("Tanggal lahir harus diisi dengan format YYYY-MM-DD"),
   check("ibu_kandung.agama").isString().notEmpty().withMessage("Agama harus diisi"),
   check("ibu_kandung.kewarganegaraan").isString().notEmpty().withMessage("Kewarganegaraan harus diisi"),
   check("ibu_kandung.pendidikan").isString().notEmpty().withMessage("Pendidikan harus diisi"),
@@ -69,7 +66,6 @@ const validatePendidikan = () => [
   check("pendidikan.diterima_di_bidang_keahlian").isString().notEmpty().withMessage("Bidang keahlian harus diisi"),
   check("pendidikan.diterima_di_program_keahlian").isString().notEmpty().withMessage("Program keahlian harus diisi"),
   check("pendidikan.diterima_di_paket_keahlian").isString().notEmpty().withMessage("Paket keahlian harus diisi"),
-  check("pendidikan.diterima_tanggal").isDate({ format: "YYYY-MM-DD" }).withMessage("Tanggal diterima harus diisi dengan format YYYY-MM-DD"),
 ];
 
 const validatePerkembangan = [
@@ -111,7 +107,6 @@ const validateTempatTinggal = () => [
 const validateWali = () => [
   check("wali.nama").isString().notEmpty().withMessage("Nama wali harus diisi"),
   check("wali.tempat_lahir").isString().notEmpty().withMessage("Tempat lahir wali harus diisi"),
-  check("wali.tanggal_lahir").isDate({ format: "YYYY-MM-DD" }).withMessage("Tanggal lahir wali harus diisi dengan format YYYY-MM-DD"),
   check("wali.agama").isString().notEmpty().withMessage("Agama wali harus diisi"),
   check("wali.kewarganegaraan").isString().notEmpty().withMessage("Kewarganegaraan wali harus diisi"),
   check("wali.pendidikan").isString().notEmpty().withMessage("Pendidikan wali harus diisi"),

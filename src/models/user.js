@@ -12,18 +12,6 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       unique: "nisn"
     },
-    tanggal_lahir: {
-      type: DataTypes.DATEONLY,
-      allowNull: false
-    },
-    token: {
-      type: DataTypes.STRING(255),
-      allowNull: true
-    },
-    nama: {
-      type: DataTypes.STRING(255),
-      allowNull: false
-    },
     angkatan_id: {
       type: DataTypes.INTEGER,
       allowNull: false,

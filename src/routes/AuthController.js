@@ -169,22 +169,17 @@ router.post("/code-admin", codeAdminRequest, async (req, res) => {
 });
 
 router.post("/login-siswa", loginSiswaRequest, async (req, res) => {
-  const { nisn, tanggal_lahir } = req.body;
+  const { nisn } = req.body;
 
   const data = await Models.user.findOne({
     include: [
       {
-        model: Models.jurusan,
-        as: "jurusan",
-      },
-      {
-        model: Models.angkatan,
-        as: "angkatan",
+        model: Models.data_diri,
+        as: "data_diri",
       },
     ],
     where: {
       nisn,
-      tanggal_lahir,
     },
   });
 
@@ -193,24 +188,9 @@ router.post("/login-siswa", loginSiswaRequest, async (req, res) => {
     return;
   }
 
-  data.token = uuidv4();
-  await data.save();
-
-  const dataDiri = await Models.data_diri.findOne({
-    where: {
-      user_id: data.id,
-    },
-  });
-
   res.json({
     id: data.id,
-    nisn: data.nisn,
-    tanggal_lahir: data.tanggal_lahir,
-    nama: data.nama,
-    jurusan: data.jurusan.nama,
-    angkatan: data.angkatan.tahun,
-    token: data.token,
-    status: dataDiri != undefined,
+    full_name: data.data_diri.nama_lengkap,
   });
 });
 

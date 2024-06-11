@@ -19,6 +19,10 @@ routes.get("/akun", async (req, res) => {
         as: "angkatan",
         attributes: ["tahun"],
       },
+      {
+        model: Models.data_diri,
+        as: "data_diri",
+      },
     ],
   });
 
@@ -26,8 +30,7 @@ routes.get("/akun", async (req, res) => {
     return {
       id: user.id,
       nisn: user.nisn,
-      tanggal_lahir: user.tanggal_lahir,
-      nama: user.nama,
+      nama: user.data_diri.nama_lengkap,
       jurusan: user.jurusan.nama,
       angkatan: user.angkatan.tahun,
     };
