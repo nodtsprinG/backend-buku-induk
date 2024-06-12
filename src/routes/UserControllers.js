@@ -180,7 +180,7 @@ routes.post("/perkembangan/:id", validatePerkembangan, async (req, res) => {
   }
 });
 
-router.get('/jurusan', async (req, res) => {
+routes.get("/jurusan", async (req, res) => {
   try {
     const allJurusan = await jurusan.findAll();
     res.status(200).json(allJurusan);
@@ -189,12 +189,12 @@ router.get('/jurusan', async (req, res) => {
   }
 });
 
-router.post("/angkatan", async (req, res) => {
+routes.get("/angkatan", async (req, res) => {
   try {
-    const newAngkatan = await angkatan.create(req.body);
-    res.status(201).json(newAngkatan);
+    const allAngkatan = await angkatan.findAll();
+    res.status(200).json(allAngkatan);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 });
 
