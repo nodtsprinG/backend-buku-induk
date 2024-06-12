@@ -4,7 +4,6 @@ const { v4: uuidv4 } = require("uuid");
 const { loginRequest, getMeRequest, loginSiswaRequest, codeAdminRequest } = require("../DTO/login-request");
 const nodemailer = require("nodemailer");
 const dotEnv = require("dotenv");
-const { where } = require("sequelize");
 dotEnv.config();
 
 const router = Router();
@@ -202,39 +201,8 @@ router.get("/me", getMeRequest, async (req, res) => {
     },
     attributes: ["id", "username", "email", "token"],
   });
-  const siswa = await Models.user.findOne({
-    include: [
-      {
-        model: Models.jurusan,
-        as: "jurusan",
-      },
-      {
-        model: Models.angkatan,
-        as: "angkatan",
-      },
-      {
-        model: Models.data_diri,
-        as: "data_diri",
-      },
-    ],
-    where: {
-      token,
-    },
-  });
-
   if (admin != undefined) {
     res.json(admin);
-    return;
-  } else if (siswa != undefined) {
-    res.json({
-      id: siswa.id,
-      nisn: siswa.nisn,
-      tanggal_lahir: siswa.tanggal_lahir,
-      nama: siswa.data_diri[0].nama_lengkap ?? siswa.nama,
-      jurusan: siswa.jurusan.nama,
-      angkatan: siswa.angkatan.tahun,
-      token: siswa.token,
-    });
     return;
   } else res.status(401).json({ message: "Unauthorised" });
 });

@@ -180,4 +180,22 @@ routes.post("/perkembangan/:id", validatePerkembangan, async (req, res) => {
   }
 });
 
+router.get('/jurusan', async (req, res) => {
+  try {
+    const allJurusan = await jurusan.findAll();
+    res.status(200).json(allJurusan);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+router.post("/angkatan", async (req, res) => {
+  try {
+    const newAngkatan = await angkatan.create(req.body);
+    res.status(201).json(newAngkatan);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
 module.exports = routes;
