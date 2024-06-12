@@ -182,7 +182,7 @@ routes.post("/perkembangan/:id", validatePerkembangan, async (req, res) => {
 
 routes.get("/jurusan", async (req, res) => {
   try {
-    const allJurusan = await jurusan.findAll();
+    const allJurusan = await Models.jurusan.findAll();
     res.status(200).json(allJurusan);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -191,7 +191,7 @@ routes.get("/jurusan", async (req, res) => {
 
 routes.get("/angkatan", async (req, res) => {
   try {
-    const allAngkatan = await angkatan.findAll();
+    const allAngkatan = await Models.angkatan.findAll();
     res.status(200).json(allAngkatan);
   } catch (error) {
     res.status(500).json({ error: error.message });
