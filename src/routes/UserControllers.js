@@ -4,6 +4,73 @@ const { dataDiriRequest, validatePerkembangan } = require("../DTO/user-request")
 
 const routes = Router();
 
+routes.get("/data/:id", async (req, res) => {
+  try {
+    const userInstance = await Models.user.findOne({
+      include: [
+        {
+          model: Models.jurusan,
+          as: "jurusan",
+          attributes: ["nama"],
+        },
+        {
+          model: Models.angkatan,
+          as: "angkatan",
+          attributes: ["tahun"],
+        },
+        {
+          model: Models.data_diri,
+          as: "data_diri",
+        },
+        {
+          model: Models.perkembangan,
+          as: "perkembangan",
+        },
+        // Add the new associations below
+        {
+          model: Models.ayah_kandung,
+          as: "ayah_kandung",
+        },
+        {
+          model: Models.ibu_kandung,
+          as: "ibu_kandung",
+        },
+        {
+          model: Models.kesehatan,
+          as: "kesehatan",
+        },
+        {
+          model: Models.pendidikan,
+          as: "pendidikan",
+        },
+        {
+          model: Models.setelah_pendidikan,
+          as: "setelah_pendidikan",
+        },
+        {
+          model: Models.tempat_tinggal,
+          as: "tempat_tinggal",
+        },
+        {
+          model: Models.wali,
+          as: "wali",
+        },
+        {
+          model: Models.hobi_siswa,
+          as: "hobi_siswa",
+        },
+      ],
+      where: {
+        id: req.params.id,
+      },
+    });
+
+    const data = userInstance.get({ plain: true });
+
+    return res.json(data);
+  } catch (ex) {}
+});
+
 routes.post("/data-diri", async (req, res) => {
   try {
     const { data_diri, hobi, ayah_kandung, ibu_kandung, kesehatan, pendidikan, setelah_pendidikan, tempat_tinggal, wali, siswa } = req.body;
