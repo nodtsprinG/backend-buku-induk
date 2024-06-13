@@ -5,47 +5,28 @@ const { dataDiriRequest, validatePerkembangan } = require("../DTO/user-request")
 const routes = Router();
 
 routes.post("/data-diri", async (req, res) => {
-  const dataDiri = req.body.data_diri;
-  const hobi = req.body.hobi;
-  const ayahKandung = req.body.ayah_kandung;
-  const ibuKandung = req.body.ibu_kandung;
-  const kesehatan = req.body.kesehatan;
-  const pendidikan = req.body.pendidikan;
-  const setelahPendidikan = req.body.setelah_pendidikan;
-  const tempatTinggal = req.body.tempat_tinggal;
-  const wali = req.body.wali;
-  const siswa = req.body.siswa;
+  try {
+    const { data_diri, hobi, ayah_kandung, ibu_kandung, kesehatan, pendidikan, setelah_pendidikan, tempat_tinggal, wali, siswa } = req.body;
 
-  Models.user.create(siswa).then(async (data) => {
-    dataDiri.user_id = data.id;
-    await Models.data_diri.create(dataDiri);
+    // Create the user
+    const user = await Models.user.create(siswa);
 
-    hobi.user_id = data.id;
-    await Models.hobi_siswa.create(hobi);
+    // Create related entities
+    await Models.data_diri.create({ ...data_diri, user_id: user.id });
+    await Models.hobi_siswa.create({ ...hobi, user_id: user.id });
+    await Models.ayah_kandung.create({ ...ayah_kandung, user_id: user.id });
+    await Models.ibu_kandung.create({ ...ibu_kandung, user_id: user.id });
+    await Models.kesehatan.create({ ...kesehatan, user_id: user.id });
+    await Models.pendidikan.create({ ...pendidikan, user_id: user.id });
+    await Models.setelah_pendidikan.create({ ...setelah_pendidikan, user_id: user.id });
+    await Models.tempat_tinggal.create({ ...tempat_tinggal, user_id: user.id });
+    await Models.wali.create({ ...wali, user_id: user.id });
 
-    ayahKandung.user_id = data.id;
-    await Models.ayah_kandung.create(ayahKandung);
-
-    ibuKandung.user_id = data.id;
-    await Models.ibu_kandung.create(ibuKandung);
-
-    kesehatan.user_id = data.id;
-    await Models.kesehatan.create(kesehatan);
-
-    pendidikan.user_id = data.id;
-    await Models.pendidikan.create(pendidikan);
-
-    setelahPendidikan.user_id = data.id;
-    await Models.setelah_pendidikan.create(setelahPendidikan);
-
-    tempatTinggal.user_id = data.id;
-    await Models.tempat_tinggal.create(tempatTinggal);
-
-    wali.user_id = data.id;
-    await Models.wali.create(wali);
-
-    res.status(201).json(req.body);
-  });
+    res.status(201).json({ message: "Data successfully created", data: req.body });
+  } catch (error) {
+    console.error("Error creating data:", error);
+    res.status(500).json({ message: "Error creating data", error: error.message });
+  }
 });
 
 routes.get("/ayah-kandung/:id", async (req, res) => {
@@ -177,6 +158,24 @@ routes.post("/perkembangan/:id", validatePerkembangan, async (req, res) => {
     res.status(201).json(response);
   } catch (ex) {
     res.status(500);
+  }
+});
+
+routes.get("/jurusan", async (req, res) => {
+  try {
+    const allJurusan = await Models.jurusan.findAll();
+    res.status(200).json(allJurusan);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+routes.get("/angkatan", async (req, res) => {
+  try {
+    const allAngkatan = await Models.angkatan.findAll();
+    res.status(200).json(allAngkatan);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 });
 
