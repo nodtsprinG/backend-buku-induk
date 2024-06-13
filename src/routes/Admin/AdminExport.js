@@ -64,7 +64,7 @@ router.get("/export-excel", async (req, res) => {
 
   if (jurusan) data = data.filter((e) => e.jurusan == jurusan);
   if (angkatan) data = data.filter((e) => e.angkatan == angkatan);
-  if (search) data = data.filter((e) => e.nama.toLowerCase().includes(search.toLowerCase()));
+  if (search) data = data.filter((e) => e.data_diri.nama_lengkap.toLowerCase().includes(search.toLowerCase()));
 
   const workbook = new ExcelJS.Workbook();
   const worksheet = workbook.addWorksheet("Data Siswa");
@@ -149,8 +149,8 @@ router.get("/export-excel", async (req, res) => {
     "Olahraga",
     "Organisasi",
     "Lain-lain",
-    "Status Perkembangan",
   ];
+
   worksheet.addRow(headers);
   data.forEach((item) => {
     const row = [
@@ -234,7 +234,6 @@ router.get("/export-excel", async (req, res) => {
       item.hobi_siswa.olahraga,
       item.hobi_siswa.organisasi,
       item.hobi_siswa.lain_lain,
-      item.status_perkembangan,
     ];
     worksheet.addRow(row);
   });
