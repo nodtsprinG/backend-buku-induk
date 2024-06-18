@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const { Models } = require("../../models"); // Adjust the path as necessary
 const ExcelJS = require("exceljs");
+const puppeteer = require("puppeteer");
 
 const router = Router();
 
@@ -243,6 +244,41 @@ router.get("/export-excel", async (req, res) => {
   // Write the workbook to the response
   await workbook.xlsx.write(res);
   res.end();
+});
+
+router.get("/export-pdf", async (req, res) => {
+  try {
+    const url = "http://localhost:8080/view-pdf"; // Ubah URL sesuai kebutuhan
+    const outputPath = "./output/example.pdf"; // Lokasi output file PDF
+
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
+
+    await page.goto(url, {
+      waitUntil: "networkidle0",
+      timeout: 60000,
+    });
+
+    console.log('Setelah menjalankan page.goto');
+    
+    // Simpan halaman sebagai file PDF
+    await page.pdf({
+      path: outputPath,
+      format: "A4", // Ganti format sesuai kebutuhan
+      printBackground: true,
+    });
+    console.log('Setelah menjalankan page.goto');
+    
+    console.log(`PDF berhasil disimpan di ${outputPath}`);
+
+    await browser.close();
+
+    // Kirim file PDF sebagai response
+    res.sendFile(outputPath);
+  } catch (err) {
+    console.error("Terjadi kesalahan:", err);
+    res.status(500).send("Terjadi kesalahan saat ekspor PDF");
+  }
 });
 
 module.exports = router;
