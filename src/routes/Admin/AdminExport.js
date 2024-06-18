@@ -300,6 +300,7 @@ router.get("/export-pdf/:id", async (req, res) => {
     // Simpan halaman sebagai file PDF
     const pdf = await page.pdf({
       format: "A3", // Ganti format sesuai kebutuhan
+      landscape : true
     });
 
     console.log('pdf berhasil dibuat');
