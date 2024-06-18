@@ -16,7 +16,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     },
     tinggal_dengan: {
-      type: DataTypes.ENUM('ortu','saudara','lainnya',''),
+      type: DataTypes.ENUM('ortu','saudara','lainnya','wali'),
       allowNull: false
     },
     jarak_ke_sekolah: {

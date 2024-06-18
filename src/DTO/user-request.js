@@ -1,59 +1,57 @@
 const { validationResult, check } = require("express-validator");
 
 const validateAyahKandung = () => [
-  check("ayah_kandung.nama").isString().notEmpty().withMessage("Nama harus diisi"),
-  check("ayah_kandung.tempat_lahir").isString().notEmpty().withMessage("Tempat lahir harus diisi"),
-  check("ayah_kandung.agama").isString().notEmpty().withMessage("Agama harus diisi"),
-  check("ayah_kandung.kewarganegaraan").isString().notEmpty().withMessage("Kewarganegaraan harus diisi"),
-  check("ayah_kandung.pendidikan").isString().notEmpty().withMessage("Pendidikan harus diisi"),
-  check("ayah_kandung.pekerjaan").isString().notEmpty().withMessage("Pekerjaan harus diisi"),
-  check("ayah_kandung.pengeluaran_per_bulan").isString().notEmpty().withMessage("Pengeluaran per bulan harus diisi"),
-  check("ayah_kandung.alamat_dan_no_telepon").isString().notEmpty().withMessage("Alamat dan nomor telepon harus diisi"),
-  check("ayah_kandung.status").isIn(["masih hidup", "meninggal"]).withMessage("Status harus diisi dengan salah satu dari masih hidup atau meninggal"),
+  check("ayah_kandung.nama").isString().notEmpty().withMessage("Nama ayah kandung wajib diisi"),
+  check("ayah_kandung.tempat_lahir").isString().notEmpty().withMessage("Tempat lahir ayah kandung wajib diisi"),
+  check("ayah_kandung.agama").isString().notEmpty().withMessage("Agama ayah kandung wajib diisi"),
+  check("ayah_kandung.kewarganegaraan").isString().notEmpty().withMessage("Kewarganegaraan ayah kandung wajib diisi"),
+  check("ayah_kandung.pendidikan").isString().notEmpty().withMessage("Pendidikan ayah kandung wajib diisi"),
+  check("ayah_kandung.pekerjaan").isString().notEmpty().withMessage("Pekerjaan ayah kandung wajib diisi"),
+  check("ayah_kandung.pengeluaran_per_bulan").isString().notEmpty().withMessage("Pengeluaran per bulan ayah kandung wajib diisi"),
+  check("ayah_kandung.alamat_dan_no_telepon").isString().notEmpty().withMessage("Alamat dan nomor telepon ayah kandung wajib diisi"),
+  check("ayah_kandung.status").isIn(["masih hidup", "meninggal"]).withMessage("Status ayah kandung harus diisi dengan salah satu dari masih hidup atau meninggal"),
 ];
 
 const validateDataDiri = () => [
-  check("data_diri.nama_lengkap").isString().notEmpty().withMessage("Nama lengkap harus diisi"),
-  check("data_diri.nama_panggilan").isString().notEmpty().withMessage("Nama panggilan harus diisi"),
-  check("data_diri.jenis_kelamin").isIn(["laki-laki", "perempuan"]).withMessage("Jenis kelamin harus diisi dengan laki-laki atau perempuan"),
-  check("data_diri.tempat_lahir").isString().notEmpty().withMessage("Tempat lahir harus diisi"),
-  check("data_diri.agama").isString().notEmpty().withMessage("Agama harus diisi"),
-  check("data_diri.kewarganegaraan").isString().notEmpty().withMessage("Kewarganegaraan harus diisi"),
-  check("data_diri.anak_ke").isInt({ min: 1 }).withMessage("Anak ke harus diisi dan berupa angka positif"),
-  check("data_diri.jml_saudara_kandung").optional().isInt({ min: 0 }).withMessage("Jumlah saudara kandung harus berupa angka positif atau nol"),
-  check("data_diri.jml_saudara_tiri").optional().isInt({ min: 0 }).withMessage("Jumlah saudara tiri harus berupa angka positif atau nol"),
-  check("data_diri.jml_saudara_angkat").optional().isInt({ min: 0 }).withMessage("Jumlah saudara angkat harus berupa angka positif atau nol"),
-  check("data_diri.kelengkapan_ortu").isIn(["yatim", "piatu", "yatim piatu", "lengkap"]).withMessage("Kelengkapan orang tua harus diisi dengan salah satu dari yatim, piatu, yatim piatu, lengkap"),
-  check("data_diri.bahasa_sehari_hari").isString().notEmpty().withMessage("Bahasa sehari-hari harus diisi"),
-  check("data_diri.nisn").isString().notEmpty().withMessage("NISN harus diisi"),
+  check("data_diri.nama_lengkap").isString().notEmpty().withMessage("Nama lengkap dalam data diri wajib diisi"),
+  check("data_diri.nama_panggilan").isString().notEmpty().withMessage("Nama panggilan dalam data diri wajib diisi"),
+  check("data_diri.jenis_kelamin").isIn(["laki-laki", "perempuan"]).withMessage("Jenis kelamin dalam data diri harus diisi dengan laki-laki atau perempuan"),
+  check("data_diri.tempat_lahir").isString().notEmpty().withMessage("Tempat lahir dalam data diri wajib diisi"),
+  check("data_diri.agama").isString().notEmpty().withMessage("Agama dalam data diri wajib diisi"),
+  check("data_diri.kewarganegaraan").isString().notEmpty().withMessage("Kewarganegaraan dalam data diri wajib diisi"),
+  check("data_diri.anak_ke").isInt({ min: 1 }).withMessage("Anak ke dalam data diri harus berupa angka positif dan wajib diisi"),
+  check("data_diri.jml_saudara_kandung").optional().isInt({ min: 0 }).withMessage("Jumlah saudara kandung dalam data diri harus berupa angka positif atau nol"),
+  check("data_diri.jml_saudara_tiri").optional().isInt({ min: 0 }).withMessage("Jumlah saudara tiri dalam data diri harus berupa angka positif atau nol"),
+  check("data_diri.jml_saudara_angkat").optional().isInt({ min: 0 }).withMessage("Jumlah saudara angkat dalam data diri harus berupa angka positif atau nol"),
+  check("data_diri.kelengkapan_ortu").isIn(["yatim", "piatu", "yatim piatu", "lengkap"]).withMessage("Kelengkapan orang tua dalam data diri harus diisi dengan salah satu dari yatim, piatu, yatim piatu, lengkap"),
+  check("data_diri.bahasa_sehari_hari").isString().notEmpty().withMessage("Bahasa sehari-hari dalam data diri wajib diisi"),
 ];
 
 const validateHobi = () => [
-  check("hobi.kesenian").optional().isString().withMessage("Kesenian harus berupa string"),
-  check("hobi.olahraga").optional().isString().withMessage("Olahraga harus berupa string"),
-  check("hobi.organisasi").optional().isString().withMessage("Organisasi harus berupa string"),
-  check("hobi.lain_lain").optional().isString().withMessage("Lain-lain harus berupa string"),
+  check("hobi.kesenian").optional().isString().withMessage("Kesenian dalam hobi harus berupa string"),
+  check("hobi.olahraga").optional().isString().withMessage("Olahraga dalam hobi harus berupa string"),
+  check("hobi.organisasi").optional().isString().withMessage("Organisasi dalam hobi harus berupa string"),
+  check("hobi.lain_lain").optional().isString().withMessage("Lain-lain dalam hobi harus berupa string"),
 ];
 
 const validateIbuKandung = () => [
-  check("ibu_kandung.nama").isString().notEmpty().withMessage("Nama harus diisi"),
-  check("ibu_kandung.tempat_lahir").isString().notEmpty().withMessage("Tempat lahir harus diisi"),
-  check("ibu_kandung.agama").isString().notEmpty().withMessage("Agama harus diisi"),
-  check("ibu_kandung.kewarganegaraan").isString().notEmpty().withMessage("Kewarganegaraan harus diisi"),
-  check("ibu_kandung.pendidikan").isString().notEmpty().withMessage("Pendidikan harus diisi"),
-  check("ibu_kandung.pekerjaan").isString().notEmpty().withMessage("Pekerjaan harus diisi"),
-  check("ibu_kandung.pengeluaran_per_bulan").isString().notEmpty().withMessage("Pengeluaran per bulan harus diisi"),
-  check("ibu_kandung.alamat_dan_no_telepon").isString().notEmpty().withMessage("Alamat dan nomor telepon harus diisi"),
-  check("ibu_kandung.status").isIn(["masih hidup", "meninggal"]).withMessage("Status harus diisi dengan salah satu dari masih hidup atau meninggal"),
+  check("ibu_kandung.nama").isString().notEmpty().withMessage("Nama ibu kandung wajib diisi"),
+  check("ibu_kandung.tempat_lahir").isString().notEmpty().withMessage("Tempat lahir ibu kandung wajib diisi"),
+  check("ibu_kandung.agama").isString().notEmpty().withMessage("Agama ibu kandung wajib diisi"),
+  check("ibu_kandung.kewarganegaraan").isString().notEmpty().withMessage("Kewarganegaraan ibu kandung wajib diisi"),
+  check("ibu_kandung.pendidikan").isString().notEmpty().withMessage("Pendidikan ibu kandung wajib diisi"),
+  check("ibu_kandung.pekerjaan").isString().notEmpty().withMessage("Pekerjaan ibu kandung wajib diisi"),
+  check("ibu_kandung.pengeluaran_per_bulan").isString().notEmpty().withMessage("Pengeluaran per bulan ibu kandung wajib diisi"),
+  check("ibu_kandung.alamat_dan_no_telepon").isString().notEmpty().withMessage("Alamat dan nomor telepon ibu kandung wajib diisi"),
+  check("ibu_kandung.status").isIn(["masih hidup", "meninggal"]).withMessage("Status ibu kandung harus diisi dengan salah satu dari masih hidup atau meninggal"),
 ];
 
 const validateKesehatan = () => [
-  check("kesehatan.gol_darah").optional().isIn(["A", "B", "O", "AB"]).withMessage("Golongan darah harus salah satu dari A, B, O, atau AB"),
-  check("kesehatan.penyakit_pernah_diderita").optional().isString().withMessage("Penyakit pernah diderita harus berupa string"),
-  check("kesehatan.kelainan_jasmani").optional().isString().withMessage("Kelainan jasmani harus berupa string"),
-  check("kesehatan.tinggi").isString().notEmpty().withMessage("Tinggi harus diisi dan berupa string"),
-  check("kesehatan.berat_badan").isString().notEmpty().withMessage("Berat badan harus diisi dan berupa string"),
+  check("kesehatan.gol_darah").optional().isIn(["A", "B", "O", "AB"]).withMessage("Golongan darah dalam kesehatan harus salah satu dari A, B, O, atau AB"),
+  check("kesehatan.tinggi").isString().notEmpty().withMessage("Tinggi badan dalam kesehatan wajib diisi dan berupa string"),
+  check("kesehatan.berat_badan").isString().notEmpty().withMessage("Berat badan dalam kesehatan wajib diisi dan berupa string"),
 ];
+
 
 const validatePendidikan = () => [
   check("pendidikan.sebelumnya_tamatan_dari").isString().notEmpty().withMessage("Tamatan dari harus diisi"),
@@ -71,7 +69,7 @@ const validatePendidikan = () => [
 const validatePerkembangan = [
   check("menerima_bea_siswa_tahun_kelas_dari").optional().isString().withMessage("Menerima beasiswa tahun/kelas dari harus berupa string"),
 
-  check("meninggalkan_sekolah_ini_tanggal").optional().isDate({ format: "YYYY-MM-DD" }).withMessage("Tanggal meninggalkan sekolah ini harus diisi dengan format YYYY-MM-DD"),
+  check("meninggalkan_sekolah_ini_tanggal").optional(),
 
   check("meninggalkan_sekolah_ini_alasan").optional().isString().withMessage("Alasan meninggalkan sekolah ini harus berupa string"),
 
@@ -93,26 +91,25 @@ const validatePerkembangan = [
 const validateSetelahPendidikan = () => [
   check("setelah_pendidikan.melanjutkan_ke").optional().isString().withMessage("Melanjutkan ke harus berupa string"),
   check("setelah_pendidikan.bekerja_nama_perusahaan").optional().isString().withMessage("Nama perusahaan tempat bekerja harus berupa string"),
-  check("setelah_pendidikan.bekerja_tanggal_mulai").optional().isDate({ format: "YYYY-MM-DD" }).withMessage("Tanggal mulai bekerja harus diisi dengan format YYYY-MM-DD"),
+  check("setelah_pendidikan.bekerja_tanggal_mulai").optional(),
   check("setelah_pendidikan.bekerja_penghasilan").optional().isString().withMessage("Penghasilan harus berupa string"),
 ];
-
 const validateTempatTinggal = () => [
-  check("tempat_tinggal.alamat").isString().notEmpty().withMessage("Alamat harus diisi"),
-  check("tempat_tinggal.no_telepon").isString().notEmpty().withMessage("Nomor telepon harus diisi"),
-  check("tempat_tinggal.tinggal_dengan").isIn(["ortu", "saudara", "lainnya"]).withMessage("Tinggal dengan harus diisi dengan salah satu dari ortu, saudara, lainnya"),
-  check("tempat_tinggal.jarak_ke_sekolah").optional().isString().withMessage("Jarak ke sekolah harus berupa string"),
+  check("tempat_tinggal.alamat").isString().notEmpty().withMessage("Alamat tempat tinggal wajib diisi"),
+  check("tempat_tinggal.no_telepon").isString().notEmpty().withMessage("Nomor telepon tempat tinggal wajib diisi"),
+  check("tempat_tinggal.tinggal_dengan").isIn(["ortu", "saudara", "wali", "lainnya"]).withMessage("Tinggal dengan dalam tempat tinggal harus diisi dengan salah satu dari ortu, saudara, lainnya"),
+  check("tempat_tinggal.jarak_ke_sekolah").optional().isString().withMessage("Jarak ke sekolah dalam tempat tinggal harus berupa string"),
 ];
 
 const validateWali = () => [
-  check("wali.nama").isString().notEmpty().withMessage("Nama wali harus diisi"),
-  check("wali.tempat_lahir").isString().notEmpty().withMessage("Tempat lahir wali harus diisi"),
-  check("wali.agama").isString().notEmpty().withMessage("Agama wali harus diisi"),
-  check("wali.kewarganegaraan").isString().notEmpty().withMessage("Kewarganegaraan wali harus diisi"),
-  check("wali.pendidikan").isString().notEmpty().withMessage("Pendidikan wali harus diisi"),
-  check("wali.pekerjaan").isString().notEmpty().withMessage("Pekerjaan wali harus diisi"),
-  check("wali.pengeluaran_per_bulan").isString().notEmpty().withMessage("Pengeluaran per bulan wali harus diisi"),
-  check("wali.alamat_dan_no_telepon").isString().notEmpty().withMessage("Alamat dan no telepon wali harus diisi"),
+  // check("wali.nama").isString().notEmpty().withMessage("Nama wali harus diisi"),
+  // check("wali.tempat_lahir").isString().notEmpty().withMessage("Tempat lahir wali harus diisi"),
+  // check("wali.agama").isString().notEmpty().withMessage("Agama wali harus diisi"),
+  // check("wali.kewarganegaraan").isString().notEmpty().withMessage("Kewarganegaraan wali harus diisi"),
+  // check("wali.pendidikan").isString().notEmpty().withMessage("Pendidikan wali harus diisi"),
+  // check("wali.pekerjaan").isString().notEmpty().withMessage("Pekerjaan wali harus diisi"),
+  // check("wali.pengeluaran_per_bulan").isString().notEmpty().withMessage("Pengeluaran per bulan wali harus diisi"),
+  // check("wali.alamat_dan_no_telepon").isString().notEmpty().withMessage("Alamat dan no telepon wali harus diisi"),
 ];
 
 const dataDiriRequest = [

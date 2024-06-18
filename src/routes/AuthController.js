@@ -32,7 +32,7 @@ router.post("/login-admin", loginRequest, async (req, res) => {
   });
 
   if (data == undefined) {
-    res.status(404).json({ message: "not found admin" });
+    res.status(404).json({ message: "Password atau Email Salah" });
     return;
   }
 
@@ -150,7 +150,7 @@ router.post("/code-admin", codeAdminRequest, async (req, res) => {
     });
 
     if (data == undefined) {
-      res.status(404).json({ message: "not found admin" });
+      res.status(404).json({ message: "Kode OTP Salah" });
       return;
     }
 

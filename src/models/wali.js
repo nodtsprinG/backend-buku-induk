@@ -9,39 +9,39 @@ module.exports = function(sequelize, DataTypes) {
     },
     nama: {
       type: DataTypes.STRING(255),
-      allowNull: false
+      allowNull: true
     },
     tempat_lahir: {
       type: DataTypes.STRING(255),
-      allowNull: false
+      allowNull: true
     },
     tanggal_lahir: {
       type: DataTypes.DATEONLY,
-      allowNull: false
+      allowNull: true
     },
     agama: {
       type: DataTypes.STRING(255),
-      allowNull: false
+      allowNull: true
     },
     kewarganegaraan: {
       type: DataTypes.STRING(255),
-      allowNull: false
+      allowNull: true
     },
     pendidikan: {
       type: DataTypes.STRING(255),
-      allowNull: false
+      allowNull: true
     },
     pekerjaan: {
       type: DataTypes.STRING(255),
-      allowNull: false
+      allowNull: true
     },
     pengeluaran_per_bulan: {
       type: DataTypes.STRING(255),
-      allowNull: false
+      allowNull: true
     },
     alamat_dan_no_telepon: {
       type: DataTypes.STRING(255),
-      allowNull: false
+      allowNull: true
     },
     user_id: {
       type: DataTypes.INTEGER,
