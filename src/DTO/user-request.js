@@ -124,8 +124,8 @@ const dataDiriRequest = [
   ...validateKesehatan(),
   ...validateAyahKandung(),
   ...validateIbuKandung(),
-  ...validatePendidikan(),
-  ...validateSetelahPendidikan(),
+  //...validatePendidikan(),
+  //..validateSetelahPendidikan(),
   (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {

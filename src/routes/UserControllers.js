@@ -71,7 +71,7 @@ routes.get("/data/:id", async (req, res) => {
   } catch (ex) {}
 });
 
-routes.post("/data-diri", async (req, res) => {
+routes.post("/data-diri", dataDiriRequest, async (req, res) => {
   try {
     const { data_diri, hobi, ayah_kandung, ibu_kandung, kesehatan, pendidikan, setelah_pendidikan, tempat_tinggal, wali, siswa } = req.body;
 
