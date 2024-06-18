@@ -246,70 +246,34 @@ router.get("/export-excel", async (req, res) => {
   res.end();
 });
 
-router.get("/export-pdf", async (req, res) => {
-  try {
-    const url = "http://localhost:8080/view-pdf"; // Ubah URL sesuai kebutuhan
-    const outputPath = "example.pdf"; // Lokasi output file PDF
-
-    const browser = await puppeteer.launch({ args: ['--no-sandbox', '--disable-setuid-sandbox'] });
-    const page = await browser.newPage();
-
-    await page.goto(url, {
-      waitUntil: "networkidle0",
-      timeout: 60000,
-    });
-    page.emulateMediaType("screen")
-
-    console.log('Setelah menjalankan page.goto');
-    
-    // Simpan halaman sebagai file PDF
-    const pdf = await page.pdf({
-      format: "A4", // Ganti format sesuai kebutuhan
-      printBackground: true,
-      timeout : 60000
-    });
-    
-    console.log(`PDF berhasil disimpan di ${outputPath}`);
-
-    await browser.close();
-
-    // Kirim file PDF sebagai response
-    res.send(pdf);
-  } catch (err) {
-    console.error("Terjadi kesalahan:", err);
-    res.status(500).send("Terjadi kesalahan saat ekspor PDF");
-  }
-});
-
 router.get("/export-pdf/:id", async (req, res) => {
-  
   try {
     const url = "http://localhost:8080/view-pdf/" + req.params.id; // Ubah URL sesuai kebutuhan
     const outputPath = "./output/example.pdf"; // Lokasi output file PDF
 
-    const browser = await puppeteer.launch({ args: ['--no-sandbox', '--disable-setuid-sandbox'] });
+    const browser = await puppeteer.launch({ args: ["--no-sandbox", "--disable-setuid-sandbox"] });
     const page = await browser.newPage();
 
-    await page.goto(url, {
-      waitUntil: "networkidle0",
-      timeout: 30000 // Increase timeout if needed
-    }).catch(e => console.error('Error during navigation:', e));
+    await page
+      .goto(url, {
+        waitUntil: "networkidle0",
+        timeout: 30000, // Increase timeout if needed
+      })
+      .catch((e) => console.error("Error during navigation:", e));
 
-    console.log('Setelah menjalankan page.goto');
-    
+    console.log("Setelah menjalankan page.goto");
+
     // Simpan halaman sebagai file PDF
     const pdf = await page.pdf({
       format: "A3", // Ganti format sesuai kebutuhan
-      landscape : true
+      landscape: true,
     });
 
-    console.log('pdf berhasil dibuat');
-
+    console.log("pdf berhasil dibuat");
 
     await browser.close();
-    res.setHeader('Content-Type', 'application/pdf');
-    res.setHeader('Content-Disposition', 'attachment; filename=download.pdf');
-
+    res.setHeader("Content-Type", "application/pdf");
+    res.setHeader("Content-Disposition", "attachment; filename=download.pdf");
 
     // Kirim file PDF sebagai response
     res.send(pdf);

@@ -7,7 +7,6 @@ module.exports = {
       host: "localhost",
       database: "db_aplikasi_buku_induk",
       username: "root",
-      password : "BigBlueApple",
       dialect: "mysql",
       port: 3306,
       logging: false,
