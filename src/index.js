@@ -38,70 +38,6 @@ app.use("/admin", AuthMiddlewareAdmin, jurusanController);
 app.use("/admin", AuthMiddlewareAdmin, angkatanController);
 app.use("/admin", AuthMiddlewareAdmin, getExport);
 
-app.get("/view-pdf", async (req, res) => {
-  const { jurusan, angkatan, search } = req.query;
-
-  let data = await Models.user.findAll({
-    include: [
-      {
-        model: Models.jurusan,
-        as: "jurusan",
-        attributes: ["nama"],
-      },
-      {
-        model: Models.angkatan,
-        as: "angkatan",
-        attributes: ["tahun"],
-      },
-      {
-        model: Models.data_diri,
-        as: "data_diri",
-      },
-      {
-        model: Models.perkembangan,
-        as: "perkembangan",
-      },
-      {
-        model: Models.ayah_kandung,
-        as: "ayah_kandung",
-      },
-      {
-        model: Models.ibu_kandung,
-        as: "ibu_kandung",
-      },
-      {
-        model: Models.kesehatan,
-        as: "kesehatan",
-      },
-      {
-        model: Models.pendidikan,
-        as: "pendidikan",
-      },
-      {
-        model: Models.setelah_pendidikan,
-        as: "setelah_pendidikan",
-      },
-      {
-        model: Models.tempat_tinggal,
-        as: "tempat_tinggal",
-      },
-      {
-        model: Models.wali,
-        as: "wali",
-      },
-      {
-        model: Models.hobi_siswa,
-        as: "hobi_siswa",
-      },
-    ],
-  });
-
-  if (jurusan) data = data.filter((e) => e.jurusan == jurusan);
-  if (angkatan) data = data.filter((e) => e.angkatan == angkatan);
-  if (search) data = data.filter((e) => e.data_diri.nama_lengkap.toLowerCase().includes(search.toLowerCase()));
-  res.render("export-pdf", { data });
-});
-
 app.get("/view-pdf/:id", async (req, res) => {
   const { jurusan, angkatan, search } = req.query;
   const { id } = req.params
@@ -161,7 +97,7 @@ app.get("/view-pdf/:id", async (req, res) => {
     ],
   });
 
-  res.render("export-pdf", { data : [data] });
+  res.render("export-pdf", { element : data });
 });
 
 app.listen(8080, async () => {
