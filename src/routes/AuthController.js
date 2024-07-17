@@ -31,6 +31,8 @@ router.post("/login-admin", loginRequest, async (req, res) => {
     },
   });
 
+  console.log(data);
+
   if (data == undefined) {
     res.status(404).json({ message: "Password atau Email Salah" });
     return;

@@ -72,9 +72,9 @@ routes.get("/data/:id", async (req, res) => {
   } catch (ex) {}
 });
 
-routes.post("/data-diri", dataDiriRequest, async (req, res) => {
-    try {
-      const { data_diri, hobi, ayah_kandung, ibu_kandung, kesehatan, pendidikan, setelah_pendidikan, tempat_tinggal, wali, siswa } = req.body;
+routes.post("/data-diri", async (req, res) => {
+  try {
+    const { data_diri, hobi, ayah_kandung, ibu_kandung, kesehatan, pendidikan, setelah_pendidikan, tempat_tinggal, wali, siswa } = req.body;
 
     // Create the user
     const user = await Models.user.create(siswa);
@@ -88,17 +88,24 @@ routes.post("/data-diri", dataDiriRequest, async (req, res) => {
     await Models.pendidikan.create({ ...pendidikan, user_id: user.id });
     await Models.setelah_pendidikan.create({ ...setelah_pendidikan, user_id: user.id });
     await Models.tempat_tinggal.create({ ...tempat_tinggal, user_id: user.id });
+    if (wali.tanggal_lahir == "null") wali.tanggal_lahir = null;
     await Models.wali.create({ ...wali, user_id: user.id });
 
     res.status(201).json({ message: "Data successfully created", data: req.body });
-    } catch (error) {
-      if (error instanceof Sequelize.UniqueConstraintError) {
-        res.status(400).json({ message: "NISN sudah terpakai" });
-      } else {
-        // Handle other types of errors
-        res.status(500).json({ message: "Internal server error" });
-      }
+  } catch (error) {
+    if (error instanceof Sequelize.UniqueConstraintError) {
+      res.status(400).json({ message: "NISN sudah terpakai" });
+    } else {
+      // Handle other types of errors
+      console.log(error);
+      res.status(500).json({ message: "Internal server error" });
     }
+    await Models.user.destroy({
+      where: {
+        nisn: req.body.siswa.nisn,
+      },
+    });
+  }
 });
 
 routes.get("/ayah-kandung/:id", async (req, res) => {
