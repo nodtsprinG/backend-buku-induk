@@ -29,11 +29,25 @@
 npm run db:migrate
 ```
 
+> [!WARNING]\
+> Kalau sebelumnya udah pernah nambahin database pakai migrate. Jalankan ini dulu sebelum no 4
+
+```bash
+npm run db:migrate:undo
+```
+
+> [!NOTE]\
+> Data atau isi database udah pasti keriset. Kalau dirasa penting simpen dulu.
+
+
 5. Lakukan seed database (Untuk mempersiapkan data pada database)
 
 ```bash
 npm run db:seed
 ```
+
+> [!NOTE]\
+> Data dari migration akan di isi pakai ini. Termasuk akun admin, jurusan dan angkatan. Kalau akun admin gak ada request ke no `Nanda`
 
 ## Bagaimana cara menjalankan server? 
 
