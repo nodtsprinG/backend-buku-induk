@@ -15,75 +15,75 @@ var _user = require('./user')
 var _wali = require('./wali')
 
 function initModels(sequelize) {
-    var admin = _admin(sequelize, DataTypes)
-    var angkatan = _angkatan(sequelize, DataTypes)
-    var ayah_kandung = _ayah_kandung(sequelize, DataTypes)
-    var data_diri = _data_diri(sequelize, DataTypes)
-    var hobi_siswa = _hobi_siswa(sequelize, DataTypes)
-    var ibu_kandung = _ibu_kandung(sequelize, DataTypes)
-    var jurusan = _jurusan(sequelize, DataTypes)
-    var kesehatan = _kesehatan(sequelize, DataTypes)
-    var pendidikan = _pendidikan(sequelize, DataTypes)
-    var perkembangan = _perkembangan(sequelize, DataTypes)
-    var setelah_pendidikan = _setelah_pendidikan(sequelize, DataTypes)
-    var tempat_tinggal = _tempat_tinggal(sequelize, DataTypes)
-    var user = _user(sequelize, DataTypes)
-    var wali = _wali(sequelize, DataTypes)
+  var admin = _admin(sequelize, DataTypes)
+  var angkatan = _angkatan(sequelize, DataTypes)
+  var ayah_kandung = _ayah_kandung(sequelize, DataTypes)
+  var data_diri = _data_diri(sequelize, DataTypes)
+  var hobi_siswa = _hobi_siswa(sequelize, DataTypes)
+  var ibu_kandung = _ibu_kandung(sequelize, DataTypes)
+  var jurusan = _jurusan(sequelize, DataTypes)
+  var kesehatan = _kesehatan(sequelize, DataTypes)
+  var pendidikan = _pendidikan(sequelize, DataTypes)
+  var perkembangan = _perkembangan(sequelize, DataTypes)
+  var setelah_pendidikan = _setelah_pendidikan(sequelize, DataTypes)
+  var tempat_tinggal = _tempat_tinggal(sequelize, DataTypes)
+  var user = _user(sequelize, DataTypes)
+  var wali = _wali(sequelize, DataTypes)
 
-    user.belongsTo(angkatan, { as: 'angkatan', foreignKey: 'angkatan_id' })
-    angkatan.hasMany(user, { as: 'users', foreignKey: 'angkatan_id' })
-    user.belongsTo(jurusan, { as: 'jurusan', foreignKey: 'jurusan_id' })
-    jurusan.hasMany(user, { as: 'users', foreignKey: 'jurusan_id' })
+  user.belongsTo(angkatan, { as: 'angkatan', foreignKey: 'angkatan_id' })
+  angkatan.hasMany(user, { as: 'users', foreignKey: 'angkatan_id' })
+  user.belongsTo(jurusan, { as: 'jurusan', foreignKey: 'jurusan_id' })
+  jurusan.hasMany(user, { as: 'users', foreignKey: 'jurusan_id' })
 
-    ayah_kandung.belongsTo(user, { as: 'user', foreignKey: 'user_id' })
-    user.hasOne(ayah_kandung, { as: 'ayah_kandung', foreignKey: 'user_id' })
+  ayah_kandung.belongsTo(user, { as: 'user', foreignKey: 'user_id' })
+  user.hasOne(ayah_kandung, { as: 'ayah_kandung', foreignKey: 'user_id' })
 
-    data_diri.belongsTo(user, { as: 'user', foreignKey: 'user_id' })
-    user.hasOne(data_diri, { as: 'data_diri', foreignKey: 'user_id' })
+  data_diri.belongsTo(user, { as: 'user', foreignKey: 'user_id' })
+  user.hasOne(data_diri, { as: 'data_diri', foreignKey: 'user_id' })
 
-    hobi_siswa.belongsTo(user, { as: 'user', foreignKey: 'user_id' })
-    user.hasOne(hobi_siswa, { as: 'hobi_siswa', foreignKey: 'user_id' })
+  hobi_siswa.belongsTo(user, { as: 'user', foreignKey: 'user_id' })
+  user.hasOne(hobi_siswa, { as: 'hobi_siswa', foreignKey: 'user_id' })
 
-    ibu_kandung.belongsTo(user, { as: 'user', foreignKey: 'user_id' })
-    user.hasOne(ibu_kandung, { as: 'ibu_kandung', foreignKey: 'user_id' })
+  ibu_kandung.belongsTo(user, { as: 'user', foreignKey: 'user_id' })
+  user.hasOne(ibu_kandung, { as: 'ibu_kandung', foreignKey: 'user_id' })
 
-    kesehatan.belongsTo(user, { as: 'user', foreignKey: 'user_id' })
-    user.hasOne(kesehatan, { as: 'kesehatan', foreignKey: 'user_id' })
+  kesehatan.belongsTo(user, { as: 'user', foreignKey: 'user_id' })
+  user.hasOne(kesehatan, { as: 'kesehatan', foreignKey: 'user_id' })
 
-    pendidikan.belongsTo(user, { as: 'user', foreignKey: 'user_id' })
-    user.hasOne(pendidikan, { as: 'pendidikan', foreignKey: 'user_id' })
+  pendidikan.belongsTo(user, { as: 'user', foreignKey: 'user_id' })
+  user.hasOne(pendidikan, { as: 'pendidikan', foreignKey: 'user_id' })
 
-    perkembangan.belongsTo(user, { as: 'user', foreignKey: 'user_id' })
-    user.hasOne(perkembangan, { as: 'perkembangan', foreignKey: 'user_id' })
+  perkembangan.belongsTo(user, { as: 'user', foreignKey: 'user_id' })
+  user.hasOne(perkembangan, { as: 'perkembangan', foreignKey: 'user_id' })
 
-    setelah_pendidikan.belongsTo(user, { as: 'user', foreignKey: 'user_id' })
-    user.hasOne(setelah_pendidikan, {
-        as: 'setelah_pendidikan',
-        foreignKey: 'user_id',
-    })
+  setelah_pendidikan.belongsTo(user, { as: 'user', foreignKey: 'user_id' })
+  user.hasOne(setelah_pendidikan, {
+    as: 'setelah_pendidikan',
+    foreignKey: 'user_id',
+  })
 
-    tempat_tinggal.belongsTo(user, { as: 'user', foreignKey: 'user_id' })
-    user.hasOne(tempat_tinggal, { as: 'tempat_tinggal', foreignKey: 'user_id' })
+  tempat_tinggal.belongsTo(user, { as: 'user', foreignKey: 'user_id' })
+  user.hasOne(tempat_tinggal, { as: 'tempat_tinggal', foreignKey: 'user_id' })
 
-    wali.belongsTo(user, { as: 'user', foreignKey: 'user_id' })
-    user.hasOne(wali, { as: 'wali', foreignKey: 'user_id' })
+  wali.belongsTo(user, { as: 'user', foreignKey: 'user_id' })
+  user.hasOne(wali, { as: 'wali', foreignKey: 'user_id' })
 
-    return {
-        admin,
-        angkatan,
-        ayah_kandung,
-        data_diri,
-        hobi_siswa,
-        ibu_kandung,
-        jurusan,
-        kesehatan,
-        pendidikan,
-        perkembangan,
-        setelah_pendidikan,
-        tempat_tinggal,
-        user,
-        wali,
-    }
+  return {
+    admin,
+    angkatan,
+    ayah_kandung,
+    data_diri,
+    hobi_siswa,
+    ibu_kandung,
+    jurusan,
+    kesehatan,
+    pendidikan,
+    perkembangan,
+    setelah_pendidikan,
+    tempat_tinggal,
+    user,
+    wali,
+  }
 }
 module.exports = initModels
 module.exports.initModels = initModels

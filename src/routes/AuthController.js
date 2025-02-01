@@ -2,10 +2,10 @@ const { Router } = require('express')
 const { Models } = require('../models')
 const { v4: uuidv4 } = require('uuid')
 const {
-    loginRequest,
-    getMeRequest,
-    loginSiswaRequest,
-    codeAdminRequest,
+  loginRequest,
+  getMeRequest,
+  loginSiswaRequest,
+  codeAdminRequest,
 } = require('../DTO/login-request')
 const nodemailer = require('nodemailer')
 const dotEnv = require('dotenv')
@@ -14,53 +14,53 @@ dotEnv.config()
 const router = Router()
 
 function generateRandomCode(length = 5) {
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
-    let randomCode = ''
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+  let randomCode = ''
 
-    for (let i = 0; i < length; i++) {
-        const randomIndex = Math.floor(Math.random() * characters.length)
-        randomCode += characters.charAt(randomIndex)
-    }
+  for (let i = 0; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length)
+    randomCode += characters.charAt(randomIndex)
+  }
 
-    return randomCode
+  return randomCode
 }
 
 router.post('/login-admin', loginRequest, async (req, res) => {
-    const { email, password } = req.body
+  const { email, password } = req.body
 
-    console.log(process.env.EMAIL)
-    const data = await Models.admin.findOne({
-        where: {
-            email,
-            password,
-        },
+  console.log(process.env.EMAIL)
+  const data = await Models.admin.findOne({
+    where: {
+      email,
+      password,
+    },
+  })
+
+  console.log(data)
+
+  if (data == undefined) {
+    res.status(404).json({ message: 'Password atau Email Salah' })
+    return
+  }
+
+  data.code = generateRandomCode()
+  data.token = null
+  await data.save()
+
+  try {
+    if (process.env.EMAIL == undefined) throw new Error()
+    const trasnport = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.EMAIL,
+        pass: process.env.PASSWORD,
+      },
     })
-
-    console.log(data)
-
-    if (data == undefined) {
-        res.status(404).json({ message: 'Password atau Email Salah' })
-        return
-    }
-
-    data.code = generateRandomCode()
-    data.token = null
-    await data.save()
-
-    try {
-        if (process.env.EMAIL == undefined) throw new Error()
-        const trasnport = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-                user: process.env.EMAIL,
-                pass: process.env.PASSWORD,
-            },
-        })
-        const response = trasnport.sendMail({
-            from: process.env.EMAIL,
-            to: data.email,
-            subject: 'Buku Induk Code',
-            html: `<!DOCTYPE html>
+    const response = trasnport.sendMail({
+      from: process.env.EMAIL,
+      to: data.email,
+      subject: 'Buku Induk Code',
+      html: `<!DOCTYPE html>
       <html>
         <head>
           <meta charset="UTF-8" />
@@ -139,81 +139,79 @@ router.post('/login-admin', loginRequest, async (req, res) => {
           </div>
         </body>
       </html>`,
-        })
-    } catch (ex) {
-        console.log(
-            'Erorr : Erorr send email .env is required, EMAIL, PASSWORD'
-        )
-    }
+    })
+  } catch (ex) {
+    console.log('Erorr : Erorr send email .env is required, EMAIL, PASSWORD')
+  }
 
-    res.json({ code: data.code })
+  res.json({ code: data.code })
 })
 
 router.post('/code-admin', codeAdminRequest, async (req, res) => {
-    try {
-        const { code } = req.body
-        const data = await Models.admin.findOne({
-            where: {
-                code,
-            },
-        })
-
-        if (data == undefined) {
-            res.status(404).json({ message: 'Kode OTP Salah' })
-            return
-        }
-
-        data.token = uuidv4()
-        data.code = null
-        await data.save()
-
-        res.json({
-            id: data.id,
-            username: data.username,
-            email: data.email,
-            token: data.token,
-        })
-    } catch (ex) {}
-})
-
-router.post('/login-siswa', loginSiswaRequest, async (req, res) => {
-    const { nisn } = req.body
-
-    const data = await Models.user.findOne({
-        include: [
-            {
-                model: Models.data_diri,
-                as: 'data_diri',
-            },
-        ],
-        where: {
-            nisn,
-        },
+  try {
+    const { code } = req.body
+    const data = await Models.admin.findOne({
+      where: {
+        code,
+      },
     })
 
     if (data == undefined) {
-        res.status(404).json({ message: 'not found Siswa' })
-        return
+      res.status(404).json({ message: 'Kode OTP Salah' })
+      return
     }
 
+    data.token = uuidv4()
+    data.code = null
+    await data.save()
+
     res.json({
-        id: data.id,
-        full_name: data.data_diri.nama_lengkap,
+      id: data.id,
+      username: data.username,
+      email: data.email,
+      token: data.token,
     })
+  } catch (ex) {}
+})
+
+router.post('/login-siswa', loginSiswaRequest, async (req, res) => {
+  const { nisn } = req.body
+
+  const data = await Models.user.findOne({
+    include: [
+      {
+        model: Models.data_diri,
+        as: 'data_diri',
+      },
+    ],
+    where: {
+      nisn,
+    },
+  })
+
+  if (data == undefined) {
+    res.status(404).json({ message: 'not found Siswa' })
+    return
+  }
+
+  res.json({
+    id: data.id,
+    full_name: data.data_diri.nama_lengkap,
+  })
 })
 
 router.get('/me', getMeRequest, async (req, res) => {
-    const token = req.headers['authorization'].split(' ')[1]
-    const admin = await Models.admin.findOne({
-        where: {
-            token,
-        },
-        attributes: ['id', 'username', 'email', 'token'],
-    })
-    if (admin != undefined) {
-        res.json(admin)
-        return
-    } else res.status(401).json({ message: 'Unauthorised' })
+  const token = req.headers['authorization'].split(' ')[1]
+  const admin = await Models.admin.findOne({
+    where: {
+      token,
+    },
+    attributes: ['id', 'username', 'email', 'token'],
+  })
+  if (admin != undefined) {
+    res.json(admin)
+    return
+  } else res.status(401).json({ message: 'Unauthorised' })
 })
 
 module.exports = router
