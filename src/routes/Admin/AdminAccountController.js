@@ -1,3 +1,16 @@
+/*
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                                A K U N  S I S W A
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+? Bagian ini isinya api untuk memanipulasi akun siswa
+! Dimohon memberikan note atau komentar pada bagian bagian route agar mempermudah development
+
+TODO : 
+- Mengganti semua akun menjadi siswa // Gak sesuai namanya
+
+*/
+
 const { Router } = require("express");
 const { Models } = require("../../models");
 const { akunRequest } = require("../../DTO/akun-request");
@@ -140,19 +153,6 @@ routes.put("/akun/:id", async (req, res) => {
   }
 });
 
-routes.delete("/akun/:id", async (req, res) => {
-  const data = await Models.user.findOne({
-    where: {
-      id: req.params.id,
-    },
-  });
-  if (!data) {
-    return res.status(404).json({ message: "User not found" });
-  }
-
-  await data.destroy();
-
-  return res.json({ message: "user Deleted Successfully" });
-});
+//! HAPUS SISWA UDAH DI HAPUS. DIHARAMKAN. SEGERA DIHAPUS DI UI JIKA MASIH ADA
 
 module.exports = routes;

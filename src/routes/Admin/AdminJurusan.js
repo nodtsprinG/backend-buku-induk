@@ -1,3 +1,13 @@
+/*
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                                J U R U S A N
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+? Bagian ini isinya api untuk memanipulasi jurusan
+! Dimohon memberikan note atau komentar pada bagian bagian route agar mempermudah development
+
+*/
+
 const { Router } = require("express")
 const { Models } = require("../../models"); // Adjust the path as necessary
 
@@ -54,20 +64,6 @@ router.put('/jurusan/:id', async (req, res) => {
   }
 });
 
-// Delete a 'jurusan'
-router.delete('/jurusan/:id', async (req, res) => {
-  try {
-    const deletedJurusan = await jurusan.destroy({
-      where: { id: req.params.id }
-    });
-    if (deletedJurusan) {
-      res.status(200).json({ message: 'Jurusan deleted successfully' });
-    } else {
-      res.status(404).json({ error: 'Jurusan not found' });
-    }
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
+//! HAPUS JURUSAN UDAH DI HAPUS. DIHARAMKAN. SEGERA DIHAPUS DI UI JIKA MASIH ADA
 
 module.exports = router;

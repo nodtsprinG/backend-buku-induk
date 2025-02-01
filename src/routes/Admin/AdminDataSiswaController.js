@@ -1,3 +1,13 @@
+/*
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                                 D A T A  S I S W A
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+? Bagian ini isinya api untuk memanipulasi Data siswa
+! Dimohon memberikan note atau komentar pada bagian bagian route agar mempermudah development
+
+*/
+
 const { Router } = require("express");
 const { Models } = require("../../models");
 

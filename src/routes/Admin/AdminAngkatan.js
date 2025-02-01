@@ -1,10 +1,20 @@
+/*
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                                A N G K A T A N
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+? Bagian ini isinya api untuk memanipulasi angkatan
+! Dimohon memberikan note atau komentar pada bagian bagian route agar mempermudah development
+
+*/
+
 const { Router } = require("express");
 const { Models } = require("../../models"); // Adjust the path as necessary
 
 const router = Router();
 const angkatan = Models.angkatan;
 
-// Create a new 'angkatan'
+//* Membuat angkatan baru
 router.post("/angkatan", async (req, res) => {
   try {
     const newAngkatan = await angkatan.create(req.body);
@@ -14,7 +24,7 @@ router.post("/angkatan", async (req, res) => {
   }
 });
 
-// Read all 'angkatan'
+//* Mengambil semua angkatan
 router.get("/angkatan", async (req, res) => {
   try {
     const allAngkatan = await angkatan.findAll();
@@ -24,7 +34,7 @@ router.get("/angkatan", async (req, res) => {
   }
 });
 
-// Read one 'angkatan' by id
+//* Mengambil satu angkata 'menggunakan id angkatan'
 router.get("/angkatan/:id", async (req, res) => {
   try {
     const oneAngkatan = await angkatan.findByPk(req.params.id);
@@ -38,7 +48,7 @@ router.get("/angkatan/:id", async (req, res) => {
   }
 });
 
-// Update an 'angkatan'
+//* Merubah angkatan berdasarkan id angkatan
 router.put("/angkatan/:id", async (req, res) => {
   try {
     console.log(req.body);
@@ -58,20 +68,6 @@ router.put("/angkatan/:id", async (req, res) => {
   }
 });
 
-// Delete an 'angkatan'
-router.delete("/angkatan/:id", async (req, res) => {
-  try {
-    const deletedAngkatan = await angkatan.destroy({
-      where: { id: req.params.id },
-    });
-    if (deletedAngkatan) {
-      res.status(200).json({ message: "Angkatan deleted successfully" });
-    } else {
-      res.status(404).json({ error: "Angkatan not found" });
-    }
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
+//! HAPUS ANGKATAN UDAH DI HAPUS. DIHARAMKAN. SEGERA DIHAPUS DI UI JIKA MASIH ADA
 
 module.exports = router;

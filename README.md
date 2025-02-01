@@ -1,28 +1,55 @@
-## Jalankan
+# Buku Induk
 
-Copy project
+## Bagaimana cara meletakannya di server?
+
+> [!NOTE]\
+> Ikuti step by step cara ini
+
+1. Clone repository ini. Tentukan dimana meletakannya. Bebas
 
 ```bash
-  git https://github.com/bwx1y/backend-buku-induk.git
+  git https://github.com/AnandaCahya/backend-buku-induk
 ```
 
-Pergi ke directory
+2. Pergi ke directory
 
 ```bash
   cd backend-buku-induk
 ```
 
-Install dependencies
+3. Install dependencies
 
 ```bash
   npm install
 ```
 
-jalankan server
+4. Lakukan migration database (Untuk mempersiapkan database)
+
+```bash
+npm run db:migrate
+```
+
+5. Lakukan seed database (Untuk mempersiapkan data pada database)
+
+```bash
+npm run db:seed
+```
+
+## Bagaimana cara menjalankan server? 
 
 ```bash
   npm start
 ```
+
+## Progress
+
+- [ ] Membuat sistem migration
+- [ ] Membuat sistem seed
+- [ ] Membuat database nilai
+- [ ] Menambahkan route tambah nilai
+- [ ] Menambahkan route mendapatkan semua nilai siswa (by id)
+- [ ] Export identitas siswa (pdf)
+- [ ] Export raport nilai siswa (excel)
 
 ## Dibuat oleh
 
@@ -30,3 +57,4 @@ Projet ini di buat oleh :
 
 - [BWX1Y](https://github.com/bwx1y)
 - [BigApple35](https://github.com/BigApple35)
+- [AnandaCahya](https://github.com/AnandaCahya)
