@@ -23,6 +23,9 @@
   npm install
 ```
 
+> [!WARNING]\
+> Kalau tidak ada perubahan pada database yang dilakukan developer backend. Tidak usah melakukan migration
+
 4. Lakukan migration database (Untuk mempersiapkan database)
 
 ```bash
