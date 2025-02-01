@@ -12,7 +12,7 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-   return queryInterface.bulkInsert([
+   return queryInterface.bulkInsert('jurusan', [
     {
       nama: "Rekayasa Perangkat Lunak"
     },
