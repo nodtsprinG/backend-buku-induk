@@ -12,7 +12,10 @@ module.exports = function (sequelize, DataTypes) {
       r: {
         type: DataTypes.INETGER(2),
         allowNull: false,
-        unique: 'tahun_pelajaran',
+      },
+      keterangan: {
+        type: DataTypes.TEXT,
+        allowNull: false,
       },
       mapel_id: {
         type: DataTypes.INTEGER,

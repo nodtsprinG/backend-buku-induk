@@ -134,7 +134,10 @@ routes.get('/akun/:id', async (req, res) => {
     data['status_perkembangan'] = data.perkembangan != null
 
     return res.json(data)
-  } catch (ex) {}
+  } catch (ex) {
+    if (ex) console.log(ex)
+    return res.status(500).json({ message: 'Internal server error' })
+  }
 })
 
 routes.put('/akun/:id', async (req, res) => {

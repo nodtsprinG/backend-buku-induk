@@ -21,7 +21,11 @@ const loginSiswaRequest = [
     .withMessage('NISN must be at most 255 characters long')
     .isString()
     .withMessage('NISN must be a string'),
-
+  body('tanggal_lahir')
+    .notEmpty()
+    .withMessage('Tanggal Lahir is required')
+    .isDate()
+    .withMessage('Tanggal Lahir must be a date'),
   (req, res, next) => {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {

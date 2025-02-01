@@ -171,11 +171,14 @@ router.post('/code-admin', codeAdminRequest, async (req, res) => {
       email: data.email,
       token: data.token,
     })
-  } catch (ex) {}
+  } catch (ex) {
+    if (ex) console.log(ex)
+    return res.status(500).json({ message: 'Internal server error' })
+  }
 })
 
 router.post('/login-siswa', loginSiswaRequest, async (req, res) => {
-  const { nisn } = req.body
+  const { nisn, tanggal_lahir } = req.body
 
   const data = await Models.user.findOne({
     include: [
@@ -186,6 +189,9 @@ router.post('/login-siswa', loginSiswaRequest, async (req, res) => {
     ],
     where: {
       nisn,
+      data_diri: {
+        tanggal_lahir,
+      },
     },
   })
 
@@ -194,9 +200,13 @@ router.post('/login-siswa', loginSiswaRequest, async (req, res) => {
     return
   }
 
+  data.token = uuidv4()
+  await data.save()
+
   res.json({
     id: data.id,
     full_name: data.data_diri.nama_lengkap,
+    token: data.token,
   })
 })
 

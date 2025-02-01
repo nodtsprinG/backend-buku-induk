@@ -69,7 +69,10 @@ routes.get('/data/:id', async (req, res) => {
     const data = userInstance.get({ plain: true })
 
     return res.json(data)
-  } catch (ex) {}
+  } catch (ex) {
+    if (ex) console.log(ex)
+    return res.status(500).json({ message: 'Internal server error' })
+  }
 })
 
 routes.post('/data-diri', async (req, res) => {

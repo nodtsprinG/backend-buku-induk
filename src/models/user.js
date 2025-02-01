@@ -30,6 +30,10 @@ module.exports = function (sequelize, DataTypes) {
           key: 'id',
         },
       },
+      token: {
+        type: Sequelize.STRING(255),
+        allowNull: true,
+      },
     },
     {
       sequelize,

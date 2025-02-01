@@ -7,7 +7,7 @@ require('dotenv').config()
 
 const app = express()
 
-// route
+//* Route admin
 const authControllers = require('./routes/AuthController')
 const userControllers = require('./routes/UserControllers')
 const akunControllers = require('./routes/Admin/AdminAccountController')
@@ -15,6 +15,9 @@ const dataSiswaController = require('./routes/Admin/AdminDataSiswaController')
 const jurusanController = require('./routes/Admin/AdminJurusan')
 const angkatanController = require('./routes/Admin/AdminAngkatan')
 const getExport = require('./routes/Admin/AdminExport')
+
+//* Route siswa
+const ubahDataController = require('./routes/Siswa/SiswaUbahData')
 
 // middleware
 const {
@@ -35,11 +38,15 @@ app.use('/auth', authControllers)
 
 app.use('/siswa', userControllers)
 
+// ----- Admin
 app.use('/admin', AuthMiddlewareAdmin, akunControllers)
 app.use('/admin', AuthMiddlewareAdmin, dataSiswaController)
 app.use('/admin', AuthMiddlewareAdmin, jurusanController)
 app.use('/admin', AuthMiddlewareAdmin, angkatanController)
 app.use('/admin', AuthMiddlewareAdmin, getExport)
+
+// ------ Siswa
+app.use('/siswa', AuthMiddlewareSiswa, ubahDataController)
 
 app.get('/view-pdf/:id', async (req, res) => {
   const { jurusan, angkatan, search } = req.query
