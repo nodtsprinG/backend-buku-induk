@@ -57,8 +57,8 @@ npm run db:seed
 
 ## Progress
 
-- [ ] Membuat sistem migration
-- [ ] Membuat sistem seed
+- [X] Membuat sistem migration
+- [X] Membuat sistem seed
 - [ ] Membuat database nilai
 - [ ] Menambahkan route tambah nilai
 - [ ] Menambahkan route mendapatkan semua nilai siswa (by id)
