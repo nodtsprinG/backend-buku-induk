@@ -6,11 +6,11 @@
   "scripts": {
     "start": "node .",
     "dev": "nodemon .",
-    "db:migrate": "sequelize-cli db:migrate --config src/config/config.json --migrations-path src/migrations",
-    "db:migrate:production":"sequelize-cli db:migrate --env production --config src/config/config.json --migrations-path src/migrations",
-    "db:migrate:undo": "sequelize-cli db:migrate:undo --config src/config/config.json --migrations-path src/migrations",
-    "db:seed": "sequelize-cli db:seed:all --config src/config/config.json --seeders-path src/seeders",
-    "db:seed:undo": "sequelize-cli db:seed:undo --config src/config/config.json --seeders-path src/seeders"
+    "db:migrate": "npx sequelize-cli db:migrate --config src/config/config.json --migrations-path src/migrations",
+    "db:migrate:production":"npx sequelize-cli db:migrate --env production --config src/config/config.json --migrations-path src/migrations",
+    "db:migrate:undo": "npx sequelize-cli db:migrate:undo --config src/config/config.json --migrations-path src/migrations",
+    "db:seed": "npx sequelize-cli db:seed:all --config src/config/config.json --seeders-path src/seeders",
+    "db:seed:undo": "npx sequelize-cli db:seed:undo --config src/config/config.json --seeders-path src/seeders"
   },
   "keywords": [],
   "author": "",

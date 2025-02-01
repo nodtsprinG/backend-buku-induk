@@ -53,7 +53,7 @@ module.exports = {
         allowNull: false
       },
       status: {
-        type: Sequelize.ENUM('masih hidup','meninggal','',''),
+        type: Sequelize.ENUM('masih hidup','meninggal'),
         allowNull: false
       },
       user_id: {
