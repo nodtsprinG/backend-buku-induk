@@ -8,15 +8,13 @@
 
 */
 
-const { Router } = require("express");
-const { Models } = require("../../models");
+const { Router } = require('express')
+const { Models } = require('../../models')
 
-const router = Router();
+const router = Router()
 
-//TODO: 
+//TODO:
 //* POST satu nilai
-router.post("/api/nilai", (req, res) => {
-    
-})
+router.post('/api/nilai', (req, res) => {})
 
 module.exports = router

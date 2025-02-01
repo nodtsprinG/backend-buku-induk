@@ -42,7 +42,6 @@ npm run db:migrate:undo
 > [!NOTE]\
 > Data atau isi database udah pasti keriset. Kalau dirasa penting simpen dulu.
 
-
 5. Lakukan seed database (Untuk mempersiapkan data pada database)
 
 ```bash
@@ -52,7 +51,7 @@ npm run db:seed
 > [!NOTE]\
 > Data dari migration akan di isi pakai ini. Termasuk akun admin, jurusan dan angkatan. Kalau akun admin gak ada request ke no `Nanda`
 
-## Bagaimana cara menjalankan server? 
+## Bagaimana cara menjalankan server?
 
 ```bash
   npm start
@@ -60,8 +59,8 @@ npm run db:seed
 
 ## Progress
 
-- [X] Membuat sistem migration
-- [X] Membuat sistem seed
+- [x] Membuat sistem migration
+- [x] Membuat sistem seed
 - [ ] Membuat database nilai
 - [ ] Menambahkan route tambah nilai
 - [ ] Menambahkan route mendapatkan semua nilai siswa (by id)

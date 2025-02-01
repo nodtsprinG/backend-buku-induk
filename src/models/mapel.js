@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize')
 module.exports = function (sequelize, DataTypes) {
     return sequelize.define(
-        'tahun_pelajaran',
+        'mapel',
         {
             id: {
                 autoIncrement: true,
@@ -12,7 +12,7 @@ module.exports = function (sequelize, DataTypes) {
             nama: {
                 type: DataTypes.STRING(50),
                 allowNull: false,
-                unique: 'tahun_pelajaran',
+                unique: 'mapel',
             },
         },
         {
