@@ -12,28 +12,28 @@ module.exports = {
     return queryInterface.createTable('hobi_siswa', {
       id: {
         autoIncrement: true,
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         allowNull: false,
         primaryKey: true
       },
       kesenian: {
-        type: DataTypes.STRING(255),
+        type: Sequelize.STRING(255),
         allowNull: true
       },
       olahraga: {
-        type: DataTypes.STRING(255),
+        type: Sequelize.STRING(255),
         allowNull: true
       },
       organisasi: {
-        type: DataTypes.STRING(255),
+        type: Sequelize.STRING(255),
         allowNull: true
       },
       lain_lain: {
-        type: DataTypes.STRING(255),
+        type: Sequelize.STRING(255),
         allowNull: true
       },
       user_id: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: 'user',

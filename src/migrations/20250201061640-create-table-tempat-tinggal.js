@@ -12,28 +12,28 @@ module.exports = {
     return queryInterface.createTable('tempat_tinggal', {
       id: {
         autoIncrement: true,
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         allowNull: false,
         primaryKey: true
       },
       alamat: {
-        type: DataTypes.STRING(255),
+        type: Sequelize.STRING(255),
         allowNull: false
       },
       no_telepon: {
-        type: DataTypes.STRING(255),
+        type: Sequelize.STRING(255),
         allowNull: false
       },
       tinggal_dengan: {
-        type: DataTypes.ENUM('ortu','saudara','lainnya','wali'),
+        type: Sequelize.ENUM('ortu','saudara','lainnya','wali'),
         allowNull: false
       },
       jarak_ke_sekolah: {
-        type: DataTypes.STRING(255),
+        type: Sequelize.STRING(255),
         allowNull: true
       },
       user_id: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: 'user',

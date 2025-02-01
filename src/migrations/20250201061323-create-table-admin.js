@@ -13,29 +13,29 @@ module.exports = {
     return queryInterface.createTable('admin', {
       id: {
         autoIncrement: true,
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         allowNull: false,
         primaryKey: true
       },
       email: {
-        type: DataTypes.STRING(100),
+        type: Sequelize.STRING(100),
         allowNull: false,
         unique: "username"
       },
       password: {
-        type: DataTypes.STRING(100),
+        type: Sequelize.STRING(100),
         allowNull: false
       },
       token: {
-        type: DataTypes.STRING(255),
+        type: Sequelize.STRING(255),
         allowNull: true
       },
       username: {
-        type: DataTypes.STRING(100),
+        type: Sequelize.STRING(100),
         allowNull: false
       },
       code: {
-        type: DataTypes.STRING(5),
+        type: Sequelize.STRING(5),
         allowNull: true
       }
     })

@@ -12,60 +12,60 @@ module.exports = {
     return queryInterface.createTable('data_diri', {
       id: {
         autoIncrement: true,
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         allowNull: false,
         primaryKey: true
       },
       nama_lengkap: {
-        type: DataTypes.STRING(255),
+        type: Sequelize.STRING(255),
         allowNull: false
       },
       nama_panggilan: {
-        type: DataTypes.STRING(255),
+        type: Sequelize.STRING(255),
         allowNull: false
       },
       jenis_kelamin: {
-        type: DataTypes.ENUM('laki-laki','perempuan'),
+        type: Sequelize.ENUM('laki-laki','perempuan'),
         allowNull: false
       },
       tempat_lahir: {
-        type: DataTypes.STRING(255),
+        type: Sequelize.STRING(255),
         allowNull: false
       },
       agama: {
-        type: DataTypes.STRING(255),
+        type: Sequelize.STRING(255),
         allowNull: false
       },
       kewarganegaraan: {
-        type: DataTypes.STRING(255),
+        type: Sequelize.STRING(255),
         allowNull: false
       },
       anak_ke: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         allowNull: false
       },
       jml_saudara_kandung: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         allowNull: true
       },
       jml_saudara_tiri: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         allowNull: true
       },
       jml_saudara_angkat: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         allowNull: true
       },
       kelengkapan_ortu: {
-        type: DataTypes.ENUM('yatim','piatu','yatim piatu','lengkap'),
+        type: Sequelize.ENUM('yatim','piatu','yatim piatu','lengkap'),
         allowNull: false
       },
       bahasa_sehari_hari: {
-        type: DataTypes.STRING(255),
+        type: Sequelize.STRING(255),
         allowNull: false
       },
       user_id: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: 'user',
@@ -73,7 +73,7 @@ module.exports = {
         }
       },
       tanggal_lahir: {
-        type: DataTypes.DATEONLY,
+        type: Sequelize.DATEONLY,
         allowNull: false
       }
     })

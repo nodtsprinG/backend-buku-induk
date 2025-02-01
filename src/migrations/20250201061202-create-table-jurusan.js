@@ -13,12 +13,12 @@ module.exports = {
     return queryInterface.createTable('jurusan', {
       id: {
         autoIncrement: true,
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         allowNull: false,
         primaryKey: true
       },
       nama: {
-        type: DataTypes.STRING(100),
+        type: Sequelize.STRING(100),
         allowNull: false
       }
     })
