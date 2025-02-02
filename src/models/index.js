@@ -1,14 +1,11 @@
 const { Sequelize } = require('sequelize')
 const initModels = require('./init-models')
+const config = require('./../config/config.json')
 
 module.exports = {
   Models: initModels(
     new Sequelize({
-      host: 'localhost',
-      database: 'db_aplikasi_buku_induk',
-      username: 'root',
-      dialect: 'mysql',
-      port: 3306,
+      ...config.development,
       logging: false,
     })
   ),
