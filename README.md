@@ -2,6 +2,9 @@
 
 ## Bagaimana cara meletakannya di server?
 
+> [!WARNING]\
+> Karena ada bug pada fitur migration database. diharap hapus dulu `db_buku_induk` dan buat lagi. Itu kalau memang **Sangat dibutuhkan migration, Kalau tidak ada yang harus diubah nggak usah migration lagi** dan jangan jalankan perintah di warning ini
+
 > [!NOTE]\
 > Ikuti step by step cara ini
 
@@ -50,6 +53,17 @@ npm run db:seed
 
 > [!NOTE]\
 > Data dari migration akan di isi pakai ini. Termasuk akun admin, jurusan dan angkatan. Kalau akun admin gak ada request ke no `Nanda`
+
+6. Configurasi tambahan
+
+Buat `.env`. Minta ke Ardian, Nanda Atau Daris
+
+```env
+EMAIL = ""
+PASSWORD = ""
+```
+
+7. (Tambahan) Cek `src/config/config.json` sesuaikan username dan password sesuai dengan database kalian
 
 ## Bagaimana cara menjalankan server?
 
