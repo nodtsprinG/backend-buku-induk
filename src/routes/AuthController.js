@@ -189,9 +189,7 @@ router.post('/login-siswa', loginSiswaRequest, async (req, res) => {
     ],
     where: {
       nisn,
-      data_diri: {
-        tanggal_lahir,
-      },
+      '$data_diri.tanggal_lahir$': tanggal_lahir,
     },
   })
 
