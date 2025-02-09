@@ -13,6 +13,9 @@ var _setelah_pendidikan = require('./setelah_pendidikan')
 var _tempat_tinggal = require('./tempat_tinggal')
 var _user = require('./user')
 var _wali = require('./wali')
+var _mapel = require('./mapel')
+var _nilai_merdeka = require('./nilai_merdeka')
+var _tahun_pelajaran = require('./tahun_pelajaran')
 
 function initModels(sequelize) {
   var admin = _admin(sequelize, DataTypes)
@@ -29,6 +32,9 @@ function initModels(sequelize) {
   var tempat_tinggal = _tempat_tinggal(sequelize, DataTypes)
   var user = _user(sequelize, DataTypes)
   var wali = _wali(sequelize, DataTypes)
+  var mapel = _mapel(sequelize, DataTypes)
+  var tahun_pelajaran = _tahun_pelajaran(sequelize, DataTypes)
+  var nilai = _nilai_merdeka(sequelize, DataTypes)
 
   user.belongsTo(angkatan, { as: 'angkatan', foreignKey: 'angkatan_id' })
   angkatan.hasMany(user, { as: 'users', foreignKey: 'angkatan_id' })
@@ -68,6 +74,8 @@ function initModels(sequelize) {
   wali.belongsTo(user, { as: 'user', foreignKey: 'user_id' })
   user.hasOne(wali, { as: 'wali', foreignKey: 'user_id' })
 
+  nilai.hasOne(tahun_pelajaran, {as: 'tahun_pelajaran', foreignKey: 'tahun_pelajaran_id'})
+
   return {
     admin,
     angkatan,
@@ -83,6 +91,9 @@ function initModels(sequelize) {
     tempat_tinggal,
     user,
     wali,
+    nilai,
+    mapel,
+    tahun_pelajaran
   }
 }
 module.exports = initModels

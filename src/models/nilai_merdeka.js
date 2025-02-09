@@ -10,7 +10,7 @@ module.exports = function (sequelize, DataTypes) {
         primaryKey: true,
       },
       r: {
-        type: DataTypes.INETGER(2),
+        type: DataTypes.INETGER,
         allowNull: false,
       },
       keterangan: {
@@ -33,6 +33,14 @@ module.exports = function (sequelize, DataTypes) {
           key: 'id',
         },
       },
+      user_id : {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: "user",
+          key: "id"
+        }
+      }
     },
     {
       sequelize,

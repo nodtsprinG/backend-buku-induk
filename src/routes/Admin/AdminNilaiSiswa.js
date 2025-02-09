@@ -12,9 +12,13 @@ const { Router } = require('express')
 const { Models } = require('../../models')
 
 const router = Router()
+const nilai = Models.nilai
 
 //TODO:
 //* POST satu nilai
-router.post('/api/nilai', (req, res) => {})
+//! Belum bisa jadi jangan di coba dulu
+router.post('/api/nilai', async (req, res) => {
+    const nilai = await nilai.create(req.body)
+})
 
 module.exports = router
