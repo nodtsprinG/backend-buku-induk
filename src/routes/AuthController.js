@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const { Router } = require('express')
 const { Models } = require('../models')
 const { v4: uuidv4 } = require('uuid')
@@ -141,7 +142,7 @@ router.post('/login-admin', loginRequest, async (req, res) => {
       </html>`,
     })
   } catch (ex) {
-    console.log('Erorr : Erorr send email .env is required, EMAIL, PASSWORD')
+    console.log('Error : Error send email .env is required, EMAIL, PASSWORD')
   }
 
   res.json({ code: data.code })
@@ -178,35 +179,41 @@ router.post('/code-admin', codeAdminRequest, async (req, res) => {
 })
 
 router.post('/login-siswa', loginSiswaRequest, async (req, res) => {
-  const { nisn, tanggal_lahir } = req.body
+  const { nisn, tanggal_lahir } = req.body;
 
-  const data = await Models.user.findOne({
-    include: [
-      {
-        model: Models.data_diri,
-        as: 'data_diri',
-      },
-    ],
-    where: {
-      nisn,
-      '$data_diri.tanggal_lahir$': tanggal_lahir,
-    },
-  })
+  try {
+    const data = await Models.user.findOne({
+      include: [
+        {
+          model: Models.data_diri,
+          as: 'data_diri',
+          where: {
+            tanggal_lahir,
+          },
+        },
+      ],
+      where: { nisn },
+    });
 
-  if (data == undefined) {
-    res.status(404).json({ message: 'not found Siswa' })
-    return
+    if (!data) {
+      return res.status(200).json({ isMatch: false, message: 'Data tidak ditemukan atau tidak cocok.' });
+    }
+
+    data.token = uuidv4();
+    await data.save();
+
+    return res.status(200).json({
+      isMatch: true,
+      id: data.id,
+      full_name: data.data_diri.nama_lengkap,
+      token: data.token,
+    });
+
+  } catch (error) {
+    console.error('Gagal login siswa:', error);
+    res.status(500).json({ message: 'Terjadi kesalahan pada server.' });
   }
-
-  data.token = uuidv4()
-  await data.save()
-
-  res.json({
-    id: data.id,
-    full_name: data.data_diri.nama_lengkap,
-    token: data.token,
-  })
-})
+});
 
 router.get('/me', getMeRequest, async (req, res) => {
   const token = req.headers['authorization'].split(' ')[1]
