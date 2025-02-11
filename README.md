@@ -11,7 +11,7 @@
 1. Clone repository ini. Tentukan dimana meletakannya. Bebas
 
 ```bash
-  git https://github.com/AnandaCahya/backend-buku-induk
+  git clone https://github.com/AnandaCahya/backend-buku-induk
 ```
 
 2. Pergi ke directory
