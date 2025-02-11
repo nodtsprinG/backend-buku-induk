@@ -10,7 +10,7 @@ module.exports = function (sequelize, DataTypes) {
         primaryKey: true,
       },
       r: {
-        type: DataTypes.INETGER,
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
       keterangan: {
@@ -44,7 +44,7 @@ module.exports = function (sequelize, DataTypes) {
     },
     {
       sequelize,
-      tableName: 'tahun_pelajaran',
+      tableName: 'nilai_merdeka',
       timestamps: false,
     }
   )
