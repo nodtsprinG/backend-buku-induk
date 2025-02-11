@@ -18,7 +18,7 @@ module.exports = {
           primaryKey: true,
         },
         r: {
-          type: Sequelize.INETGER,
+          type: Sequelize.INTEGER,
           allowNull: false,
         },
         keterangan: {
