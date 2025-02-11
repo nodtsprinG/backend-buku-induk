@@ -14,7 +14,74 @@ const { Models } = require('../../models')
 const router = Router()
 
 //! Belum ditest
-router.put('/data-diri/:id', async (req, res) => {
+router.get('/data-diri', async (req, res) => {
+  try {
+    const user = await Models.user.findOne({
+      include: [
+        {
+          model: Models.jurusan,
+          as: 'jurusan',
+          attributes: ['nama'],
+        },
+        {
+          model: Models.angkatan,
+          as: 'angkatan',
+          attributes: ['tahun'],
+        },
+        {
+          model: Models.data_diri,
+          as: 'data_diri',
+        },
+        {
+          model: Models.perkembangan,
+          as: 'perkembangan',
+        },
+        // Add the new associations below
+        {
+          model: Models.ayah_kandung,
+          as: 'ayah_kandung',
+        },
+        {
+          model: Models.ibu_kandung,
+          as: 'ibu_kandung',
+        },
+        {
+          model: Models.kesehatan,
+          as: 'kesehatan',
+        },
+        {
+          model: Models.pendidikan,
+          as: 'pendidikan',
+        },
+        {
+          model: Models.setelah_pendidikan,
+          as: 'setelah_pendidikan',
+        },
+        {
+          model: Models.tempat_tinggal,
+          as: 'tempat_tinggal',
+        },
+        {
+          model: Models.wali,
+          as: 'wali',
+        },
+        {
+          model: Models.hobi_siswa,
+          as: 'hobi_siswa',
+        },
+      ],
+      where: {
+        id: req.params.id,
+      },
+    })
+    res.status(200).json(user)
+  } catch (error) {
+    res.status(500).json({ error: error.message })
+  }
+})
+
+//! Belum ditest
+router.put('/data-diri', async (req, res) => {
   const user_id = req.user_id
   const {
     ayah_kandung,
