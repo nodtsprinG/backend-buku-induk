@@ -16,6 +16,8 @@ const jurusanController = require('./routes/Admin/AdminJurusan')
 const angkatanController = require('./routes/Admin/AdminAngkatan')
 const tahunpelajaranController = require('./routes/Admin/AdminTahunPelajaran')
 const getExport = require('./routes/Admin/AdminExport')
+const nilaiController = require("./routes/Admin/AdminNilaiSiswa")
+const mapelController = require("./routes/Admin/AdminMapel")
 
 //* Route siswa
 const ubahDataController = require('./routes/Siswa/SiswaUbahData')
@@ -46,6 +48,8 @@ app.use('/admin', AuthMiddlewareAdmin, jurusanController)
 app.use('/admin', AuthMiddlewareAdmin, angkatanController)
 app.use('/admin', AuthMiddlewareAdmin, getExport)
 app.use('/admin', AuthMiddlewareAdmin, tahunpelajaranController)
+app.use('/admin', AuthMiddlewareAdmin, nilaiController)
+app.use('/admin', AuthMiddlewareAdmin, mapelController)
 
 // ------ Siswa
 app.use('/siswa', AuthMiddlewareSiswa, ubahDataController)
