@@ -121,4 +121,44 @@ router.put('/data-diri', async (req, res) => {
   }
 })
 
+router.post('/data-diri', async (req, res) => {
+  const user_id = req.user_id
+  const {
+    ayah_kandung,
+    ibu_kandung,
+    data_diri,
+    hobi,
+    kesehatan,
+    pendidikan,
+    perkembangan,
+    setelah_pendidikan,
+    tempat_tinggal,
+    wali,
+  } = req.body
+
+  try {
+    await Models.ayah_kandung.create(ayah_kandung, { where: { user_id } })
+    await Models.ibu_kandung.create(ibu_kandung, { where: { user_id } })
+    await Models.data_diri.create(data_diri, { where: { user_id } })
+    await Models.hobi_siswa.createt(hobi, { where: { user_id } })
+    await Models.kesehatan.create(kesehatan, { where: { user_id } })
+    await Models.pendidikan.create(pendidikan, { where: { user_id } })
+    await Models.perkembangan.create(perkembangan, { where: { user_id } })
+    await Models.setelah_pendidikan.create(setelah_pendidikan, {
+      where: { user_id },
+    })
+    await Models.tempat_tinggal.create(tempat_tinggal, {
+      where: { user_id },
+    })
+    await Models.wali.create(wali, { where: { user_id } })
+
+    return res.json({ message: 'Data updated successfully' })
+  } catch (error) {
+    console.error(error)
+    return res
+      .status(500)
+      .json({ error: 'An error occurred while updating the data' })
+  }
+})
+
 module.exports = router
