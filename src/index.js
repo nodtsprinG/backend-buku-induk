@@ -16,6 +16,7 @@ const jurusanController = require('./routes/Admin/AdminJurusan')
 const angkatanController = require('./routes/Admin/AdminAngkatan')
 const tahunpelajaranController = require('./routes/Admin/AdminTahunPelajaran')
 const getExport = require('./routes/Admin/AdminExport')
+
 const nilaiController = require("./routes/Admin/AdminNilaiSiswa")
 const mapelController = require("./routes/Admin/AdminMapel")
 
@@ -46,6 +47,7 @@ app.use('/admin', AuthMiddlewareAdmin, akunControllers)
 app.use('/admin', AuthMiddlewareAdmin, dataSiswaController)
 app.use('/admin', AuthMiddlewareAdmin, jurusanController)
 app.use('/admin', AuthMiddlewareAdmin, angkatanController)
+app.use('/admin', AuthMiddlewareAdmin, getExport)
 app.use('/admin', AuthMiddlewareAdmin, getExport)
 app.use('/admin', AuthMiddlewareAdmin, tahunpelajaranController)
 app.use('/admin', AuthMiddlewareAdmin, nilaiController)
@@ -317,7 +319,7 @@ app.post('/import-excel', upload.single('file'), async (req, res) => {
       });
 
       await Models.setelah_pendidikan.create({
-        user_id: siswa.id,
+        user_id: newUser.id,
         melanjutkan_ke: row["Melanjutkan Ke"],
       });
     }
@@ -328,6 +330,7 @@ app.post('/import-excel', upload.single('file'), async (req, res) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 });
+
 
 
 
