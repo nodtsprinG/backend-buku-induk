@@ -1,21 +1,21 @@
 {
   "development": {
-    "username": "ananda",
-    "password": "anandaeka140206",
+    "username": "root",
+    "password": "",
     "database": "db_buku_induk",
     "host": "localhost",
     "dialect": "mysql"
   },
   "test": {
-    "username": "ananda",
-    "password": "anandaeka140206",
+    "username": "root",
+    "password": "",
     "database": "db_buku_induk",
     "host": "localhost",
     "dialect": "mysql"
   },
   "production": {
-    "username": "ananda",
-    "password": "anandaeka140206",
+    "username": "root",
+    "password": "",
     "database": "db_buku_induk",
     "host": "localhost",
     "dialect": "mysql"
