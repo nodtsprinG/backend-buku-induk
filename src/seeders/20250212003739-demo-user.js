@@ -12,9 +12,9 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-    return queryInterface.bulkInsert('tahun_pelajaran', [
+    return queryInterface.bulkInsert('user', [
       {
-        nisn: '0097932112', //Mas Andi Djarod
+        nisn: '0097932112',
         angkatan_id: 1,
         jurusan_id: 6
       }
