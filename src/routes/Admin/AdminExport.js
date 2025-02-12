@@ -167,6 +167,7 @@ router.get('/export-excel', async (req, res) => {
 
   worksheet.addRow(headers)
   data.forEach((item) => {
+    console.log(item)
     const row = [
       item.id,
       item.nisn,
@@ -265,6 +266,44 @@ router.get('/export-excel', async (req, res) => {
 router.get('/export-pdf/:id', async (req, res) => {
   try {
     const url = 'http://localhost:8080/view-pdf/' + req.params.id // Ubah URL sesuai kebutuhan
+    const outputPath = './output/example.pdf' // Lokasi output file PDF
+
+    const browser = await puppeteer.launch({
+      args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    })
+    const page = await browser.newPage()
+
+    await page
+      .goto(url, {
+        waitUntil: 'networkidle0',
+        timeout: 30000, // Increase timeout if needed
+      })
+      .catch((e) => console.error('Error during navigation:', e))
+
+    console.log('Setelah menjalankan page.goto')
+
+    // Simpan halaman sebagai file PDF
+    const pdf = await page.pdf({
+      format: 'A3', // Ganti format sesuai kebutuhan
+      landscape: true,
+    })
+
+    console.log('pdf berhasil dibuat')
+
+    await browser.close()
+    res.setHeader('Content-Type', 'application/pdf')
+    res.setHeader('Content-Disposition', 'attachment; filename=download.pdf')
+
+    // Kirim file PDF sebagai response
+    res.send(pdf)
+  } catch (err) {
+    console.error('Terjadi kesalahan:', err)
+    res.status(500).send('Terjadi kesalahan saat ekspor PDF')
+  }
+})
+router.get('/export-pdf', async (req, res) => {
+  try {
+    const url = 'http://localhost:8080/view-pdf' // Ubah URL sesuai kebutuhan
     const outputPath = './output/example.pdf' // Lokasi output file PDF
 
     const browser = await puppeteer.launch({

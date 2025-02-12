@@ -108,7 +108,7 @@ routes.post('/data-diri', async (req, res) => {
       ...tempat_tinggal,
       user_id: user.id,
     })
-    if (wali.tanggal_lahir == 'null') wali.tanggal_lahir = null
+
     await Models.wali.create({ ...wali, user_id: user.id })
 
     res.status(201).json({
