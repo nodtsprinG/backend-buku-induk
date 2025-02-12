@@ -21,7 +21,6 @@ const mapelController = require("./routes/Admin/AdminMapel")
 
 //* Route siswa
 const ubahDataController = require('./routes/Siswa/SiswaUbahData')
-const TambahFotoController = require('./routes/Siswa/siswaTambahFoto')
 
 // middleware
 const {
@@ -54,7 +53,6 @@ app.use('/admin', AuthMiddlewareAdmin, mapelController)
 
 // ------ Siswa
 app.use('/siswa', AuthMiddlewareSiswa, ubahDataController)
-app.use('/siswa/foto', AuthMiddlewareSiswa, TambahFotoController)
 
 // app.use("/", )
 

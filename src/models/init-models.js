@@ -16,7 +16,6 @@ var _wali = require('./wali')
 var _mapel = require('./mapel')
 var _nilai_merdeka = require('./nilai_merdeka')
 var _tahun_pelajaran = require('./tahun_pelajaran')
-var _foto = require('./foto')
 
 function initModels(sequelize) {
   var admin = _admin(sequelize, DataTypes)
@@ -36,7 +35,6 @@ function initModels(sequelize) {
   var mapel = _mapel(sequelize, DataTypes)
   var tahun_pelajaran = _tahun_pelajaran(sequelize, DataTypes)
   var nilai = _nilai_merdeka(sequelize, DataTypes)
-  var foto = _foto(sequelize, DataTypes)
 
   user.belongsTo(angkatan, { as: 'angkatan', foreignKey: 'angkatan_id' })
   angkatan.hasMany(user, { as: 'users', foreignKey: 'angkatan_id' })
@@ -78,8 +76,6 @@ function initModels(sequelize) {
 
   nilai.hasOne(tahun_pelajaran, {as: 'tahun_pelajaran', foreignKey: 'tahun_pelajaran_id'})
 
-  foto.belongsTo(user, { as: 'user', foreignKey: 'user_id' })
-  user.hasOne(foto, { as: 'foto', foreignKey: 'user_id' })
 
   return {
     admin,
@@ -98,8 +94,7 @@ function initModels(sequelize) {
     wali,
     nilai,
     mapel,
-    tahun_pelajaran,
-    foto
+    tahun_pelajaran
   }
 }
 module.exports = initModels
