@@ -18,8 +18,6 @@ const mapelController = require('./routes/Admin/AdminMapel')
 const nilaiController = require('./routes/Admin/AdminNilaiSiswa')
 const tahunpelajaranController = require('./routes/Admin/AdminTahunPelajaran')
 const getExport = require('./routes/Admin/AdminExport')
-const nilaiController = require("./routes/Admin/AdminNilaiSiswa")
-const mapelController = require("./routes/Admin/AdminMapel")
 
 //* Route siswa
 const ubahDataController = require('./routes/Siswa/SiswaUbahData')
