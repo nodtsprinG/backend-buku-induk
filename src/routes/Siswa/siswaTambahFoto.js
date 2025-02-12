@@ -93,4 +93,57 @@ router.get('/foto-keluar/:user_id', async (req, res) => {
   }
 });
 
+router.put('/update-foto-diterima/:user_id', upload.single('foto'), async (req, res) => {
+    try {
+      const { user_id } = req.params;
+      const foto_url = req.file.path;
+  
+      const existingFoto = await Models.foto.findOne({ where: { user_id } });
+  
+      if (!existingFoto) {
+        return res.status(404).json({ message: 'Foto not found' });
+      }
+      
+      if (existingFoto.foto_diterima_url) {
+        const oldFilePath = path.join(__dirname, '../../../', existingFoto.foto_diterima_url);
+        if (fs.existsSync(oldFilePath)) {
+          fs.unlinkSync(oldFilePath);
+        }
+      }
+  
+      await existingFoto.update({ foto_diterima_url: foto_url });
+  
+      res.status(200).json({ message: 'Foto updated successfully' });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  router.put('/update-foto-keluar/:user_id', upload.single('foto'), async (req, res) => {
+    try {
+      const { user_id } = req.params;
+      const foto_url = req.file.path;
+  
+      const existingFoto = await Models.foto.findOne({ where: { user_id } });
+  
+      if (!existingFoto) {
+        return res.status(404).json({ message: 'Foto not found' });
+      }
+      
+      if (existingFoto.foto_diterima_url) {
+        const oldFilePath = path.join(__dirname, '../../../', existingFoto.foto_keluar_url);
+        if (fs.existsSync(oldFilePath)) {
+          fs.unlinkSync(oldFilePath);
+        }
+      }
+  
+      await existingFoto.update({ foto_keluar_url: foto_url });
+  
+      res.status(200).json({ message: 'Foto updated successfully' });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  });
+  
+
 module.exports = router; 
