@@ -44,7 +44,7 @@ module.exports = function (sequelize, DataTypes) {
     },
     {
       sequelize,
-      tableName: 'tahun_pelajaran',
+      tableName: 'nilai_merdeka',
       timestamps: false,
     }
   )
