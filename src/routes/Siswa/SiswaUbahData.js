@@ -71,7 +71,7 @@ router.get('/data-diri', async (req, res) => {
         },
       ],
       where: {
-        id: req.params.id,
+        id: req.user_id,
       },
     })
     res.status(200).json(user)
