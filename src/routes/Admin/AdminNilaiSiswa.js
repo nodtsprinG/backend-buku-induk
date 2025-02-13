@@ -89,6 +89,7 @@ router.get('/nilai', async (req, res) => {
 /**
  * GET /nilai/{id}
  * @summary Mengambil data 'nilai' berdasarkan ID
+ * @tags admin
  * @param {string} id.path.required - ID dari 'nilai' yang ingin diambil
  * @return {object} 200 - Objek 'nilai' yang ditemukan - application/json
  * @return {object} 404 - Pesan kesalahan jika 'nilai' tidak ditemukan - application/json
@@ -126,6 +127,7 @@ router.get('/nilai/:id', async (req, res) => {
 /**
  * PUT /nilai/{id}
  * @summary Memperbarui data 'nilai' berdasarkan ID
+ * @tags admin
  * @param {string} id.path.required - ID dari 'nilai' yang akan diperbarui
  * @param {object} request.body.required - Data yang akan diperbarui
  * @param {string} request.body.nama - Nama mata pelajaran
