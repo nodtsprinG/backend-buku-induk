@@ -1,4 +1,32 @@
-const Sequelize = require('sequelize')
+/**
+ * @module ModelIbuKandung
+ * @deskripsi Model Sequelize untuk tabel 'ibu_kandung'.
+ * @param {Sequelize} sequelize - Instance Sequelize yang digunakan.
+ * @param {DataTypes} DataTypes - DataTypes dari Sequelize untuk mendefinisikan tipe data.
+ * @returns {Sequelize.Model} - Mengembalikan model Sequelize untuk tabel 'ibu_kandung'.
+ */
+
+/**
+ * Definisi model IbuKandung.
+ * @typedef {object} IbuKandung
+ * @property {number} id - Identifikasi unik untuk ibu kandung. Di-auto-increment.
+ * @property {string} nama - Nama lengkap ibu kandung.
+ * @property {string} tempat_lahir - Tempat lahir ibu kandung.
+ * @property {string} tanggal_lahir - Tanggal lahir ibu kandung.
+ * @property {string} agama - Agama ibu kandung.
+ * @property {string} kewarganegaraan - Kewarganegaraan ibu kandung.
+ * @property {string} pendidikan - Pendidikan terakhir ibu kandung.
+ * @property {string} pekerjaan - Pekerjaan ibu kandung.
+ * @property {string} pengeluaran_per_bulan - Pengeluaran per bulan ibu kandung.
+ * @property {string} alamat_dan_no_telepon - Alamat dan nomor telepon ibu kandung.
+ * @property {'masih hidup' | 'meninggal'} status - Status ibu kandung (masih hidup atau meninggal).
+ * @property {number} user_id - ID pengguna yang terkait dengan ibu kandung.
+ */
+
+/**
+ * Definisi model Sequelize untuk tabel 'ibu_kandung'.
+ * @type {Sequelize.Model<IbuKandung>}
+ */
 module.exports = function (sequelize, DataTypes) {
   return sequelize.define(
     'ibu_kandung',

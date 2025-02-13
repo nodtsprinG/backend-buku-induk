@@ -13,7 +13,62 @@ const { Models } = require('../../models')
 
 const router = Router()
 
-//! Belum ditest
+router.post('/data-diri', async (req, res) => {
+  try {
+    const {
+      data_diri,
+      hobi,
+      ayah_kandung,
+      ibu_kandung,
+      kesehatan,
+      pendidikan,
+      setelah_pendidikan,
+      tempat_tinggal,
+      wali,
+      siswa,
+    } = req.body
+
+    // Create the user
+    const user = await Models.user.create(siswa)
+
+    // Create related entities
+    await Models.data_diri.create({ ...data_diri, user_id: user.id })
+    await Models.hobi_siswa.create({ ...hobi, user_id: user.id })
+    await Models.ayah_kandung.create({ ...ayah_kandung, user_id: user.id })
+    await Models.ibu_kandung.create({ ...ibu_kandung, user_id: user.id })
+    await Models.kesehatan.create({ ...kesehatan, user_id: user.id })
+    await Models.pendidikan.create({ ...pendidikan, user_id: user.id })
+    await Models.setelah_pendidikan.create({
+      ...setelah_pendidikan,
+      user_id: user.id,
+    })
+    await Models.tempat_tinggal.create({
+      ...tempat_tinggal,
+      user_id: user.id,
+    })
+
+    await Models.wali.create({ ...wali, user_id: user.id })
+
+    res.status(201).json({
+      message: 'Data successfully created',
+      data: req.body,
+    })
+  } catch (error) {
+    if (error instanceof Sequelize.UniqueConstraintError) {
+      res.status(400).json({ message: 'NISN sudah terpakai' })
+    } else {
+      // Handle other types of errors
+      console.log(error)
+      res.status(500).json({ message: 'Internal server error' })
+    }
+    await Models.user.destroy({
+      where: {
+        nisn: req.body.siswa.nisn,
+      },
+    })
+  }
+})
+
 router.get('/data-diri', async (req, res) => {
   try {
     const user = await Models.user.findOne({
@@ -78,6 +133,18 @@ router.get('/data-diri', async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message })
   }
+})
+
+router.get('/data-diri/:id', async (req, res) => {
+  const data = await Models.data_diri.findOne({
+    where: {
+      user_id: req.params.id,
+    },
+    attributes: {
+      exclude: ['user_id'],
+    },
+  })
+  res.json(data)
 })
 
 //! Belum ditest

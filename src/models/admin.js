@@ -1,4 +1,27 @@
-const Sequelize = require('sequelize')
+/**
+ * @module ModelAdmin
+ * @deskripsi Model Sequelize untuk tabel 'admin'.
+ * @param {Sequelize} sequelize - Instance Sequelize yang digunakan.
+ * @param {DataTypes} DataTypes - DataTypes dari Sequelize untuk mendefinisikan tipe data.
+ * @returns {Sequelize.Model} - Mengembalikan model Sequelize untuk tabel 'admin'.
+ */
+
+/**
+ * Definisi model Admin.
+ * @typedef {object} Admin
+ * @property {number} id - Identifikasi unik untuk admin. Di-auto-increment.
+ * @property {string} email - Email admin. Harus unik.
+ * @property {string} password - Kata sandi admin.
+ * @property {string} [token] - Token autentikasi opsional untuk admin.
+ * @property {string} username - Nama pengguna admin. Harus unik.
+ * @property {string} [code] - Kode opsional yang terkait dengan admin (misalnya, untuk verifikasi).
+ */
+
+/**
+ * Definisi model Sequelize untuk tabel 'admin'.
+ * @type {Sequelize.Model<Admin>}
+ */
+
 module.exports = function (sequelize, DataTypes) {
   return sequelize.define(
     'admin',

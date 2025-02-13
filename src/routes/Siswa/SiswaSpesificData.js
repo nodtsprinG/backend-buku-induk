@@ -1,6 +1,6 @@
 const { Router } = require('express')
-const { Models } = require('../models')
-const { dataDiriRequest, validatePerkembangan } = require('../DTO/user-request')
+const { Models } = require('../../models')
+const { dataDiriRequest, validatePerkembangan } = require('../../DTO/user-request')
 const { Sequelize } = require('sequelize')
 
 const routes = Router()
@@ -75,76 +75,8 @@ routes.get('/data/:id', async (req, res) => {
   }
 })
 
-routes.post('/data-diri', async (req, res) => {
-  try {
-    const {
-      data_diri,
-      hobi,
-      ayah_kandung,
-      ibu_kandung,
-      kesehatan,
-      pendidikan,
-      setelah_pendidikan,
-      tempat_tinggal,
-      wali,
-      siswa,
-    } = req.body
-
-    // Create the user
-    const user = await Models.user.create(siswa)
-
-    // Create related entities
-    await Models.data_diri.create({ ...data_diri, user_id: user.id })
-    await Models.hobi_siswa.create({ ...hobi, user_id: user.id })
-    await Models.ayah_kandung.create({ ...ayah_kandung, user_id: user.id })
-    await Models.ibu_kandung.create({ ...ibu_kandung, user_id: user.id })
-    await Models.kesehatan.create({ ...kesehatan, user_id: user.id })
-    await Models.pendidikan.create({ ...pendidikan, user_id: user.id })
-    await Models.setelah_pendidikan.create({
-      ...setelah_pendidikan,
-      user_id: user.id,
-    })
-    await Models.tempat_tinggal.create({
-      ...tempat_tinggal,
-      user_id: user.id,
-    })
-
-    await Models.wali.create({ ...wali, user_id: user.id })
-
-    res.status(201).json({
-      message: 'Data successfully created',
-      data: req.body,
-    })
-  } catch (error) {
-    if (error instanceof Sequelize.UniqueConstraintError) {
-      res.status(400).json({ message: 'NISN sudah terpakai' })
-    } else {
-      // Handle other types of errors
-      console.log(error)
-      res.status(500).json({ message: 'Internal server error' })
-    }
-    await Models.user.destroy({
-      where: {
-        nisn: req.body.siswa.nisn,
-      },
-    })
-  }
-})
-
 routes.get('/ayah-kandung/:id', async (req, res) => {
   const data = await Models.ayah_kandung.findOne({
-    where: {
-      user_id: req.params.id,
-    },
-    attributes: {
-      exclude: ['user_id'],
-    },
-  })
-  res.json(data)
-})
-
-routes.get('/data-diri/:id', async (req, res) => {
-  const data = await Models.data_diri.findOne({
     where: {
       user_id: req.params.id,
     },

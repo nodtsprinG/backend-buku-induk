@@ -1,4 +1,31 @@
-const Sequelize = require('sequelize')
+/**
+ * @module ModelWali
+ * @deskripsi Model Sequelize untuk tabel 'wali'.
+ * @param {Sequelize} sequelize - Instance Sequelize yang digunakan.
+ * @param {DataTypes} DataTypes - DataTypes dari Sequelize untuk mendefinisikan tipe data.
+ * @returns {Sequelize.Model} - Mengembalikan model Sequelize untuk tabel 'wali'.
+ */
+
+/**
+ * Definisi model Wali.
+ * @typedef {object} Wali
+ * @property {number} id - Identifikasi unik untuk wali. Di-auto-increment.
+ * @property {string} [nama] - Nama wali.
+ * @property {string} [tempat_lahir] - Tempat lahir wali.
+ * @property {string} [tanggal_lahir] - Tanggal lahir wali.
+ * @property {string} [agama] - Agama wali.
+ * @property {string} [kewarganegaraan] - Kewarganegaraan wali.
+ * @property {string} [pendidikan] - Pendidikan wali.
+ * @property {string} [pekerjaan] - Pekerjaan wali.
+ * @property {string} [pengeluaran_per_bulan] - Pengeluaran per bulan wali.
+ * @property {string} [alamat_dan_no_telepon] - Alamat dan nomor telepon wali.
+ * @property {number} user_id - ID user yang berhubungan dengan wali.
+ */
+
+/**
+ * Definisi model Sequelize untuk tabel 'wali'.
+ * @type {Sequelize.Model<Wali>}
+ */
 module.exports = function (sequelize, DataTypes) {
   return sequelize.define(
     'wali',

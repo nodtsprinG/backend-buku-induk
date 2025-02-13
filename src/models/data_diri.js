@@ -1,4 +1,35 @@
-const Sequelize = require('sequelize')
+/**
+ * @module ModelDataDiri
+ * @deskripsi Model Sequelize untuk tabel 'data_diri'.
+ * @param {Sequelize} sequelize - Instance Sequelize yang digunakan.
+ * @param {DataTypes} DataTypes - DataTypes dari Sequelize untuk mendefinisikan tipe data.
+ * @returns {Sequelize.Model} - Mengembalikan model Sequelize untuk tabel 'data_diri'.
+ */
+
+/**
+ * Definisi model DataDiri.
+ * @typedef {object} DataDiri
+ * @property {number} id - Identifikasi unik untuk data diri. Di-auto-increment.
+ * @property {string} nama_lengkap - Nama lengkap pengguna.
+ * @property {string} nama_panggilan - Nama panggilan pengguna.
+ * @property {'laki-laki' | 'perempuan'} jenis_kelamin - Jenis kelamin pengguna.
+ * @property {string} tempat_lahir - Tempat lahir pengguna.
+ * @property {string} agama - Agama pengguna.
+ * @property {string} kewarganegaraan - Kewarganegaraan pengguna.
+ * @property {number} anak_ke - Urutan anak dalam keluarga.
+ * @property {number} [jml_saudara_kandung] - Jumlah saudara kandung pengguna.
+ * @property {number} [jml_saudara_tiri] - Jumlah saudara tiri pengguna.
+ * @property {number} [jml_saudara_angkat] - Jumlah saudara angkat pengguna.
+ * @property {'yatim' | 'piatu' | 'yatim piatu' | 'lengkap'} kelengkapan_ortu - Status kelengkapan orang tua.
+ * @property {string} bahasa_sehari_hari - Bahasa sehari-hari yang digunakan pengguna.
+ * @property {number} user_id - ID pengguna yang terkait dengan data diri ini.
+ * @property {string} tanggal_lahir - Tanggal lahir pengguna.
+ */
+
+/**
+ * Definisi model Sequelize untuk tabel 'data_diri'.
+ * @type {Sequelize.Model<DataDiri>}
+ */
 module.exports = function (sequelize, DataTypes) {
   return sequelize.define(
     'data_diri',

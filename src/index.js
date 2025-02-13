@@ -2,6 +2,8 @@ const express = require('express')
 const cors = require('cors')
 const bodyParser = require('body-parser')
 const path = require('path')
+const expressJSDocSwagger = require('express-jsdoc-swagger');
+const package = require('../package.json')
 
 require('dotenv').config()
 
@@ -9,7 +11,7 @@ const app = express()
 
 //* Route admin
 const authControllers = require('./routes/AuthController')
-const userControllers = require('./routes/UserControllers')
+const userControllers = require('./routes/Siswa/SiswaSpesificData')
 const akunControllers = require('./routes/Admin/AdminAccountController')
 const dataSiswaController = require('./routes/Admin/AdminDataSiswaController')
 const jurusanController = require('./routes/Admin/AdminJurusan')
@@ -21,7 +23,36 @@ const nilaiController = require("./routes/Admin/AdminNilaiSiswa")
 const mapelController = require("./routes/Admin/AdminMapel")
 
 //* Route siswa
-const ubahDataController = require('./routes/Siswa/SiswaUbahData')
+const ubahDataController = require('./routes/Siswa/SiswaDataDiri')
+
+//* DEV MODE
+
+if (process.env.NODE_ENV === 'development') {
+  console.log('Mode Pengembangan, Anda dapat membuka dokumentasi di /api-docs');
+
+  const options = {
+    info: {
+      version: package.version,
+      title: 'Buku Induk',
+      license: {
+        name: 'MIT',
+      },
+    },
+    security: {
+      BearerAuth: {
+        type: 'http',
+        scheme: 'bearer',
+      }
+    },
+    baseDir: __dirname,
+    filesPattern: './**/*.js',
+  };
+
+  expressJSDocSwagger(app)(options);
+} else {
+  console.log('Mode Produksi');
+}
+
 
 // middleware
 const {
