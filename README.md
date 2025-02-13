@@ -81,7 +81,7 @@ PASSWORD = ""
 - [ ] Export identitas siswa (pdf)
 - [ ] Export raport nilai siswa (excel)
 
-## Documentation
+## Documentation (Singkat)
 
 ### 1. Nilai
 Action : POST, GET, UPDATE, DELETE\
@@ -152,8 +152,23 @@ body : {
 }
 ```
 
+## Documentation (Lengkap)
 
+### 1. Jalankan api dalam mode development
 
+```bash
+npm run dev
+```
+
+### 2. Buka halaman dibawah
+
+[Buka Halaman Dokumentasi](localhost:8080)
+
+atau
+
+```
+localhost:8080
+```
 
 ## Dibuat oleh
 
