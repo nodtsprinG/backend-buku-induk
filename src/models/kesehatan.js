@@ -10,7 +10,7 @@
  * Definisi model Kesehatan.
  * @typedef {object} Kesehatan
  * @property {number} id - Identifikasi unik untuk data kesehatan. Di-auto-increment.
- * @property {'A' | 'B' | 'O' | 'AB'} gol_darah - Golongan darah.
+ * @property {enum<string>} gol_darah - Golongan darah.
  * @property {string} [penyakit_pernah_diderita] - Penyakit yang pernah diderita.
  * @property {string} [kelainan_jasmani] - Kelainan jasmani yang dimiliki.
  * @property {string} tinggi - Tinggi badan.

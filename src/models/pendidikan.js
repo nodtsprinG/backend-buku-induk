@@ -14,8 +14,8 @@
  * @property {string} sebelumnya_tanggal_dan_ijazah - Tanggal dan nomor ijazah sebelumnya.
  * @property {string} sebelumnya_tanggal_skhun_dan_ - Tanggal dan nomor SKHUN sebelumnya.
  * @property {string} sebelumnya_lama_belajar - Lama belajar di sekolah atau institusi sebelumnya.
- * @property {string} [pindahan_dari_sekolah] - Nama sekolah asal (jika pindahan).
- * @property {string} [pindahan_alasan] - Alasan pindahan sekolah.
+ * @property {string} pindahan_dari_sekolah - Nama sekolah asal (jika pindahan).
+ * @property {string} pindahan_alasan - Alasan pindahan sekolah.
  * @property {number} diterima_di_kelas - Kelas di mana siswa diterima.
  * @property {string} diterima_di_bidang_keahlian - Bidang keahlian yang diterima.
  * @property {string} diterima_di_program_keahlian - Program keahlian yang diterima.

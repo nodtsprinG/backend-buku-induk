@@ -13,7 +13,7 @@
  * @property {string} nisn - Nomor Induk Siswa Nasional (NISN) yang unik untuk setiap user.
  * @property {number} angkatan_id - ID angkatan yang berhubungan dengan user.
  * @property {number} jurusan_id - ID jurusan yang berhubungan dengan user.
- * @property {string} [token] - Token untuk autentikasi atau identifikasi tambahan, bisa null.
+ * @property {string} token - Token untuk autentikasi atau identifikasi tambahan, bisa null.
  */
 
 /**

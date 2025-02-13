@@ -19,7 +19,7 @@
  * @property {string} pekerjaan - Pekerjaan ibu kandung.
  * @property {string} pengeluaran_per_bulan - Pengeluaran per bulan ibu kandung.
  * @property {string} alamat_dan_no_telepon - Alamat dan nomor telepon ibu kandung.
- * @property {'masih hidup' | 'meninggal'} status - Status ibu kandung (masih hidup atau meninggal).
+ * @property {enum<string>} status - Status ibu kandung (masih hidup atau meninggal).
  * @property {number} user_id - ID pengguna yang terkait dengan ibu kandung.
  */
 

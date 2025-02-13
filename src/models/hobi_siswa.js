@@ -10,10 +10,10 @@
  * Definisi model HobiSiswa.
  * @typedef {object} HobiSiswa
  * @property {number} id - Identifikasi unik untuk hobi siswa. Di-auto-increment.
- * @property {string} [kesenian] - Hobi siswa dalam bidang kesenian.
- * @property {string} [olahraga] - Hobi siswa dalam bidang olahraga.
- * @property {string} [organisasi] - Hobi siswa dalam bidang organisasi.
- * @property {string} [lain_lain] - Hobi siswa dalam kategori lain-lain.
+ * @property {string} kesenian - Hobi siswa dalam bidang kesenian.
+ * @property {string} olahraga - Hobi siswa dalam bidang olahraga.
+ * @property {string} organisasi - Hobi siswa dalam bidang organisasi.
+ * @property {string} lain_lain - Hobi siswa dalam kategori lain-lain.
  * @property {number} user_id - ID pengguna yang terkait dengan hobi siswa.
  */
 
