@@ -13,6 +13,49 @@ const { Models } = require('../../models')
 
 const router = Router()
 
+/**
+ * POST /siswa/data-diri
+ * @summary Menambahkan data diri siswa beserta informasi terkait lainnya
+ * @tags siswa
+ * @param {object} request.body.required - Data yang akan ditambahkan
+ * @param {object} request.body.data_diri - Data diri siswa
+ * @param {object} request.body.hobi - Data hobi siswa
+ * @param {object} request.body.ayah_kandung - Data ayah kandung siswa
+ * @param {object} request.body.ibu_kandung - Data ibu kandung siswa
+ * @param {object} request.body.kesehatan - Data kesehatan siswa
+ * @param {object} request.body.pendidikan - Data pendidikan siswa
+ * @param {object} request.body.setelah_pendidikan - Data setelah pendidikan siswa
+ * @param {object} request.body.tempat_tinggal - Data tempat tinggal siswa
+ * @param {object} request.body.wali - Data wali siswa
+ * @param {object} request.body.siswa - Data siswa (termasuk NISN dan informasi lainnya)
+ * @return {object} 201 - Data berhasil dibuat - application/json
+ * @return {object} 400 - NISN sudah terpakai - application/json
+ * @return {object} 500 - Terjadi kesalahan pada server - application/json
+ * @example response - 201 - Data berhasil dibuat
+ * {
+ *   "message": "Data successfully created",
+ *   "data": {
+ *     "data_diri": { ... },
+ *     "hobi": { ... },
+ *     "ayah_kandung": { ... },
+ *     "ibu_kandung": { ... },
+ *     "kesehatan": { ... },
+ *     "pendidikan": { ... },
+ *     "setelah_pendidikan": { ... },
+ *     "tempat_tinggal": { ... },
+ *     "wali": { ... },
+ *     "siswa": { ... }
+ *   }
+ * }
+ * @example response - 400 - NISN sudah terpakai
+ * {
+ *   "message": "NISN sudah terpakai"
+ * }
+ * @example response - 500 - Kesalahan pada server
+ * {
+ *   "message": "Internal server error"
+ * }
+ */
 router.post('/data-diri', async (req, res) => {
   try {
     const {
@@ -69,6 +112,39 @@ router.post('/data-diri', async (req, res) => {
   }
 })
 
+/**
+ * GET /siswa/data-diri
+ * @summary Mengambil data diri lengkap siswa beserta informasi terkait lainnya
+ * @tags siswa
+ * @param {string} user_id.query.required - ID pengguna yang data dirinya ingin diambil
+ * @return {object} 200 - Data diri siswa beserta informasi terkait ditemukan - application/json
+ * @return {object} 500 - Terjadi kesalahan pada server - application/json
+ * @example response - 200 - Data diri siswa ditemukan
+ * {
+ *   "id": 1,
+ *   "nama": "John Doe",
+ *   "jurusan": {
+ *     "nama": "Teknik Informatika"
+ *   },
+ *   "angkatan": {
+ *     "tahun": "2024"
+ *   },
+ *   "data_diri": { ... },
+ *   "perkembangan": { ... },
+ *   "ayah_kandung": { ... },
+ *   "ibu_kandung": { ... },
+ *   "kesehatan": { ... },
+ *   "pendidikan": { ... },
+ *   "setelah_pendidikan": { ... },
+ *   "tempat_tinggal": { ... },
+ *   "wali": { ... },
+ *   "hobi_siswa": { ... }
+ * }
+ * @example response - 500 - Kesalahan pada server
+ * {
+ *   "error": "Internal server error"
+ * }
+ */
 router.get('/data-diri', async (req, res) => {
   try {
     const user = await Models.user.findOne({
@@ -91,7 +167,6 @@ router.get('/data-diri', async (req, res) => {
           model: Models.perkembangan,
           as: 'perkembangan',
         },
-        // Add the new associations below
         {
           model: Models.ayah_kandung,
           as: 'ayah_kandung',
@@ -135,19 +210,77 @@ router.get('/data-diri', async (req, res) => {
   }
 })
 
+/**
+ * GET /siswa/data-diri/:id
+ * @summary Mengambil data diri siswa berdasarkan ID pengguna
+ * @tags siswa
+ * @param {string} id.path.required - ID pengguna yang data dirinya ingin diambil
+ * @return {object} 200 - Data diri siswa ditemukan - application/json
+ * @return {object} 404 - Data diri siswa tidak ditemukan - application/json
+ * @return {object} 500 - Terjadi kesalahan pada server - application/json
+ * @example response - 200 - Data diri siswa ditemukan
+ * {
+ *   "id": 1,
+ *   "nama": "John Doe",
+ *   "alamat": "Jl. Contoh No. 1",
+ *   "tanggal_lahir": "2000-01-01"
+ * }
+ * @example response - 404 - Data diri siswa tidak ditemukan
+ * {
+ *   "error": "Data diri tidak ditemukan"
+ * }
+ * @example response - 500 - Kesalahan pada server
+ * {
+ *   "error": "Internal server error"
+ * }
+ */
 router.get('/data-diri/:id', async (req, res) => {
-  const data = await Models.data_diri.findOne({
-    where: {
-      user_id: req.params.id,
-    },
-    attributes: {
-      exclude: ['user_id'],
-    },
-  })
-  res.json(data)
+  try {
+    const data = await Models.data_diri.findOne({
+      where: {
+        user_id: req.params.id,
+      },
+      attributes: {
+        exclude: ['user_id'],
+      },
+    })
+    
+    if (data) {
+      res.status(200).json(data)
+    } else {
+      res.status(404).json({ error: 'Data diri tidak ditemukan' })
+    }
+  } catch (error) {
+    res.status(500).json({ error: error.message })
+  }
 })
 
-//! Belum ditest
+/**
+ * PUT /siswa/data-diri
+ * @summary Memperbarui data diri siswa
+ * @tags siswa
+ * @param {object} request.body.required - Data yang akan diperbarui
+ * @param {object} request.body.ayah_kandung - Informasi ayah kandung siswa
+ * @param {object} request.body.ibu_kandung - Informasi ibu kandung siswa
+ * @param {object} request.body.data_diri - Informasi umum data diri siswa
+ * @param {object} request.body.hobi - Informasi hobi siswa
+ * @param {object} request.body.kesehatan - Informasi kesehatan siswa
+ * @param {object} request.body.pendidikan - Informasi pendidikan siswa
+ * @param {object} request.body.perkembangan - Informasi perkembangan siswa
+ * @param {object} request.body.setelah_pendidikan - Informasi setelah pendidikan siswa
+ * @param {object} request.body.tempat_tinggal - Informasi tempat tinggal siswa
+ * @param {object} request.body.wali - Informasi wali siswa
+ * @return {object} 200 - Data berhasil diperbarui - application/json
+ * @return {object} 500 - Terjadi kesalahan saat memperbarui data - application/json
+ * @example response - 200 - Data berhasil diperbarui
+ * {
+ *   "message": "Data updated successfully"
+ * }
+ * @example response - 500 - Kesalahan saat memperbarui data
+ * {
+ *   "error": "An error occurred while updating the data"
+ * }
+ */
 router.put('/data-diri', async (req, res) => {
   const user_id = req.user_id
   const {

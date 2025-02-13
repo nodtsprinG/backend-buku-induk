@@ -87,7 +87,7 @@ router.get('/nilai', async (req, res) => {
 
 
 /**
- * GET /nilai/{id}
+ * GET /admin/nilai/{id}
  * @summary Mengambil data 'nilai' berdasarkan ID
  * @tags admin
  * @param {string} id.path.required - ID dari 'nilai' yang ingin diambil
@@ -125,7 +125,7 @@ router.get('/nilai/:id', async (req, res) => {
 })
 
 /**
- * PUT /nilai/{id}
+ * PUT /admin/nilai/{id}
  * @summary Memperbarui data 'nilai' berdasarkan ID
  * @tags admin
  * @param {string} id.path.required - ID dari 'nilai' yang akan diperbarui
