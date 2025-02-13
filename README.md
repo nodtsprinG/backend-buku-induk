@@ -162,12 +162,8 @@ npm run dev
 
 ### 2. Buka halaman dibawah
 
-[Buka Halaman Dokumentasi](localhost:8080)
-
-atau
-
 ```
-localhost:8080
+localhost:8080/api-docs
 ```
 
 ## Dibuat oleh
