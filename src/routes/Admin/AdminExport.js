@@ -15,6 +15,20 @@ const puppeteer = require('puppeteer')
 
 const router = Router()
 
+/**
+ * GET /admin/export-excel
+ * @summary Mengubah data diri siswa berdasarkan ID siswa
+ * @tags admin
+ * @param {string} jurusan.query - Nama jurusan untuk filter data siswa
+ * @param {string} angkatan.query - Tahun angkatan untuk filter data siswa
+ * @param {string} search.query - Pencarian nama siswa
+ * @return {object} 200 - Data berhasil dibuat - application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+ * @return {object} 500 - Terjadi kesalahan saat memperbarui data - application/json
+ * @example response - 500 - Terjadi kesalahan pada server
+ * {
+ *   "error": "An error occurred while updating the data"
+ * }
+ */
 router.get('/export-excel', async (req, res) => {
   const { jurusan, angkatan, search } = req.query
 
@@ -263,10 +277,24 @@ router.get('/export-excel', async (req, res) => {
   res.end()
 })
 
+/**
+ * GET /admin/export-pdf/:id
+ * @summary Mengekspor halaman web yang terkait dengan ID yang diberikan ke dalam file PDF
+ * @tags admin
+ * @param {string} id.path.required - ID yang digunakan untuk membangun URL yang akan diekspor ke PDF
+ * @return {file} 200 - Berhasil mengekspor file PDF - application/pdf
+ * @return {object} 500 - Terjadi kesalahan saat ekspor PDF - application/json
+ * @example response - 200 - Berhasil mengekspor PDF
+ * // File PDF akan diunduh otomatis saat permintaan berhasil
+ * @example response - 500 - Terjadi kesalahan saat ekspor PDF
+ * {
+ *   "error": "Terjadi kesalahan saat ekspor PDF"
+ * }
+ */
 router.get('/export-pdf/:id', async (req, res) => {
   try {
-    const url = 'http://localhost:8080/view-pdf/' + req.params.id // Ubah URL sesuai kebutuhan
-    const outputPath = './output/example.pdf' // Lokasi output file PDF
+    const url = 'http://localhost:8080/view-pdf/' + req.params.id
+    const outputPath = './output/example.pdf'
 
     const browser = await puppeteer.launch({
       args: ['--no-sandbox', '--disable-setuid-sandbox'],
@@ -276,15 +304,14 @@ router.get('/export-pdf/:id', async (req, res) => {
     await page
       .goto(url, {
         waitUntil: 'networkidle0',
-        timeout: 30000, // Increase timeout if needed
+        timeout: 30000,
       })
       .catch((e) => console.error('Error during navigation:', e))
 
     console.log('Setelah menjalankan page.goto')
 
-    // Simpan halaman sebagai file PDF
     const pdf = await page.pdf({
-      format: 'A3', // Ganti format sesuai kebutuhan
+      format: 'A3',
       landscape: true,
     })
 
@@ -294,17 +321,30 @@ router.get('/export-pdf/:id', async (req, res) => {
     res.setHeader('Content-Type', 'application/pdf')
     res.setHeader('Content-Disposition', 'attachment; filename=download.pdf')
 
-    // Kirim file PDF sebagai response
     res.send(pdf)
   } catch (err) {
     console.error('Terjadi kesalahan:', err)
     res.status(500).send('Terjadi kesalahan saat ekspor PDF')
   }
 })
+
+/**
+ * GET /admin/export-pdf
+ * @summary Mengekspor halaman web yang telah ditentukan menjadi file PDF
+ * @tags admin
+ * @return {file} 200 - Berhasil mengekspor halaman web ke file PDF - application/pdf
+ * @return {object} 500 - Terjadi kesalahan saat ekspor PDF - application/json
+ * @example response - 200 - Berhasil mengekspor halaman web ke file PDF
+ * // File PDF akan diunduh otomatis saat permintaan berhasil
+ * @example response - 500 - Terjadi kesalahan saat ekspor PDF
+ * {
+ *   "error": "Terjadi kesalahan saat ekspor PDF"
+ * }
+ */
 router.get('/export-pdf', async (req, res) => {
   try {
-    const url = 'http://localhost:8080/view-pdf' // Ubah URL sesuai kebutuhan
-    const outputPath = './output/example.pdf' // Lokasi output file PDF
+    const url = 'http://localhost:8080/view-pdf'
+    const outputPath = './output/example.pdf'
 
     const browser = await puppeteer.launch({
       args: ['--no-sandbox', '--disable-setuid-sandbox'],
@@ -314,15 +354,14 @@ router.get('/export-pdf', async (req, res) => {
     await page
       .goto(url, {
         waitUntil: 'networkidle0',
-        timeout: 30000, // Increase timeout if needed
+        timeout: 30000,
       })
       .catch((e) => console.error('Error during navigation:', e))
 
     console.log('Setelah menjalankan page.goto')
 
-    // Simpan halaman sebagai file PDF
     const pdf = await page.pdf({
-      format: 'A3', // Ganti format sesuai kebutuhan
+      format: 'A3',
       landscape: true,
     })
 
@@ -332,7 +371,6 @@ router.get('/export-pdf', async (req, res) => {
     res.setHeader('Content-Type', 'application/pdf')
     res.setHeader('Content-Disposition', 'attachment; filename=download.pdf')
 
-    // Kirim file PDF sebagai response
     res.send(pdf)
   } catch (err) {
     console.error('Terjadi kesalahan:', err)
