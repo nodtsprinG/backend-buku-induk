@@ -18,7 +18,7 @@ const jurusan = Models.jurusan
  * POST /admin/jurusan
  * @summary Membuat data jurusan baru
  * @tags admin
- * @param {object} request.body.required - Data jurusan yang akan dibuat
+ * @param {object} request.body.request.required - Data jurusan yang akan dibuat
  * @param {string} request.body.nama.required - Nama jurusan yang akan dibuat
  * @return {object} 201 - Berhasil membuat jurusan baru - application/json
  * @return {object} 400 - Terjadi kesalahan saat membuat jurusan - application/json
@@ -74,7 +74,7 @@ router.get('/admin/jurusan', async (req, res) => {
 
 
 /**
- * GET /admin/jurusan/:id
+ * GET /admin/jurusan/{id}
  * @summary Mengambil data jurusan berdasarkan ID
  * @tags admin
  * @param {integer} id.path.required - ID jurusan yang akan diambil
@@ -109,7 +109,7 @@ router.get('/admin/jurusan/:id', async (req, res) => {
 })
 
 /**
- * PUT /admin/jurusan/:id
+ * PUT /admin/jurusan/{id}
  * @summary Memperbarui data jurusan berdasarkan ID
  * @tags admin
  * @param {integer} id.path.required - ID jurusan yang akan diperbarui

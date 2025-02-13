@@ -253,7 +253,7 @@ routes.get('/admin/akun/:id', async (req, res) => {
  * @summary Memperbarui data akun siswa berdasarkan ID
  * @tags admin
  * @param {string} id.path.required - ID siswa yang ingin diperbarui
- * @param {object} request.body.required - Data yang akan diperbarui pada akun siswa
+ * @param {object} request.body.request.required - Data yang akan diperbarui pada akun siswa
  * @return {object} 200 - Data akun siswa yang berhasil diperbarui - application/json
  * @return {object} 400 - Bad request error - application/json
  * @return {object} 404 - User not found error - application/json
@@ -305,7 +305,5 @@ routes.put('/admin/akun/:id', async (req, res) => {
     return res.status(400).json({ message: ex })
   }
 })
-
-//! HAPUS SISWA UDAH DI HAPUS. DIHARAMKAN. SEGERA DIHAPUS DI UI JIKA MASIH ADA
 
 module.exports = routes

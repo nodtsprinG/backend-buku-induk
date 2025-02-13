@@ -17,7 +17,7 @@ const router = Router()
  * POST /siswa/data-diri
  * @summary Menambahkan data diri siswa beserta informasi terkait lainnya
  * @tags siswa
- * @param {object} request.body.required - Data yang akan ditambahkan
+ * @param {object} request.body.request.required - Data yang akan ditambahkan
  * @param {object} request.body.data_diri - Data diri siswa
  * @param {object} request.body.hobi - Data hobi siswa
  * @param {object} request.body.ayah_kandung - Data ayah kandung siswa
@@ -259,7 +259,7 @@ router.get('/data-diri/:id', async (req, res) => {
  * PUT /siswa/data-diri
  * @summary Memperbarui data diri siswa
  * @tags siswa
- * @param {object} request.body.required - Data yang akan diperbarui
+ * @param {object} request.body.request.required - Data yang akan diperbarui
  * @param {object} request.body.ayah_kandung - Informasi ayah kandung siswa
  * @param {object} request.body.ibu_kandung - Informasi ibu kandung siswa
  * @param {object} request.body.data_diri - Informasi umum data diri siswa

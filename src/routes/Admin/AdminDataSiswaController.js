@@ -14,11 +14,11 @@ const { Models } = require('../../models')
 const router = Router()
 
 /**
- * PUT /admin/data-diri/:id
+ * PUT /admin/data-diri/{id}
  * @summary Mengubah data diri siswa berdasarkan ID siswa
  * @tags admin
  * @param {integer} id.path.required - ID siswa yang datanya ingin diubah
- * @param {object} request.body.required - Data diri yang ingin diperbarui
+ * @param {object} request.body.request.required - Data diri yang ingin diperbarui
  * @param {object} request.body.ayah_kandung.required - Data ayah kandung siswa
  * @param {object} request.body.ibu_kandung.required - Data ibu kandung siswa
  * @param {object} request.body.data_diri.required - Data diri siswa (seperti nama, alamat, dll.)

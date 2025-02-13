@@ -278,14 +278,12 @@ router.get('/export-excel', async (req, res) => {
 })
 
 /**
- * GET /admin/export-pdf/:id
+ * GET /admin/export-pdf/{id}
  * @summary Mengekspor halaman web yang terkait dengan ID yang diberikan ke dalam file PDF
  * @tags admin
  * @param {string} id.path.required - ID yang digunakan untuk membangun URL yang akan diekspor ke PDF
  * @return {file} 200 - Berhasil mengekspor file PDF - application/pdf
  * @return {object} 500 - Terjadi kesalahan saat ekspor PDF - application/json
- * @example response - 200 - Berhasil mengekspor PDF
- * // File PDF akan diunduh otomatis saat permintaan berhasil
  * @example response - 500 - Terjadi kesalahan saat ekspor PDF
  * {
  *   "error": "Terjadi kesalahan saat ekspor PDF"
@@ -334,8 +332,6 @@ router.get('/export-pdf/:id', async (req, res) => {
  * @tags admin
  * @return {file} 200 - Berhasil mengekspor halaman web ke file PDF - application/pdf
  * @return {object} 500 - Terjadi kesalahan saat ekspor PDF - application/json
- * @example response - 200 - Berhasil mengekspor halaman web ke file PDF
- * // File PDF akan diunduh otomatis saat permintaan berhasil
  * @example response - 500 - Terjadi kesalahan saat ekspor PDF
  * {
  *   "error": "Terjadi kesalahan saat ekspor PDF"

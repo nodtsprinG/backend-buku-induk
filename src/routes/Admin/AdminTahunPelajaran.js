@@ -1,6 +1,6 @@
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-                                N I L A I   S I S W A
+                                        T A H U N  P E L A J A R A N
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ? Bagian ini isinya api untuk memanipulasi nilai siswa
@@ -18,7 +18,7 @@ const tahun_pelajaran = Models.tahun_pelajaran
  * POST /admin/tahun_pelajaran
  * @summary Menambahkan data tahun pelajaran baru
  * @tags admin
- * @param {TahunPelajaran} request.body.required - Data tahun pelajaran yang akan ditambahkan
+ * @param {TahunPelajaran} request.body.request.required - Data tahun pelajaran yang akan ditambahkan
  * @return {object} 201 - Data tahun pelajaran berhasil ditambahkan - application/json
  * @return {object} 400 - Terjadi kesalahan dalam permintaan - application/json
  * @example response - 201 - Tahun pelajaran berhasil ditambahkan
@@ -97,7 +97,7 @@ router.get('/tahun_pelajaran/:id', async (req, res) => {
  * @summary Memperbarui data tahun pelajaran berdasarkan ID
  * @tags admin
  * @param {string} id.path.required - ID dari tahun pelajaran yang akan diperbarui
- * @param {TahunPelajaran} request.body.required - Data tahun pelajaran yang akan diperbarui
+ * @param {TahunPelajaran} request.body.request.required - Data tahun pelajaran yang akan diperbarui
  * @param {string} request.body.nama - Nama tahun pelajaran
  * @return {object} 200 - Tahun pelajaran berhasil diperbarui - application/json
  * @return {object} 404 - Tahun pelajaran tidak ditemukan - application/json

@@ -30,8 +30,8 @@ function generateRandomCode(length = 5) {
  * POST /auth/login-admin
  * @summary Login Admin dan kirimkan kode verifikasi melalui email
  * @tags admin
- * @param {string} email.body.required - Email admin yang terdaftar
- * @param {string} password.body.required - Password admin yang terdaftar
+ * @param {string} request.body.email.required - Email admin yang terdaftar
+ * @param {string} request.body.password.required - Password admin yang terdaftar
  * @return {object} 200 - Kode verifikasi dikirimkan ke email - application/json
  * @return {object} 404 - Password atau email salah - application/json
  * @return {object} 500 - Terjadi kesalahan pengiriman email - application/json
@@ -183,7 +183,7 @@ router.post('/login-admin', loginRequest, async (req, res) => {
  * POST /auth/code-admin
  * @summary Verifikasi Kode OTP untuk Login Admin
  * @tags admin
- * @param {string} code.body.required - Kode OTP yang dikirimkan ke email admin
+ * @param {string} request.body.code.required - Kode OTP yang dikirimkan ke email admin
  * @return {object} 200 - Token berhasil dibuat dan dikirimkan - application/json
  * @return {object} 404 - Kode OTP salah - application/json
  * @return {object} 500 - Terjadi kesalahan pada server - application/json
@@ -241,8 +241,8 @@ router.post('/code-admin', codeAdminRequest, async (req, res) => {
  * POST /auth/login-siswa
  * @summary Melakukan login untuk siswa dengan memverifikasi NISN dan tanggal lahir
  * @tags siswa
- * @param {string} nisn.body.required - Nomor Induk Siswa Nasional (NISN) siswa
- * @param {string} tanggal_lahir.body.required - Tanggal lahir siswa
+ * @param {string} request.body.nisn.required - Nomor Induk Siswa Nasional (NISN) siswa
+ * @param {string} tanggal_request.body.lahir.required - Tanggal lahir siswa
  * @return {object} 200 - Response sukses dengan token baru dan data siswa - application/json
  * @return {object} 200 - Data tidak ditemukan atau tidak cocok - application/json
  * @return {object} 500 - Terjadi kesalahan pada server - application/json

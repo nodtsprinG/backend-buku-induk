@@ -1,6 +1,6 @@
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-                                J U R U S A N
+                                    N I L A I  S I S W A
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ? Bagian ini isinya api untuk memanipulasi nilai
@@ -129,7 +129,7 @@ router.get('/nilai/:id', async (req, res) => {
  * @summary Memperbarui data 'nilai' berdasarkan ID
  * @tags admin
  * @param {string} id.path.required - ID dari 'nilai' yang akan diperbarui
- * @param {object} request.body.required - Data yang akan diperbarui
+ * @param {object} request.body.request.required - Data yang akan diperbarui
  * @param {string} request.body.nama - Nama mata pelajaran
  * @param {number} request.body.nilai - Nilai yang akan diperbarui
  * @return {object} 200 - Nilai berhasil diperbarui - application/json

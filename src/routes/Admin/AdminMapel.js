@@ -1,6 +1,6 @@
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-                                N I L A I   S I S W A
+                                                M A P E L
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ? Bagian ini isinya api untuk memanipulasi nilai siswa
@@ -74,7 +74,7 @@ router.get('/admin/mapel', async (req, res) => {
 })
 
 /**
- * GET /admin/mapel/:id
+ * GET /admin/mapel/{id}
  * @summary Mengambil mata pelajaran berdasarkan ID
  * @tags admin
  * @param {integer} id.path.required - ID mata pelajaran
@@ -110,11 +110,11 @@ router.get('/admin/mapel/:id', async (req, res) => {
 
 
 /**
- * PUT /admin/mapel/:id
+ * PUT /admin/mapel/{id}
  * @summary Memperbarui data mata pelajaran berdasarkan ID
  * @tags admin
  * @param {integer} id.path.required - ID mata pelajaran
- * @param {object} request.body.required - Data yang akan diperbarui
+ * @param {object} request.body.request.required - Data yang akan diperbarui
  * @param {string} request.body.nama - Nama mata pelajaran
  * @return {object} 200 - Mata pelajaran berhasil diperbarui - application/json
  * @return {object} 404 - Mata pelajaran tidak ditemukan - application/json

@@ -19,7 +19,7 @@ const angkatan = Models.angkatan
  * POST /admin/angkatan
  * @summary Membuat data angkatan baru
  * @tags admin
- * @param {object} request.body.required - Data angkatan yang akan dibuat
+ * @param {object} request.body.request.required - Data angkatan yang akan dibuat
  * @param {string} request.body.tahun.required - Tahun angkatan yang akan dibuat
  * @return {object} 201 - Data angkatan yang berhasil dibuat - application/json
  * @return {object} 400 - Bad request error - application/json
@@ -75,7 +75,7 @@ router.get('/admin/angkatan', async (req, res) => {
 })
 
 /**
- * GET /admin/angkatan/:id
+ * GET /admin/angkatan/{id}
  * @summary Mengambil data angkatan berdasarkan ID angkatan
  * @tags admin
  * @param {integer} id.path.required - ID angkatan yang ingin diambil
@@ -110,11 +110,11 @@ router.get('/admin/angkatan/:id', async (req, res) => {
 })
 
 /**
- * PUT /admin/angkatan/:id
+ * PUT /admin/angkatan/{id}
  * @summary Mengubah data angkatan berdasarkan ID angkatan
  * @tags admin
  * @param {integer} id.path.required - ID angkatan yang ingin diubah
- * @param {object} request.body.required - Data yang akan diubah
+ * @param {object} request.body.request.required - Data yang akan diubah
  * @param {integer} request.body.tahun.required - Tahun angkatan yang baru
  * @return {object} 200 - Angkatan berhasil diupdate - application/json
  * @return {object} 404 - Angkatan tidak ditemukan - application/json
