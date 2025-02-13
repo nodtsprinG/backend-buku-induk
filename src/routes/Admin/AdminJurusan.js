@@ -72,7 +72,6 @@ router.get('/admin/jurusan', async (req, res) => {
   }
 })
 
-
 /**
  * GET /admin/jurusan/{id}
  * @summary Mengambil data jurusan berdasarkan ID
@@ -145,6 +144,5 @@ router.put('/admin/jurusan/:id', async (req, res) => {
     res.status(500).json({ error: error.message })
   }
 })
-
 
 module.exports = router

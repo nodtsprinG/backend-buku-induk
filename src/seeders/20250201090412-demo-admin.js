@@ -25,14 +25,14 @@ module.exports = {
       },
       {
         email: 'jokoaiko8b@gmail.com',
-        password: "aiko",
-        username: "JokoAiko"
+        password: 'aiko',
+        username: 'JokoAiko',
       },
       {
         email: 'drscity20@gmail.comm',
-        password: "pass",
-        username: "DarisNur"
-      }
+        password: 'pass',
+        username: 'DarisNur',
+      },
     ])
   },
 

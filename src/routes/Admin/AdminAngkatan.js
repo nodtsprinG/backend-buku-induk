@@ -42,7 +42,6 @@ router.post('/admin/angkatan', async (req, res) => {
   }
 })
 
-
 /**
  * GET /admin/angkatan
  * @summary Mengambil semua data angkatan

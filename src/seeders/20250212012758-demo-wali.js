@@ -1,8 +1,8 @@
-'use strict';
+'use strict'
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up (queryInterface, Sequelize) {
+  async up(queryInterface, Sequelize) {
     /**
      * Add seed commands here.
      *
@@ -11,30 +11,29 @@ module.exports = {
      *   name: 'John Doe',
      *   isBetaMember: false
      * }], {});
-    */
+     */
     return queryInterface.bulkInsert('wali', [
       {
-        nama: null, 
+        nama: null,
         tempat_lahir: null,
-        tanggal_lahir: null, 
-        agama: null, 
+        tanggal_lahir: null,
+        agama: null,
         kewarganegaraan: null,
         pendidikan: null,
-        pekerjaan: null, 
-        pengeluaran_per_bulan: null,  
+        pekerjaan: null,
+        pengeluaran_per_bulan: null,
         alamat_dan_no_telepon: null,
         user_id: 1,
-      }
+      },
     ])
-    
   },
 
-  async down (queryInterface, Sequelize) {
+  async down(queryInterface, Sequelize) {
     /**
      * Add commands to revert seed here.
      *
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
-  }
-};
+  },
+}

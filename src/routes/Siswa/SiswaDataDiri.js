@@ -244,7 +244,7 @@ router.get('/data-diri/:id', async (req, res) => {
         exclude: ['user_id'],
       },
     })
-    
+
     if (data) {
       res.status(200).json(data)
     } else {

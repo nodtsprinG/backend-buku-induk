@@ -1,6 +1,9 @@
 const { Router } = require('express')
 const { Models } = require('../../models')
-const { dataDiriRequest, validatePerkembangan } = require('../../DTO/user-request')
+const {
+  dataDiriRequest,
+  validatePerkembangan,
+} = require('../../DTO/user-request')
 const { Sequelize } = require('sequelize')
 
 const routes = Router()

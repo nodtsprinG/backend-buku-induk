@@ -54,30 +54,30 @@ function generateRandomCode(length = 5) {
  * }
  */
 router.post('/login-admin', loginRequest, async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password } = req.body
 
-  console.log(process.env.EMAIL);
+  console.log(process.env.EMAIL)
 
   const data = await Models.admin.findOne({
     where: {
       email,
       password,
     },
-  });
+  })
 
-  console.log(data);
+  console.log(data)
 
   if (data == undefined) {
-    res.status(404).json({ message: 'Password atau Email Salah' });
-    return;
+    res.status(404).json({ message: 'Password atau Email Salah' })
+    return
   }
 
-  data.code = generateRandomCode();
-  data.token = null;
-  await data.save();
+  data.code = generateRandomCode()
+  data.token = null
+  await data.save()
 
   try {
-    if (process.env.EMAIL == undefined) throw new Error();
+    if (process.env.EMAIL == undefined) throw new Error()
 
     const trasnport = nodemailer.createTransport({
       service: 'gmail',
@@ -85,7 +85,7 @@ router.post('/login-admin', loginRequest, async (req, res) => {
         user: process.env.EMAIL,
         pass: process.env.PASSWORD,
       },
-    });
+    })
 
     const response = trasnport.sendMail({
       from: process.env.EMAIL,
@@ -170,14 +170,13 @@ router.post('/login-admin', loginRequest, async (req, res) => {
           </div>
         </body>
       </html>`,
-    });
+    })
   } catch (ex) {
-    console.log('Error : Error send email .env is required, EMAIL, PASSWORD');
+    console.log('Error : Error send email .env is required, EMAIL, PASSWORD')
   }
 
-  res.json({ code: data.code });
-});
-
+  res.json({ code: data.code })
+})
 
 /**
  * POST /auth/code-admin
@@ -269,7 +268,7 @@ router.post('/code-admin', codeAdminRequest, async (req, res) => {
  * }
  */
 router.post('/login-siswa', loginSiswaRequest, async (req, res) => {
-  const { nisn, tanggal_lahir } = req.body;
+  const { nisn, tanggal_lahir } = req.body
 
   try {
     const data = await Models.user.findOne({
@@ -283,27 +282,31 @@ router.post('/login-siswa', loginSiswaRequest, async (req, res) => {
         },
       ],
       where: { nisn },
-    });
+    })
 
     if (!data) {
-      return res.status(200).json({ isMatch: false, message: 'Data tidak ditemukan atau tidak cocok.' });
+      return res
+        .status(200)
+        .json({
+          isMatch: false,
+          message: 'Data tidak ditemukan atau tidak cocok.',
+        })
     }
 
-    data.token = uuidv4();
-    await data.save();
+    data.token = uuidv4()
+    await data.save()
 
     return res.status(200).json({
       isMatch: true,
       id: data.id,
       full_name: data.data_diri.nama_lengkap,
       token: data.token,
-    });
-
+    })
   } catch (error) {
-    console.error('Gagal login siswa:', error);
-    res.status(500).json({ message: 'Terjadi kesalahan pada server.' });
+    console.error('Gagal login siswa:', error)
+    res.status(500).json({ message: 'Terjadi kesalahan pada server.' })
   }
-});
+})
 
 /**
  * GET /auth/me
@@ -337,6 +340,5 @@ router.get('/me', getMeRequest, async (req, res) => {
     return
   } else res.status(401).json({ message: 'Unauthorised' })
 })
-
 
 module.exports = router
