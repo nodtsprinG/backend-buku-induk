@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const express = require('express')
 const cors = require('cors')
 const bodyParser = require('body-parser')
@@ -195,6 +196,7 @@ app.post('/import-excel', upload.single('file'), async (req, res) => {
     const workbook = XLSX.read(req.file.buffer, { type: 'buffer' });
     const sheetName = workbook.SheetNames[0]; // Get first sheet
     const data = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
+    console.log(data)
 
     // Process each row
     for (const row of data) {
@@ -211,6 +213,8 @@ app.post('/import-excel', upload.single('file'), async (req, res) => {
       }
 
       const newUser = await Models.user.create(siswa);
+
+      console.log("creating")
 
       await Models.data_diri.create({
         user_id: newUser.id,
@@ -229,6 +233,9 @@ app.post('/import-excel', upload.single('file'), async (req, res) => {
         bahasa_sehari_hari: row['Bahasa Sehari-hari'],
       });
 
+      console.log("creating")
+
+
       await Models.perkembangan.create({
         user_id: newUser.id,
         menerima_bea_siswa_tahun_kelas_dari: row['Menerima Bea Siswa Tahun Kelas Dari'],
@@ -238,6 +245,8 @@ app.post('/import-excel', upload.single('file'), async (req, res) => {
         akhir_pendidikan_no_tanggal_ijazah: row['Akhir Pendidikan No/Tanggal Ijazah'],
         akhir_pendidikan_no_tanggal_skhun: row['Akhir Pendidikan No/Tanggal SKHUN'],
       });
+      console.log("creating")
+
 
       await Models.ayah_kandung.create({
         user_id: newUser.id,
@@ -252,6 +261,8 @@ app.post('/import-excel', upload.single('file'), async (req, res) => {
         alamat_dan_no_telepon: row['Alamat dan No. Telepon Ayah'],
         status: row['Status Ayah'],
       });
+      console.log("creating")
+
 
       await Models.ibu_kandung.create({
         user_id: newUser.id,
@@ -266,6 +277,8 @@ app.post('/import-excel', upload.single('file'), async (req, res) => {
         alamat_dan_no_telepon: row['Alamat dan No. Telepon Ibu'],
         status: row['Status Ibu'],
       });
+      console.log("creating")
+
 
       await Models.kesehatan.create({
         user_id: newUser.id,
@@ -275,6 +288,8 @@ app.post('/import-excel', upload.single('file'), async (req, res) => {
         tinggi: row.Tinggi,
         berat_badan: row['Berat Badan'],
       });
+      console.log("creating")
+
 
       await Models.wali.create({
         user_id: newUser.id,
@@ -288,6 +303,8 @@ app.post('/import-excel', upload.single('file'), async (req, res) => {
         pengeluaran_per_bulan: row['Pengeluaran per Bulan Wali'],
         alamat_dan_no_telepon: row['Alamat dan No. Telepon Wali'],
       });
+      console.log("creating")
+
 
       await Models.hobi_siswa.create({
         user_id: newUser.id,
@@ -296,6 +313,8 @@ app.post('/import-excel', upload.single('file'), async (req, res) => {
         organisasi: row.Organisasi,
         lain_lain: row['Lain-lain'],
       });
+      console.log("creating")
+
 
       await Models.pendidikan.create({
         user_id: newUser.id,
@@ -308,8 +327,9 @@ app.post('/import-excel', upload.single('file'), async (req, res) => {
         diterima_di_program_keahlian: row['Diterima di Program Keahlian'],
         diterima_di_paket_keahlian: row['Diterima di Paket Keahlian'],
         diterima_tanggal: row['Diterima Tanggal'],
-        user_id: newUser.id,
       });
+      console.log("creating")
+
 
       await Models.tempat_tinggal.create({
         user_id: newUser.id,
