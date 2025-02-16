@@ -1,4 +1,4 @@
-/**
+/**non
  * @module ModelAngkatan
  * @deskripsi Model Sequelize untuk tabel 'angkatan'.
  * @param {Sequelize} sequelize - Instance Sequelize yang digunakan.

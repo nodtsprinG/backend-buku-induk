@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "start": "node .",
-    "dev": "NODE_ENV=development nodemon .",
+    "dev": "cross-env NODE_ENV=development nodemon .",
     "db:migrate": "npx sequelize-cli db:migrate --config src/config/config.json --migrations-path src/migrations",
     "db:migrate:production": "npx sequelize-cli db:migrate --env production --config src/config/config.json --migrations-path src/migrations",
     "db:migrate:undo": "npx sequelize-cli db:migrate:undo --config src/config/config.json --migrations-path src/migrations",
@@ -40,6 +40,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.19.0",
+    "cross-env": "^7.0.3",
     "eslint": "^9.19.0",
     "globals": "^15.14.0",
     "nodemon": "^3.1.1",
