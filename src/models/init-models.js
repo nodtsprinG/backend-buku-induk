@@ -74,8 +74,15 @@ function initModels(sequelize) {
   wali.belongsTo(user, { as: 'user', foreignKey: 'user_id' })
   user.hasOne(wali, { as: 'wali', foreignKey: 'user_id' })
 
+<<<<<<< HEAD
   nilai.hasOne(tahun_pelajaran, {as: 'tahun_pelajaran', foreignKey: 'tahun_pelajaran_id'})
   nilai.belongsTo(mapel, {as: 'mapel', foreignKey: 'mapel_id'})
+=======
+  nilai.hasOne(tahun_pelajaran, {
+    as: 'tahun_pelajaran',
+    foreignKey: 'tahun_pelajaran_id',
+  })
+>>>>>>> 983b7ab869c52869bd01a7f47f33e1bde5258bd4
 
   return {
     admin,
@@ -94,7 +101,7 @@ function initModels(sequelize) {
     wali,
     nilai,
     mapel,
-    tahun_pelajaran
+    tahun_pelajaran,
   }
 }
 module.exports = initModels

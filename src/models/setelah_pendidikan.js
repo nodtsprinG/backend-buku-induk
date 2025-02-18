@@ -1,4 +1,26 @@
-const Sequelize = require('sequelize')
+/**
+ * @module ModelSetelahPendidikan
+ * @deskripsi Model Sequelize untuk tabel 'setelah_pendidikan'.
+ * @param {Sequelize} sequelize - Instance Sequelize yang digunakan.
+ * @param {DataTypes} DataTypes - DataTypes dari Sequelize untuk mendefinisikan tipe data.
+ * @returns {Sequelize.Model} - Mengembalikan model Sequelize untuk tabel 'setelah_pendidikan'.
+ */
+
+/**
+ * Definisi model SetelahPendidikan.
+ * @typedef {object} SetelahPendidikan
+ * @property {number} id - Identifikasi unik untuk data setelah pendidikan. Di-auto-increment.
+ * @property {string} melanjutkan_ke - Institusi atau tempat yang dilanjutkan setelah pendidikan (jika ada).
+ * @property {string} bekerja_nama_perusahaan - Nama perusahaan tempat bekerja setelah pendidikan (jika ada).
+ * @property {string} bekerja_tanggal_mulai - Tanggal mulai bekerja setelah pendidikan (jika ada).
+ * @property {string} bekerja_penghasilan - Penghasilan yang diterima saat bekerja setelah pendidikan (jika ada).
+ * @property {number} user_id - ID pengguna yang terkait dengan data setelah pendidikan ini.
+ */
+
+/**
+ * Definisi model Sequelize untuk tabel 'setelah_pendidikan'.
+ * @type {Sequelize.Model<SetelahPendidikan>}
+ */
 module.exports = function (sequelize, DataTypes) {
   return sequelize.define(
     'setelah_pendidikan',

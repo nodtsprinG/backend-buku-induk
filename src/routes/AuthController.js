@@ -26,10 +26,38 @@ function generateRandomCode(length = 5) {
   return randomCode
 }
 
+/**
+ * POST /auth/login-admin
+ * @summary Login Admin dan kirimkan kode verifikasi melalui email
+ * @tags admin
+ * @param {string} request.body.email.required - Email admin yang terdaftar
+ * @param {string} request.body.password.required - Password admin yang terdaftar
+ * @return {object} 200 - Kode verifikasi dikirimkan ke email - application/json
+ * @return {object} 404 - Password atau email salah - application/json
+ * @return {object} 500 - Terjadi kesalahan pengiriman email - application/json
+ * @example request - Login Admin
+ * {
+ *   "email": "admin@example.com",
+ *   "password": "admin123"
+ * }
+ * @example response - 200 - Kode verifikasi berhasil dikirimkan
+ * {
+ *   "code": "123456"
+ * }
+ * @example response - 404 - Email atau password salah
+ * {
+ *   "message": "Password atau Email Salah"
+ * }
+ * @example response - 500 - Kesalahan dalam pengiriman email
+ * {
+ *   "message": "Error : Error send email .env is required, EMAIL, PASSWORD"
+ * }
+ */
 router.post('/login-admin', loginRequest, async (req, res) => {
   const { email, password } = req.body
 
   console.log(process.env.EMAIL)
+
   const data = await Models.admin.findOne({
     where: {
       email,
@@ -50,6 +78,7 @@ router.post('/login-admin', loginRequest, async (req, res) => {
 
   try {
     if (process.env.EMAIL == undefined) throw new Error()
+
     const trasnport = nodemailer.createTransport({
       service: 'gmail',
       auth: {
@@ -57,6 +86,7 @@ router.post('/login-admin', loginRequest, async (req, res) => {
         pass: process.env.PASSWORD,
       },
     })
+
     const response = trasnport.sendMail({
       from: process.env.EMAIL,
       to: data.email,
@@ -148,6 +178,34 @@ router.post('/login-admin', loginRequest, async (req, res) => {
   res.json({ code: data.code })
 })
 
+/**
+ * POST /auth/code-admin
+ * @summary Verifikasi Kode OTP untuk Login Admin
+ * @tags admin
+ * @param {string} request.body.code.required - Kode OTP yang dikirimkan ke email admin
+ * @return {object} 200 - Token berhasil dibuat dan dikirimkan - application/json
+ * @return {object} 404 - Kode OTP salah - application/json
+ * @return {object} 500 - Terjadi kesalahan pada server - application/json
+ * @example request - Verifikasi Kode OTP Admin
+ * {
+ *   "code": "123456"
+ * }
+ * @example response - 200 - Token berhasil dibuat
+ * {
+ *   "id": 1,
+ *   "username": "adminuser",
+ *   "email": "admin@example.com",
+ *   "token": "newly-generated-token"
+ * }
+ * @example response - 404 - Kode OTP salah
+ * {
+ *   "message": "Kode OTP Salah"
+ * }
+ * @example response - 500 - Kesalahan pada server
+ * {
+ *   "message": "Internal server error"
+ * }
+ */
 router.post('/code-admin', codeAdminRequest, async (req, res) => {
   try {
     const { code } = req.body
@@ -178,8 +236,39 @@ router.post('/code-admin', codeAdminRequest, async (req, res) => {
   }
 })
 
+/**
+ * POST /auth/login-siswa
+ * @summary Melakukan login untuk siswa dengan memverifikasi NISN dan tanggal lahir
+ * @tags siswa
+ * @param {string} request.body.nisn.required - Nomor Induk Siswa Nasional (NISN) siswa
+ * @param {string} tanggal_request.body.lahir.required - Tanggal lahir siswa
+ * @return {object} 200 - Response sukses dengan token baru dan data siswa - application/json
+ * @return {object} 200 - Data tidak ditemukan atau tidak cocok - application/json
+ * @return {object} 500 - Terjadi kesalahan pada server - application/json
+ * @example request - Login dengan NISN dan Tanggal Lahir
+ * {
+ *   "nisn": "1234567890",
+ *   "tanggal_lahir": "2005-01-01"
+ * }
+ * @example response - 200 - Login sukses dengan token baru
+ * {
+ *   "isMatch": true,
+ *   "id": 1,
+ *   "full_name": "John Doe",
+ *   "token": "newly-generated-token"
+ * }
+ * @example response - 200 - Data tidak ditemukan atau tidak cocok
+ * {
+ *   "isMatch": false,
+ *   "message": "Data tidak ditemukan atau tidak cocok."
+ * }
+ * @example response - 500 - Kesalahan pada server
+ * {
+ *   "message": "Terjadi kesalahan pada server."
+ * }
+ */
 router.post('/login-siswa', loginSiswaRequest, async (req, res) => {
-  const { nisn, tanggal_lahir } = req.body;
+  const { nisn, tanggal_lahir } = req.body
 
   try {
     const data = await Models.user.findOne({
@@ -193,28 +282,51 @@ router.post('/login-siswa', loginSiswaRequest, async (req, res) => {
         },
       ],
       where: { nisn },
-    });
+    })
 
     if (!data) {
-      return res.status(200).json({ isMatch: false, message: 'Data tidak ditemukan atau tidak cocok.' });
+      return res
+        .status(200)
+        .json({
+          isMatch: false,
+          message: 'Data tidak ditemukan atau tidak cocok.',
+        })
     }
 
-    data.token = uuidv4();
-    await data.save();
+    data.token = uuidv4()
+    await data.save()
 
     return res.status(200).json({
       isMatch: true,
       id: data.id,
       full_name: data.data_diri.nama_lengkap,
       token: data.token,
-    });
-
+    })
   } catch (error) {
-    console.error('Gagal login siswa:', error);
-    res.status(500).json({ message: 'Terjadi kesalahan pada server.' });
+    console.error('Gagal login siswa:', error)
+    res.status(500).json({ message: 'Terjadi kesalahan pada server.' })
   }
-});
+})
 
+/**
+ * GET /auth/me
+ * @summary Mengambil informasi admin yang sedang login berdasarkan token
+ * @tags admin
+ * @security BearerAuth
+ * @return {Admin} 200 - Response sukses dengan data admin - application/json
+ * @return {object} 401 - Unauthorized response jika token tidak valid - application/json
+ * @example response - 200 - Sukses mengambil data admin
+ * {
+ *   "id": 1,
+ *   "username": "admin_user",
+ *   "email": "admin@example.com",
+ *   "token": "valid-token"
+ * }
+ * @example response - 401 - Unauthorized, token tidak valid
+ * {
+ *   "message": "Unauthorised"
+ * }
+ */
 router.get('/me', getMeRequest, async (req, res) => {
   const token = req.headers['authorization'].split(' ')[1]
   const admin = await Models.admin.findOne({
