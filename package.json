@@ -1,11 +1,11 @@
 {
   "name": "backend-buku-induk",
-  "version": "1.0.0",
+  "version": "1.25.1.4-dev",
   "description": "",
   "main": "src/index.js",
   "scripts": {
     "start": "node .",
-    "dev": "nodemon .",
+    "dev": "cross-env NODE_ENV=development nodemon .",
     "db:migrate": "npx sequelize-cli db:migrate --config src/config/config.json --migrations-path src/migrations",
     "db:migrate:production": "npx sequelize-cli db:migrate --env production --config src/config/config.json --migrations-path src/migrations",
     "db:migrate:undo": "npx sequelize-cli db:migrate:undo --config src/config/config.json --migrations-path src/migrations",
@@ -26,6 +26,7 @@
     "ejs": "^3.1.10",
     "exceljs": "^4.4.0",
     "express": "^4.19.2",
+    "express-jsdoc-swagger": "^1.8.0",
     "express-validator": "^7.1.0",
     "morgan": "^1.10.0",
     "multer": "^1.4.5-lts.1",
@@ -39,6 +40,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.19.0",
+    "cross-env": "^7.0.3",
     "eslint": "^9.19.0",
     "globals": "^15.14.0",
     "nodemon": "^3.1.1",

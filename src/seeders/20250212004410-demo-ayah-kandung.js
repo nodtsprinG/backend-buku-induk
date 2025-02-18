@@ -12,26 +12,19 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
      */
-    return queryInterface.bulkInsert('admin', [
+    return queryInterface.bulkInsert('ayah_kandung', [
       {
-        email: 'triogamerz46@gmail.com',
-        password: 'sendaljepit',
-        username: 'AnandaEka',
-      },
-      {
-        email: 'aden286chara@gmail.com',
-        password: 'aden',
-        username: 'Aden',
-      },
-      {
-        email: 'jokoaiko8b@gmail.com',
-        password: 'aiko',
-        username: 'JokoAiko',
-      },
-      {
-        email: 'drscity20@gmail.comm',
-        password: 'pass',
-        username: 'DarisNur',
+        nama: 'Aster',
+        tempat_lahir: 'Malang',
+        tanggal_lahir: '1978-04-17',
+        agama: 'Islam',
+        kewarganegaraan: 'Indonesia',
+        pendidikan: 'S1',
+        pekerjaan: 'Guru',
+        pengeluaran_per_bulan: '1200000',
+        alamat_dan_no_telepon: 'Jl. Raya Tunjungtirto, 08123456789',
+        status: 'masih hidup',
+        user_id: 1,
       },
     ])
   },

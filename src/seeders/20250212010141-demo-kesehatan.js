@@ -12,26 +12,14 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
      */
-    return queryInterface.bulkInsert('admin', [
+    return queryInterface.bulkInsert('kesehatan', [
       {
-        email: 'triogamerz46@gmail.com',
-        password: 'sendaljepit',
-        username: 'AnandaEka',
-      },
-      {
-        email: 'aden286chara@gmail.com',
-        password: 'aden',
-        username: 'Aden',
-      },
-      {
-        email: 'jokoaiko8b@gmail.com',
-        password: 'aiko',
-        username: 'JokoAiko',
-      },
-      {
-        email: 'drscity20@gmail.comm',
-        password: 'pass',
-        username: 'DarisNur',
+        gol_darah: 'O',
+        penyakit_pernah_diderita: 'Asma',
+        kelainan_jasmani: 'Tidak ada',
+        tinggi: '175 cm',
+        berat_badan: '70 kg',
+        user_id: 1,
       },
     ])
   },

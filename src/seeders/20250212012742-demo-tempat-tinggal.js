@@ -12,26 +12,13 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
      */
-    return queryInterface.bulkInsert('admin', [
+    return queryInterface.bulkInsert('tempat_tinggal', [
       {
-        email: 'triogamerz46@gmail.com',
-        password: 'sendaljepit',
-        username: 'AnandaEka',
-      },
-      {
-        email: 'aden286chara@gmail.com',
-        password: 'aden',
-        username: 'Aden',
-      },
-      {
-        email: 'jokoaiko8b@gmail.com',
-        password: 'aiko',
-        username: 'JokoAiko',
-      },
-      {
-        email: 'drscity20@gmail.comm',
-        password: 'pass',
-        username: 'DarisNur',
+        alamat: 'JL Raya Tunjungtirto',
+        no_telepon: '081234567890',
+        tinggal_dengan: 'ortu',
+        jarak_ke_sekolah: '5 km',
+        user_id: 1,
       },
     ])
   },

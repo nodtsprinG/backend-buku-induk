@@ -1,4 +1,26 @@
-const Sequelize = require('sequelize')
+/**
+ * @module ModelTempatTinggal
+ * @deskripsi Model Sequelize untuk tabel 'tempat_tinggal'.
+ * @param {Sequelize} sequelize - Instance Sequelize yang digunakan.
+ * @param {DataTypes} DataTypes - DataTypes dari Sequelize untuk mendefinisikan tipe data.
+ * @returns {Sequelize.Model} - Mengembalikan model Sequelize untuk tabel 'tempat_tinggal'.
+ */
+
+/**
+ * Definisi model TempatTinggal.
+ * @typedef {object} TempatTinggal
+ * @property {number} id - Identifikasi unik untuk tempat tinggal. Di-auto-increment.
+ * @property {string} alamat - Alamat tempat tinggal.
+ * @property {string} no_telepon - Nomor telepon tempat tinggal.
+ * @property {enum<string>} tinggal_dengan - Informasi mengenai dengan siapa tinggal.
+ * @property {string} jarak_ke_sekolah - Jarak ke sekolah.
+ * @property {number} user_id - ID pengguna yang terkait dengan tempat tinggal.
+ */
+
+/**
+ * Definisi model Sequelize untuk tabel 'tempat_tinggal'.
+ * @type {Sequelize.Model<TempatTinggal>}
+ */
 module.exports = function (sequelize, DataTypes) {
   return sequelize.define(
     'tempat_tinggal',

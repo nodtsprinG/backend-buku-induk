@@ -12,26 +12,15 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
      */
-    return queryInterface.bulkInsert('admin', [
+    return queryInterface.bulkInsert('mapel', [
       {
-        email: 'triogamerz46@gmail.com',
-        password: 'sendaljepit',
-        username: 'AnandaEka',
+        nama: 'Matematika',
       },
       {
-        email: 'aden286chara@gmail.com',
-        password: 'aden',
-        username: 'Aden',
+        nama: 'Bahasa Indonesia',
       },
       {
-        email: 'jokoaiko8b@gmail.com',
-        password: 'aiko',
-        username: 'JokoAiko',
-      },
-      {
-        email: 'drscity20@gmail.comm',
-        password: 'pass',
-        username: 'DarisNur',
+        nama: 'Bahasa Inggris',
       },
     ])
   },

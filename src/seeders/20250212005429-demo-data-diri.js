@@ -12,26 +12,22 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
      */
-    return queryInterface.bulkInsert('admin', [
+    return queryInterface.bulkInsert('data_diri', [
       {
-        email: 'triogamerz46@gmail.com',
-        password: 'sendaljepit',
-        username: 'AnandaEka',
-      },
-      {
-        email: 'aden286chara@gmail.com',
-        password: 'aden',
-        username: 'Aden',
-      },
-      {
-        email: 'jokoaiko8b@gmail.com',
-        password: 'aiko',
-        username: 'JokoAiko',
-      },
-      {
-        email: 'drscity20@gmail.comm',
-        password: 'pass',
-        username: 'DarisNur',
+        nama_lengkap: 'Andi Djarod',
+        nama_panggilan: 'Andi',
+        jenis_kelamin: 'laki-laki',
+        tempat_lahir: 'Malang',
+        agama: 'Islam',
+        kewarganegaraan: 'Indonesia',
+        anak_ke: 2,
+        jml_saudara_kandung: 3,
+        jml_saudara_tiri: 0,
+        jml_saudara_angkat: 0,
+        kelengkapan_ortu: 'lengkap',
+        bahasa_sehari_hari: 'Indonesia',
+        user_id: 1,
+        tanggal_lahir: '2007-02-02',
       },
     ])
   },

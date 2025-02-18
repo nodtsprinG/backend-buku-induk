@@ -12,26 +12,15 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
      */
-    return queryInterface.bulkInsert('admin', [
+    return queryInterface.bulkInsert('perkembangan', [
       {
-        email: 'triogamerz46@gmail.com',
-        password: 'sendaljepit',
-        username: 'AnandaEka',
-      },
-      {
-        email: 'aden286chara@gmail.com',
-        password: 'aden',
-        username: 'Aden',
-      },
-      {
-        email: 'jokoaiko8b@gmail.com',
-        password: 'aiko',
-        username: 'JokoAiko',
-      },
-      {
-        email: 'drscity20@gmail.comm',
-        password: 'pass',
-        username: 'DarisNur',
+        menerima_bea_siswa_tahun_kelas_dari: null,
+        meninggalkan_sekolah_ini_tanggal: '2025-06-15',
+        meninggalkan_sekolah_ini_alasan: 'Lulus',
+        akhir_pendidikan_tamat_belajar_lulus_tahun: '2025',
+        akhir_pendidikan_no_tanggal_ijazah: '2025-06-15',
+        akhir_pendidikan_no_tanggal_skhun: '2025-06-15',
+        user_id: 1,
       },
     ])
   },

@@ -81,6 +81,91 @@ PASSWORD = ""
 - [ ] Export identitas siswa (pdf)
 - [ ] Export raport nilai siswa (excel)
 
+## Documentation (Singkat)
+
+### 1. Nilai
+Action : POST, GET, UPDATE, DELETE\
+url : /admin/nilai
+```json
+body : {
+    "semester" : int(1 - 5),
+    "user_id" : user_id,
+    "data" : [
+        {
+            "r" : int(1-100),
+            "keterangan" : string,
+            "mapel_id" : mapel_id
+        },
+        {
+            "r" : 98,
+            "keterangan" : "Bagus Banget",
+            "mapel_id" : 1
+        }
+    ]
+}
+```
+
+### 2. Mapel
+Action : POST, GET, UPDATE, DELETE\
+url : /admin/mapel
+```json
+body : {
+    "data" : [
+        {
+          "nama" : "Matematika"
+        },
+        {
+          "nama" : "Matematika"
+        }
+}
+```
+
+### 3. All Siswa (Siswa)
+Action : GET, UPDATE, DELETE\
+url : /admin/akun\
+*Available Params*
+| params | value |
+|----------|----------|
+| jurusan   | jurusan_id   |
+| angkatan   | angkatan   |
+| search   | nama siswa   |
+
+### 4. Angakatan
+Action : POST, GET, UPDATE, DELETE\
+url : /admin/angkatan
+```json
+body : {
+    {
+      "nama" : "2020"
+    }        
+}
+```
+
+### 5. Jurusan
+Action : POST, GET, UPDATE, DELETE\
+url : /admin/jurusan 
+```json
+body : {
+    {
+      "nama" : "Rekayasa Perangkat Lunaak"
+    }        
+}
+```
+
+## Documentation (Lengkap)
+
+### 1. Jalankan api dalam mode development
+
+```bash
+npm run dev
+```
+
+### 2. Buka halaman dibawah
+
+```
+localhost:8080/api-docs
+```
+
 ## Dibuat oleh
 
 Projet ini di buat oleh :

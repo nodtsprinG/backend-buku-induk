@@ -2,6 +2,8 @@ const express = require('express')
 const cors = require('cors')
 const bodyParser = require('body-parser')
 const path = require('path')
+const expressJSDocSwagger = require('express-jsdoc-swagger')
+const package = require('../package.json')
 
 require('dotenv').config()
 
@@ -9,7 +11,7 @@ const app = express()
 
 //* Route admin
 const authControllers = require('./routes/AuthController')
-const userControllers = require('./routes/UserControllers')
+const userControllers = require('./routes/Siswa/SiswaSpesificData')
 const akunControllers = require('./routes/Admin/AdminAccountController')
 const dataSiswaController = require('./routes/Admin/AdminDataSiswaController')
 const jurusanController = require('./routes/Admin/AdminJurusan')
@@ -17,11 +19,40 @@ const angkatanController = require('./routes/Admin/AdminAngkatan')
 const tahunpelajaranController = require('./routes/Admin/AdminTahunPelajaran')
 const getExport = require('./routes/Admin/AdminExport')
 
-const nilaiController = require("./routes/Admin/AdminNilaiSiswa")
-const mapelController = require("./routes/Admin/AdminMapel")
+const nilaiController = require('./routes/Admin/AdminNilaiSiswa')
+const mapelController = require('./routes/Admin/AdminMapel')
 
 //* Route siswa
-const ubahDataController = require('./routes/Siswa/SiswaUbahData')
+const ubahDataController = require('./routes/Siswa/SiswaDataDiri')
+
+//* DEV MODE
+
+if (process.env.NODE_ENV === 'development') {
+  console.log('Mode Pengembangan, Anda dapat membuka dokumentasi di /api-docs')
+
+  const options = {
+    info: {
+      version: package.version,
+      title: 'Buku Induk',
+      description: "Aplikasi Buku Induk untuk melakukan pencatatan data siswa, jurusan, angkatan dan lainnya. API Ini dibangun diatas Nodejs dengan sistem autentikasi bearer. Gunakan API ini sebaik mungkin",
+      license: {
+        name: 'MIT',
+      },
+    },
+    security: {
+      BearerAuth: {
+        type: 'http',
+        scheme: 'bearer',
+      },
+    },
+    baseDir: __dirname,
+    filesPattern: './**/*.js',
+  }
+
+  expressJSDocSwagger(app)(options)
+} else {
+  console.log('Mode Produksi')
+}
 
 // middleware
 const {
@@ -47,7 +78,6 @@ app.use('/admin', AuthMiddlewareAdmin, akunControllers)
 app.use('/admin', AuthMiddlewareAdmin, dataSiswaController)
 app.use('/admin', AuthMiddlewareAdmin, jurusanController)
 app.use('/admin', AuthMiddlewareAdmin, angkatanController)
-app.use('/admin', AuthMiddlewareAdmin, getExport)
 app.use('/admin', AuthMiddlewareAdmin, getExport)
 app.use('/admin', AuthMiddlewareAdmin, tahunpelajaranController)
 app.use('/admin', AuthMiddlewareAdmin, nilaiController)
@@ -181,19 +211,19 @@ app.get('/view-pdf', async (req, res) => {
   res.render('export-pdf-bulk', { elements: data })
 })
 
-const XLSX = require('xlsx');
+const XLSX = require('xlsx')
 const upload = require('./middleware/upload')
 
 app.post('/import-excel', upload.single('file'), async (req, res) => {
   try {
     if (!req.file) {
-      return res.status(400).json({ message: 'No file uploaded' });
+      return res.status(400).json({ message: 'No file uploaded' })
     }
 
     // Read the Excel file
-    const workbook = XLSX.read(req.file.buffer, { type: 'buffer' });
-    const sheetName = workbook.SheetNames[0]; // Get first sheet
-    const data = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
+    const workbook = XLSX.read(req.file.buffer, { type: 'buffer' })
+    const sheetName = workbook.SheetNames[0] // Get first sheet
+    const data = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName])
 
     // Process each row
     for (const row of data) {
@@ -201,15 +231,17 @@ app.post('/import-excel', upload.single('file'), async (req, res) => {
         nisn: row.NISN,
         angkatan_id: row['Angkatan Tahun'],
         jurusan_id: row.Jurusan,
-      };
-
-      const existingUser = await Models.user.findOne({ where: { nisn: siswa.nisn } });
-      if (existingUser) {
-        console.log(`Skipping duplicate NISN: ${siswa.nisn}`);
-        continue;
       }
 
-      const newUser = await Models.user.create(siswa);
+      const existingUser = await Models.user.findOne({
+        where: { nisn: siswa.nisn },
+      })
+      if (existingUser) {
+        console.log(`Skipping duplicate NISN: ${siswa.nisn}`)
+        continue
+      }
+
+      const newUser = await Models.user.create(siswa)
 
       await Models.data_diri.create({
         user_id: newUser.id,
@@ -226,17 +258,22 @@ app.post('/import-excel', upload.single('file'), async (req, res) => {
         jml_saudara_angkat: row['Jumlah Saudara Angkat'],
         kelengkapan_ortu: row['Kelengkapan Ortu'],
         bahasa_sehari_hari: row['Bahasa Sehari-hari'],
-      });
+      })
 
       await Models.perkembangan.create({
         user_id: newUser.id,
-        menerima_bea_siswa_tahun_kelas_dari: row['Menerima Bea Siswa Tahun Kelas Dari'],
-        meninggalkan_sekolah_ini_tanggal: row['Meninggalkan Sekolah Ini Tanggal'],
+        menerima_bea_siswa_tahun_kelas_dari:
+          row['Menerima Bea Siswa Tahun Kelas Dari'],
+        meninggalkan_sekolah_ini_tanggal:
+          row['Meninggalkan Sekolah Ini Tanggal'],
         meninggalkan_sekolah_ini_alasan: row['Meninggalkan Sekolah Ini Alasan'],
-        akhir_pendidikan_tamat_belajar_lulus_tahun: row['Akhir Pendidikan Tamat Belajar Lulus Tahun'],
-        akhir_pendidikan_no_tanggal_ijazah: row['Akhir Pendidikan No/Tanggal Ijazah'],
-        akhir_pendidikan_no_tanggal_skhun: row['Akhir Pendidikan No/Tanggal SKHUN'],
-      });
+        akhir_pendidikan_tamat_belajar_lulus_tahun:
+          row['Akhir Pendidikan Tamat Belajar Lulus Tahun'],
+        akhir_pendidikan_no_tanggal_ijazah:
+          row['Akhir Pendidikan No/Tanggal Ijazah'],
+        akhir_pendidikan_no_tanggal_skhun:
+          row['Akhir Pendidikan No/Tanggal SKHUN'],
+      })
 
       await Models.ayah_kandung.create({
         user_id: newUser.id,
@@ -250,7 +287,7 @@ app.post('/import-excel', upload.single('file'), async (req, res) => {
         pengeluaran_per_bulan: row['Pengeluaran per Bulan Ayah'],
         alamat_dan_no_telepon: row['Alamat dan No. Telepon Ayah'],
         status: row['Status Ayah'],
-      });
+      })
 
       await Models.ibu_kandung.create({
         user_id: newUser.id,
@@ -264,7 +301,7 @@ app.post('/import-excel', upload.single('file'), async (req, res) => {
         pengeluaran_per_bulan: row['Pengeluaran per Bulan Ibu'],
         alamat_dan_no_telepon: row['Alamat dan No. Telepon Ibu'],
         status: row['Status Ibu'],
-      });
+      })
 
       await Models.kesehatan.create({
         user_id: newUser.id,
@@ -273,7 +310,7 @@ app.post('/import-excel', upload.single('file'), async (req, res) => {
         kelainan_jasmani: row['Kelainan Jasmani'],
         tinggi: row.Tinggi,
         berat_badan: row['Berat Badan'],
-      });
+      })
 
       await Models.wali.create({
         user_id: newUser.id,
@@ -286,7 +323,7 @@ app.post('/import-excel', upload.single('file'), async (req, res) => {
         pekerjaan: row['Pekerjaan Wali'],
         pengeluaran_per_bulan: row['Pengeluaran per Bulan Wali'],
         alamat_dan_no_telepon: row['Alamat dan No. Telepon Wali'],
-      });
+      })
 
       await Models.hobi_siswa.create({
         user_id: newUser.id,
@@ -294,7 +331,7 @@ app.post('/import-excel', upload.single('file'), async (req, res) => {
         olahraga: row.Olahraga,
         organisasi: row.Organisasi,
         lain_lain: row['Lain-lain'],
-      });
+      })
 
       await Models.pendidikan.create({
         user_id: newUser.id,
@@ -308,7 +345,7 @@ app.post('/import-excel', upload.single('file'), async (req, res) => {
         diterima_di_paket_keahlian: row['Diterima di Paket Keahlian'],
         diterima_tanggal: row['Diterima Tanggal'],
         user_id: newUser.id,
-      });
+      })
 
       await Models.tempat_tinggal.create({
         user_id: newUser.id,
@@ -316,24 +353,20 @@ app.post('/import-excel', upload.single('file'), async (req, res) => {
         no_telepon: row['No. Telepon Tempat Tinggal'],
         tinggal_dengan: row['Tinggal Dengan'],
         jarak_ke_sekolah: row['Jarak ke Sekolah'],
-      });
+      })
 
       await Models.setelah_pendidikan.create({
         user_id: newUser.id,
-        melanjutkan_ke: row["Melanjutkan Ke"],
-      });
+        melanjutkan_ke: row['Melanjutkan Ke'],
+      })
     }
 
-    res.status(201).json({ message: 'Excel data imported successfully' });
+    res.status(201).json({ message: 'Excel data imported successfully' })
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Internal server error' });
+    console.error(error)
+    res.status(500).json({ message: 'Internal server error' })
   }
-});
-
-
-
-
+})
 
 app.listen(8080, async () => {
   console.log('App listen on port 8080')

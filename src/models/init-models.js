@@ -74,7 +74,10 @@ function initModels(sequelize) {
   wali.belongsTo(user, { as: 'user', foreignKey: 'user_id' })
   user.hasOne(wali, { as: 'wali', foreignKey: 'user_id' })
 
-  nilai.hasOne(tahun_pelajaran, {as: 'tahun_pelajaran', foreignKey: 'tahun_pelajaran_id'})
+  nilai.hasOne(tahun_pelajaran, {
+    as: 'tahun_pelajaran',
+    foreignKey: 'tahun_pelajaran_id',
+  })
 
   return {
     admin,
@@ -93,7 +96,7 @@ function initModels(sequelize) {
     wali,
     nilai,
     mapel,
-    tahun_pelajaran
+    tahun_pelajaran,
   }
 }
 module.exports = initModels
