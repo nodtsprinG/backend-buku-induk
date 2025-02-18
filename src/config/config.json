@@ -1,8 +1,8 @@
 {
   "development": {
-    "username": "ananda",
-    "password": "anandaeka140206",
-    "database": "db_buku_induk",
+    "username": "root",
+    "password": "",
+    "database": "db_buku_induk_v2",
     "host": "localhost",
     "dialect": "mysql"
   },

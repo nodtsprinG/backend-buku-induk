@@ -25,13 +25,9 @@ module.exports = function (sequelize, DataTypes) {
           key: 'id',
         },
       },
-      tahun_pelajaran_id: {
+      semester: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        references: {
-          model: 'tahun_pelajaran',
-          key: 'id',
-        },
       },
       user_id : {
         type: DataTypes.INTEGER,

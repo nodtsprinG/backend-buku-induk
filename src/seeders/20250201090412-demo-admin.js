@@ -29,7 +29,7 @@ module.exports = {
         username: "JokoAiko"
       },
       {
-        email: 'drscity20@gmail.comm',
+        email: 'drscity20@gmail.com',
         password: "pass",
         username: "DarisNur"
       }

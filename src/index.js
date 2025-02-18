@@ -50,6 +50,7 @@ app.use('/admin', AuthMiddlewareAdmin, angkatanController)
 app.use('/admin', AuthMiddlewareAdmin, getExport)
 app.use('/admin', AuthMiddlewareAdmin, getExport)
 app.use('/admin', AuthMiddlewareAdmin, tahunpelajaranController)
+
 app.use('/admin', AuthMiddlewareAdmin, nilaiController)
 app.use('/admin', AuthMiddlewareAdmin, mapelController)
 
