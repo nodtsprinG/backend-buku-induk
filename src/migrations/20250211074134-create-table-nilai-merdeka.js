@@ -47,32 +47,8 @@ module.exports = {
           model: 'user',
           key: 'id',
         },
-<<<<<<< HEAD
-        mapel_id: {
-          type: Sequelize.INTEGER,
-          allowNull: false,
-          references: {
-            model: 'mapel',
-            key: 'id',
-          },
-        },
-        semester: {
-          type: Sequelize.INTEGER,
-          allowNull: false,
-        },
-        user_id : {
-          type: Sequelize.INTEGER,
-          allowNull: false,
-          references: {
-            model: "user",
-            key: "id"
-          }
-        }
-      })
-=======
       },
     })
->>>>>>> 983b7ab869c52869bd01a7f47f33e1bde5258bd4
   },
 
   async down(queryInterface, Sequelize) {

@@ -2,11 +2,7 @@
   "development": {
     "username": "root",
     "password": "",
-<<<<<<< HEAD
     "database": "db_buku_induk_v2",
-=======
-    "database": "db_buku_induk",
->>>>>>> 983b7ab869c52869bd01a7f47f33e1bde5258bd4
     "host": "localhost",
     "dialect": "mysql"
   },

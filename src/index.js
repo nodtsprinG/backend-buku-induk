@@ -212,6 +212,9 @@ app.get('/view-pdf', async (req, res) => {
   res.render('export-pdf-bulk', { elements: data })
 })
 
+app.get('/view-raport', async (req, res) => {
+  res.render('export-halaman-belakang')
+})
 const XLSX = require('xlsx')
 const upload = require('./middleware/upload')
 

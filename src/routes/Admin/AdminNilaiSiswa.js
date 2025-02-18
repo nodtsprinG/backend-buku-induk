@@ -26,6 +26,26 @@ const nilai = Models.nilai
  * @param {number} request.body.user_id - ID pengguna yang terkait dengan nilai ini.
  * @return {object} 201 - Nilai berhasil dibuat - application/json
  * @return {object} 400 - Terjadi kesalahan dalam pembuatan data - application/json
+ * @example request - Contoh request body
+ *{
+ *   "semester" : 4,
+ *   "user_id" : 1,
+ *   "data_sia" : {
+ *       "sakit" : 2
+ *   },
+ *   "data" : [
+ *       {
+ *        "r" : 98,
+ *           "keterangan" : "Bagus Banget",
+ *           "mapel_id" : 2
+ *       },
+ *       {
+ *           "r" : 98,
+ *           "keterangan" : "Bagus Banget",
+ *           "mapel_id" : 1
+ *       }
+ *   ]
+ *}
  * @example response - 201 - Nilai berhasil dibuat
  * {
  *   "id": 1,
@@ -42,7 +62,7 @@ const nilai = Models.nilai
  */
 router.post('/nilai', async (req, res) => {
   try {
-    const { semester, user_id, data } = req.body;
+    const { semester, user_id, data, sia } = req.body;
 
     // Ensure data is an array
     if (!Array.isArray(data) || data.length === 0) {
@@ -57,6 +77,16 @@ router.post('/nilai', async (req, res) => {
       keterangan: item.keterangan,
       mapel_id: item.mapel_id
     }));
+
+    if(sia) {
+      const new_SIA = await Models.sia.create({
+        semester : semester,
+        user_id,
+        sakit : sia.sakit ?? 0,
+        izin : sia.izin ?? 0,
+        alpha : sia.alpha ?? 0
+      })
+    }
 
     // Bulk insert into the database
     const newNilai = await nilai.bulkCreate(nilaiEntries);
@@ -133,42 +163,84 @@ router.get('/nilai', async (req, res) => {
 router.get('/nilai/:id', async (req, res) => {
   try {
     const oneNilai = await nilai.findAll({
-      where : {
-        user_id : req.params.id
+      where: {
+        user_id: req.params.id
       },
-      include : [
+      include: [
         {
           model: Models.mapel,
           as: 'mapel',
           attributes: ['nama'],
-        },
+        }
       ]
-    })
-    if (oneNilai) {
+    });
+
+    if (oneNilai.length > 0) {
       const user = await Models.user.findOne({
-      where: {
-        id: req.params.id
-        },
-        include : [
+        where: { id: req.params.id },
+        include: [
           {
             model: Models.angkatan,
             as: 'angkatan',
             attributes: ['tahun'],
-          },
+          }
         ]
-        })
-        result = oneNilai.map((item) => ({
+      });
+
+      // Initialize all semesters with empty arrays
+      let groupedBySemester = {
+        "Semester 1": [],
+        "Semester 2": [],
+        "Semester 3": [],
+        "Semester 4": [],
+        "Semester 5": [],
+        "Semester 6": []
+      };
+
+      // Use for...of to properly await each async operation
+      for (const item of oneNilai) {
+        const tahun_pelajaran = user.angkatan
+          ? (parseInt(user.angkatan.tahun) + Math.floor(item.semester / 2) + 1) +
+            "/" +
+            (parseInt(user.angkatan.tahun) + Math.floor(item.semester / 2) + 2)
+          : null;
+
+        const semesterKey = `Semester ${item.semester}`;
+
+        // Get SIA data properly with await
+        const SIA = await Models.sia.findOne({
+          where: {
+            user_id: req.params.id,
+            semester: item.semester
+          }
+        });
+
+        groupedBySemester[semesterKey].push({
           ...item.toJSON(),
-          tahun_pelajaran: user.angkatan ? (parseInt(parseInt(user.angkatan.tahun) + (Math.floor(item.semester / 2)) + 1)) + "/" + (parseInt(parseInt(user.angkatan.tahun) + (Math.floor(item.semester / 2)) + 1) + 1)  : null
-        }))
-      res.status(200).json(result)
+          tahun_pelajaran,
+          SIA
+        });
+      }
+
+      res.status(200).json(groupedBySemester);
     } else {
-      res.status(404).json({ error: 'Nilai not found' })
+      // If no data found, return an empty structure for all semesters
+      res.status(200).json({
+        "Semester 1": [],
+        "Semester 2": [],
+        "Semester 3": [],
+        "Semester 4": [],
+        "Semester 5": [],
+        "Semester 6": []
+      });
     }
   } catch (error) {
-    res.status(500).json({ error: error.message })
+    res.status(500).json({ error: error.message });
   }
-})
+});
+
+
+
 
 /**
  * PUT /admin/nilai/{id}
