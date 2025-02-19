@@ -162,42 +162,92 @@ router.get('/data-diri', async (req, res) => {
         {
           model: Models.data_diri,
           as: 'data_diri',
+          where: {
+            status_perubahan: {
+              [Op.not]: 'pending',  // Filter untuk hanya data yang statusnya bukan 'pending'
+            },
+          },    
         },
         {
           model: Models.perkembangan,
           as: 'perkembangan',
+          where: {
+            status_perubahan: {
+              [Op.not]: 'pending',  // Filter untuk hanya data yang statusnya bukan 'pending'
+            },
+          },    
         },
         {
           model: Models.ayah_kandung,
           as: 'ayah_kandung',
+          where: {
+            status_perubahan: {
+              [Op.not]: 'pending',  // Filter untuk hanya data yang statusnya bukan 'pending'
+            },
+          },    
         },
         {
           model: Models.ibu_kandung,
           as: 'ibu_kandung',
+          where: {
+            status_perubahan: {
+              [Op.not]: 'pending',  // Filter untuk hanya data yang statusnya bukan 'pending'
+            },
+          },    
         },
         {
           model: Models.kesehatan,
           as: 'kesehatan',
+          where: {
+            status_perubahan: {
+              [Op.not]: 'pending',  // Filter untuk hanya data yang statusnya bukan 'pending'
+            },
+          },    
         },
         {
           model: Models.pendidikan,
           as: 'pendidikan',
+          where: {
+            status_perubahan: {
+              [Op.not]: 'pending',  // Filter untuk hanya data yang statusnya bukan 'pending'
+            },
+          },    
         },
         {
           model: Models.setelah_pendidikan,
           as: 'setelah_pendidikan',
+          where: {
+            status_perubahan: {
+              [Op.not]: 'pending',  // Filter untuk hanya data yang statusnya bukan 'pending'
+            },
+          },    
         },
         {
           model: Models.tempat_tinggal,
           as: 'tempat_tinggal',
+          where: {
+            status_perubahan: {
+              [Op.not]: 'pending',  // Filter untuk hanya data yang statusnya bukan 'pending'
+            },
+          },    
         },
         {
           model: Models.wali,
           as: 'wali',
+          where: {
+            status_perubahan: {
+              [Op.not]: 'pending',  // Filter untuk hanya data yang statusnya bukan 'pending'
+            },
+          },    
         },
         {
           model: Models.hobi_siswa,
           as: 'hobi_siswa',
+          where: {
+            status_perubahan: {
+              [Op.not]: 'pending',  // Filter untuk hanya data yang statusnya bukan 'pending'
+            },
+          },    
         },
       ],
       where: {
@@ -205,51 +255,6 @@ router.get('/data-diri', async (req, res) => {
       },
     })
     res.status(200).json(user)
-  } catch (error) {
-    res.status(500).json({ error: error.message })
-  }
-})
-
-/**
- * GET /siswa/data-diri/:id
- * @summary Mengambil data diri siswa berdasarkan ID pengguna
- * @tags siswa
- * @param {string} id.path.required - ID pengguna yang data dirinya ingin diambil
- * @return {object} 200 - Data diri siswa ditemukan - application/json
- * @return {object} 404 - Data diri siswa tidak ditemukan - application/json
- * @return {object} 500 - Terjadi kesalahan pada server - application/json
- * @example response - 200 - Data diri siswa ditemukan
- * {
- *   "id": 1,
- *   "nama": "John Doe",
- *   "alamat": "Jl. Contoh No. 1",
- *   "tanggal_lahir": "2000-01-01"
- * }
- * @example response - 404 - Data diri siswa tidak ditemukan
- * {
- *   "error": "Data diri tidak ditemukan"
- * }
- * @example response - 500 - Kesalahan pada server
- * {
- *   "error": "Internal server error"
- * }
- */
-router.get('/data-diri/:id', async (req, res) => {
-  try {
-    const data = await Models.data_diri.findOne({
-      where: {
-        user_id: req.params.id,
-      },
-      attributes: {
-        exclude: ['user_id'],
-      },
-    })
-
-    if (data) {
-      res.status(200).json(data)
-    } else {
-      res.status(404).json({ error: 'Data diri tidak ditemukan' })
-    }
   } catch (error) {
     res.status(500).json({ error: error.message })
   }
