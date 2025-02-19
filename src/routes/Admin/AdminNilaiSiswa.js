@@ -30,7 +30,7 @@ const nilai = Models.nilai
  *{
  *   "semester" : 4,
  *   "user_id" : 1,
- *   "data_sia" : {
+ *   "sia" : {
  *       "sakit" : 2
  *   },
  *   "data" : [
