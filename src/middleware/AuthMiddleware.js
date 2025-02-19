@@ -23,7 +23,7 @@ const AuthMiddlewareAdmin = async (req, res, next) => {
     req.user_id = data.id
     next()
   } catch (ex) {
-    res.status(401).json({ message: 'Unauthorised' })
+    res.status(401).json({ message: ex })
   }
 }
 

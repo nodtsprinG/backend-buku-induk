@@ -80,6 +80,7 @@ app.use('/admin', AuthMiddlewareAdmin, jurusanController)
 app.use('/admin', AuthMiddlewareAdmin, angkatanController)
 app.use('/admin', AuthMiddlewareAdmin, getExport)
 app.use('/admin', AuthMiddlewareAdmin, tahunpelajaranController)
+
 app.use('/admin', AuthMiddlewareAdmin, nilaiController)
 app.use('/admin', AuthMiddlewareAdmin, mapelController)
 
@@ -211,6 +212,9 @@ app.get('/view-pdf', async (req, res) => {
   res.render('export-pdf-bulk', { elements: data })
 })
 
+app.get('/view-raport', async (req, res) => {
+  res.render('export-halaman-belakang')
+})
 const XLSX = require('xlsx')
 const upload = require('./middleware/upload')
 

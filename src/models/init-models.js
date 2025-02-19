@@ -8,6 +8,7 @@ var _ibu_kandung = require('./ibu_kandung')
 var _jurusan = require('./jurusan')
 var _kesehatan = require('./kesehatan')
 var _pendidikan = require('./pendidikan')
+var _sia = require('./sia')
 var _perkembangan = require('./perkembangan')
 var _setelah_pendidikan = require('./setelah_pendidikan')
 var _tempat_tinggal = require('./tempat_tinggal')
@@ -27,6 +28,7 @@ function initModels(sequelize) {
   var jurusan = _jurusan(sequelize, DataTypes)
   var kesehatan = _kesehatan(sequelize, DataTypes)
   var pendidikan = _pendidikan(sequelize, DataTypes)
+  var sia = _sia(sequelize, DataTypes)
   var perkembangan = _perkembangan(sequelize, DataTypes)
   var setelah_pendidikan = _setelah_pendidikan(sequelize, DataTypes)
   var tempat_tinggal = _tempat_tinggal(sequelize, DataTypes)
@@ -74,9 +76,16 @@ function initModels(sequelize) {
   wali.belongsTo(user, { as: 'user', foreignKey: 'user_id' })
   user.hasOne(wali, { as: 'wali', foreignKey: 'user_id' })
 
+
+
   nilai.hasOne(tahun_pelajaran, {
     as: 'tahun_pelajaran',
     foreignKey: 'tahun_pelajaran_id',
+  })
+
+  nilai.hasOne(mapel, {
+    as: 'mapel',
+    foreignKey: 'id',
   })
 
   return {
@@ -94,6 +103,7 @@ function initModels(sequelize) {
     tempat_tinggal,
     user,
     wali,
+    sia,
     nilai,
     mapel,
     tahun_pelajaran,
