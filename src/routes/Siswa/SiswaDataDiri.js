@@ -298,84 +298,84 @@ router.put('/data-diri', async (req, res) => {
 
   try {
     // TODO: Tambah kodingannya
-    
-    const existingDataDiri = await Models.data_diri.findOne({ where: { user_id, status: 'pending' } });
+
+    const existingDataDiri = await Models.data_diri.findOne({ where: { user_id, status_perubahan: 'pending' } });
     if (existingDataDiri) {
-      await Models.data_diri.update({ ...data_diri, status: 'pending' }, { where: { user_id, status: 'pending' } });
+      await Models.data_diri.update({ ...data_diri, status_perubahan: 'pending' }, { where: { user_id, status_perubahan: 'pending' } });
     } else {
-      await Models.data_diri.create({ ...data_diri, user_id, status: 'pending' });
+      await Models.data_diri.create({ ...data_diri, user_id, status_perubahan: 'pending' });
     }
 
     // Update atau buat untuk ayah kandung
-    const existingAyahKandung = await Models.ayah_kandung.findOne({ where: { user_id, status: 'pending' } });
+    const existingAyahKandung = await Models.ayah_kandung.findOne({ where: { user_id, status_perubahan: 'pending' } });
     if (existingAyahKandung) {
-      await Models.ayah_kandung.update({ ...ayah_kandung, status: 'pending' }, { where: { user_id, status: 'pending' } });
+      await Models.ayah_kandung.update({ ...ayah_kandung, status_perubahan: 'pending' }, { where: { user_id, status_perubahan: 'pending' } });
     } else {
-      await Models.ayah_kandung.create({ ...ayah_kandung, user_id, status: 'pending' });
+      await Models.ayah_kandung.create({ ...ayah_kandung, user_id, status_perubahan: 'pending' });
     }
 
     // Update atau buat untuk ibu kandung
-    const existingIbuKandung = await Models.ibu_kandung.findOne({ where: { user_id, status: 'pending' } });
+    const existingIbuKandung = await Models.ibu_kandung.findOne({ where: { user_id, status_perubahan: 'pending' } });
     if (existingIbuKandung) {
-      await Models.ibu_kandung.update({ ...ibu_kandung, status: 'pending' }, { where: { user_id, status: 'pending' } });
+      await Models.ibu_kandung.update({ ...ibu_kandung, status_perubahan: 'pending' }, { where: { user_id, status_perubahan: 'pending' } });
     } else {
-      await Models.ibu_kandung.create({ ...ibu_kandung, user_id, status: 'pending' });
+      await Models.ibu_kandung.create({ ...ibu_kandung, user_id, status_perubahan: 'pending' });
     }
 
     // Update atau buat untuk hobi siswa
-    const existingHobiSiswa = await Models.hobi_siswa.findOne({ where: { user_id, status: 'pending' } });
+    const existingHobiSiswa = await Models.hobi_siswa.findOne({ where: { user_id, status_perubahan: 'pending' } });
     if (existingHobiSiswa) {
-      await Models.hobi_siswa.update({ ...hobi, status: 'pending' }, { where: { user_id, status: 'pending' } });
+      await Models.hobi_siswa.update({ ...hobi, status_perubahan: 'pending' }, { where: { user_id, status_perubahan: 'pending' } });
     } else {
-      await Models.hobi_siswa.create({ ...hobi, user_id, status: 'pending' });
+      await Models.hobi_siswa.create({ ...hobi, user_id, status_perubahan: 'pending' });
     }
 
     // Update atau buat untuk kesehatan
-    const existingKesehatan = await Models.kesehatan.findOne({ where: { user_id, status: 'pending' } });
+    const existingKesehatan = await Models.kesehatan.findOne({ where: { user_id, status_perubahan: 'pending' } });
     if (existingKesehatan) {
-      await Models.kesehatan.update({ ...kesehatan, status: 'pending' }, { where: { user_id, status: 'pending' } });
+      await Models.kesehatan.update({ ...kesehatan, status_perubahan: 'pending' }, { where: { user_id, status_perubahan: 'pending' } });
     } else {
-      await Models.kesehatan.create({ ...kesehatan, user_id, status: 'pending' });
+      await Models.kesehatan.create({ ...kesehatan, user_id, status_perubahan: 'pending' });
     }
 
     // Update atau buat untuk pendidikan
-    const existingPendidikan = await Models.pendidikan.findOne({ where: { user_id, status: 'pending' } });
+    const existingPendidikan = await Models.pendidikan.findOne({ where: { user_id, status_perubahan: 'pending' } });
     if (existingPendidikan) {
-      await Models.pendidikan.update({ ...pendidikan, status: 'pending' }, { where: { user_id, status: 'pending' } });
+      await Models.pendidikan.update({ ...pendidikan, status_perubahan: 'pending' }, { where: { user_id, status_perubahan: 'pending' } });
     } else {
-      await Models.pendidikan.create({ ...pendidikan, user_id, status: 'pending' });
+      await Models.pendidikan.create({ ...pendidikan, user_id, status_perubahan: 'pending' });
     }
 
     // Update atau buat untuk perkembangan
-    const existingPerkembangan = await Models.perkembangan.findOne({ where: { user_id, status: 'pending' } });
+    const existingPerkembangan = await Models.perkembangan.findOne({ where: { user_id, status_perubahan: 'pending' } });
     if (existingPerkembangan) {
-      await Models.perkembangan.update({ ...perkembangan, status: 'pending' }, { where: { user_id, status: 'pending' } });
+      await Models.perkembangan.update({ ...perkembangan, status_perubahan: 'pending' }, { where: { user_id, status_perubahan: 'pending' } });
     } else {
-      await Models.perkembangan.create({ ...perkembangan, user_id, status: 'pending' });
+      await Models.perkembangan.create({ ...perkembangan, user_id, status_perubahan: 'pending' });
     }
 
     // Update atau buat untuk setelah pendidikan
-    const existingSetelahPendidikan = await Models.setelah_pendidikan.findOne({ where: { user_id, status: 'pending' } });
+    const existingSetelahPendidikan = await Models.setelah_pendidikan.findOne({ where: { user_id, status_perubahan: 'pending' } });
     if (existingSetelahPendidikan) {
-      await Models.setelah_pendidikan.update({ ...setelah_pendidikan, status: 'pending' }, { where: { user_id, status: 'pending' } });
+      await Models.setelah_pendidikan.update({ ...setelah_pendidikan, status_perubahan: 'pending' }, { where: { user_id, status_perubahan: 'pending' } });
     } else {
-      await Models.setelah_pendidikan.create({ ...setelah_pendidikan, user_id, status: 'pending' });
+      await Models.setelah_pendidikan.create({ ...setelah_pendidikan, user_id, status_perubahan: 'pending' });
     }
 
     // Update atau buat untuk tempat tinggal
-    const existingTempatTinggal = await Models.tempat_tinggal.findOne({ where: { user_id, status: 'pending' } });
+    const existingTempatTinggal = await Models.tempat_tinggal.findOne({ where: { user_id, status_perubahan: 'pending' } });
     if (existingTempatTinggal) {
-      await Models.tempat_tinggal.update({ ...tempat_tinggal, status: 'pending' }, { where: { user_id, status: 'pending' } });
+      await Models.tempat_tinggal.update({ ...tempat_tinggal, status_perubahan: 'pending' }, { where: { user_id, status_perubahan: 'pending' } });
     } else {
-      await Models.tempat_tinggal.create({ ...tempat_tinggal, user_id, status: 'pending' });
+      await Models.tempat_tinggal.create({ ...tempat_tinggal, user_id, status_perubahan: 'pending' });
     }
 
     // Update atau buat untuk wali
-    const existingWali = await Models.wali.findOne({ where: { user_id, status: 'pending' } });
+    const existingWali = await Models.wali.findOne({ where: { user_id, status_perubahan: 'pending' } });
     if (existingWali) {
-      await Models.wali.update({ ...wali, status: 'pending' }, { where: { user_id, status: 'pending' } });
+      await Models.wali.update({ ...wali, status_perubahan: 'pending' }, { where: { user_id, status_perubahan: 'pending' } });
     } else {
-      await Models.wali.create({ ...wali, user_id, status: 'pending' });
+      await Models.wali.create({ ...wali, user_id, status_perubahan: 'pending' });
     }
 
 
