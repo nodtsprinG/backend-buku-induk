@@ -163,6 +163,97 @@ router.get('/data-diri/pending', async (req, res) => {
 });
 
 /**
+ * GET /data-diri/pending/{id-siswa}
+ * @summary Admin melihat data siswa tertentu yang status perubahan-nya "pending"
+ * @tags admin
+ * @param {integer} id.path.required - ID siswa yang datanya ingin dilihat
+ * @return {object} 200 - Data siswa yang status perubahan-nya "pending" - application/json
+ * @return {object} 404 - Data siswa tidak ditemukan atau tidak ada status pending - application/json
+ * @return {object} 500 - Terjadi kesalahan saat mendapatkan data - application/json
+ */
+router.get('/data-diri/pending/:id', async (req, res) => {
+  const user_id = req.params.id;
+
+  try {
+    // Menemukan data siswa berdasarkan user_id dengan status_perubahan 'pending' di berbagai tabel terkait
+    const pendingData = await Models.user.findOne({
+      where: { id: user_id },
+      include: [
+        {
+          model: Models.jurusan,
+          as: 'jurusan',
+          attributes: ['nama'],
+        },
+        {
+          model: Models.angkatan,
+          as: 'angkatan',
+          attributes: ['tahun'],
+        },
+        {
+          model: Models.data_diri,
+          as: 'data_diri',
+          where: { status_perubahan: 'pending' },
+        },
+        {
+          model: Models.perkembangan,
+          as: 'perkembangan',
+          where: { status_perubahan: 'pending' },
+        },
+        {
+          model: Models.ayah_kandung,
+          as: 'ayah_kandung',
+          where: { status_perubahan: 'pending' },
+        },
+        {
+          model: Models.ibu_kandung,
+          as: 'ibu_kandung',
+          where: { status_perubahan: 'pending' },
+        },
+        {
+          model: Models.kesehatan,
+          as: 'kesehatan',
+          where: { status_perubahan: 'pending' },
+        },
+        {
+          model: Models.pendidikan,
+          as: 'pendidikan',
+          where: { status_perubahan: 'pending' },
+        },
+        {
+          model: Models.setelah_pendidikan,
+          as: 'setelah_pendidikan',
+          where: { status_perubahan: 'pending' },
+        },
+        {
+          model: Models.tempat_tinggal,
+          as: 'tempat_tinggal',
+          where: { status_perubahan: 'pending' },
+        },
+        {
+          model: Models.wali,
+          as: 'wali',
+          where: { status_perubahan: 'pending' },
+        },
+        {
+          model: Models.hobi_siswa,
+          as: 'hobi_siswa',
+          where: { status_perubahan: 'pending' },
+        },
+      ],
+    });
+
+    if (!pendingData) {
+      return res.status(404).json({ error: 'Data siswa tidak ditemukan atau tidak ada status pending' });
+    }
+
+    return res.json({ data: pendingData });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: 'Terjadi kesalahan saat mendapatkan data siswa' });
+  }
+});
+
+/**
  * POST /data-diri/pending/{id-siswa}
  * @summary Admin menyetujui dan mengubah status data diri siswa yang pending menjadi approved
  * @tags admin
