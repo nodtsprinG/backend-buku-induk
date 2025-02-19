@@ -260,16 +260,16 @@ router.get('/data-diri/:id', async (req, res) => {
  * @summary Memperbarui data diri siswa
  * @tags siswa
  * @param {object} request.body.request.required - Data yang akan diperbarui
- * @param {object} request.body.ayah_kandung - Informasi ayah kandung siswa
- * @param {object} request.body.ibu_kandung - Informasi ibu kandung siswa
- * @param {object} request.body.data_diri - Informasi umum data diri siswa
- * @param {object} request.body.hobi - Informasi hobi siswa
- * @param {object} request.body.kesehatan - Informasi kesehatan siswa
- * @param {object} request.body.pendidikan - Informasi pendidikan siswa
- * @param {object} request.body.perkembangan - Informasi perkembangan siswa
- * @param {object} request.body.setelah_pendidikan - Informasi setelah pendidikan siswa
- * @param {object} request.body.tempat_tinggal - Informasi tempat tinggal siswa
- * @param {object} request.body.wali - Informasi wali siswa
+ * @param {AyahKandung} request.body.ayah_kandung - Informasi ayah kandung siswa
+ * @param {IBuKandung} request.body.ibu_kandung - Informasi ibu kandung siswa
+ * @param {DataDiri} request.body.data_diri - Informasi umum data diri siswa
+ * @param {HobiSiswa} request.body.hobi - Informasi hobi siswa
+ * @param {Kesehatan} request.body.kesehatan - Informasi kesehatan siswa
+ * @param {Pendidikan} request.body.pendidikan - Informasi pendidikan siswa
+ * @param {Perkembangan} request.body.perkembangan - Informasi perkembangan siswa
+ * @param {SetelahPendidikan} request.body.setelah_pendidikan - Informasi setelah pendidikan siswa
+ * @param {TempatTinggal} request.body.tempat_tinggal - Informasi tempat tinggal siswa
+ * @param {Wali} request.body.wali - Informasi wali siswa
  * @return {object} 200 - Data berhasil diperbarui - application/json
  * @return {object} 500 - Terjadi kesalahan saat memperbarui data - application/json
  * @example response - 200 - Data berhasil diperbarui
