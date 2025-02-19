@@ -9,7 +9,7 @@
 */
 
 const { Router } = require('express')
-const { Models } = require('../../models') // Adjust the path as necessary
+const { Models } = require('../../models') 
 
 const router = Router()
 const angkatan = Models.angkatan

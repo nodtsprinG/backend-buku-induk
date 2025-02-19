@@ -85,7 +85,7 @@ router.put('/data-diri/:id', async (req, res) => {
  */
 router.get('/data-diri/pending', async (req, res) => {
   try {
-    // Menemukan semua data siswa yang status_perubahan-nya 'pending' di berbagai tabel terkait
+    
     const pendingData = await Models.user.findAll({
       include: [
         {
@@ -175,7 +175,7 @@ router.get('/data-diri/pending/:id', async (req, res) => {
   const user_id = req.params.id;
 
   try {
-    // Menemukan data siswa berdasarkan user_id dengan status_perubahan 'pending' di berbagai tabel terkait
+    
     const pendingData = await Models.user.findOne({
       where: { id: user_id },
       include: [
@@ -270,7 +270,7 @@ router.post('/data-diri/pending/:id', async (req, res) => {
       where: {
         user_id,
         status_perubahan: {
-          [Op.not]: 'pending' // Hapus data dengan status selain 'pending'
+          [Op.not]: 'pending' 
         }
       }
     });
@@ -279,7 +279,7 @@ router.post('/data-diri/pending/:id', async (req, res) => {
       where: {
         user_id,
         status_perubahan: {
-          [Op.not]: 'pending' // Hapus data dengan status selain 'pending'
+          [Op.not]: 'pending' 
         }
       }
     });
@@ -288,7 +288,7 @@ router.post('/data-diri/pending/:id', async (req, res) => {
       where: {
         user_id,
         status_perubahan: {
-          [Op.not]: 'pending' // Hapus data dengan status selain 'pending'
+          [Op.not]: 'pending' 
         }
       }
     });
@@ -297,7 +297,7 @@ router.post('/data-diri/pending/:id', async (req, res) => {
       where: {
         user_id,
         status_perubahan: {
-          [Op.not]: 'pending' // Hapus data dengan status selain 'pending'
+          [Op.not]: 'pending' 
         }
       }
     });
@@ -306,7 +306,7 @@ router.post('/data-diri/pending/:id', async (req, res) => {
       where: {
         user_id,
         status_perubahan: {
-          [Op.not]: 'pending' // Hapus data dengan status selain 'pending'
+          [Op.not]: 'pending' 
         }
       }
     });
@@ -315,7 +315,7 @@ router.post('/data-diri/pending/:id', async (req, res) => {
       where: {
         user_id,
         status_perubahan: {
-          [Op.not]: 'pending' // Hapus data dengan status selain 'pending'
+          [Op.not]: 'pending' 
         }
       }
     });
@@ -324,7 +324,7 @@ router.post('/data-diri/pending/:id', async (req, res) => {
       where: {
         user_id,
         status_perubahan: {
-          [Op.not]: 'pending' // Hapus data dengan status selain 'pending'
+          [Op.not]: 'pending' 
         }
       }
     });
@@ -333,7 +333,7 @@ router.post('/data-diri/pending/:id', async (req, res) => {
       where: {
         user_id,
         status_perubahan: {
-          [Op.not]: 'pending' // Hapus data dengan status selain 'pending'
+          [Op.not]: 'pending' 
         }
       }
     });
@@ -342,7 +342,7 @@ router.post('/data-diri/pending/:id', async (req, res) => {
       where: {
         user_id,
         status_perubahan: {
-          [Op.not]: 'pending' // Hapus data dengan status selain 'pending'
+          [Op.not]: 'pending' 
         }
       }
     });
@@ -351,7 +351,7 @@ router.post('/data-diri/pending/:id', async (req, res) => {
       where: {
         user_id,
         status_perubahan: {
-          [Op.not]: 'pending' // Hapus data dengan status selain 'pending'
+          [Op.not]: 'pending' 
         }
       }
     });
@@ -393,7 +393,7 @@ router.delete('/data-diri/pending/:id', async (req, res) => {
   const user_id = req.params.id;
 
   try {
-    // Hapus semua data yang status_perubahannya 'pending'
+    
     await Models.data_diri.destroy({
       where: {
         user_id,
@@ -464,7 +464,7 @@ router.delete('/data-diri/pending/:id', async (req, res) => {
       }
     });
 
-    // Return success message after deletion
+    
     return res.json({ message: 'Data berhasil ditolak' });
   } catch (error) {
     console.error(error);

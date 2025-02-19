@@ -27,7 +27,7 @@ routes.get('/data/:id', async (req, res) => {
           as: 'data_diri',
           where: {
             status_perubahan: {
-              [Op.not]: 'pending',  // Filter untuk hanya data yang statusnya bukan 'pending'
+              [Op.not]: 'pending',  
             },
           },    
         },
@@ -36,7 +36,7 @@ routes.get('/data/:id', async (req, res) => {
           as: 'perkembangan',
           where: {
             status_perubahan: {
-              [Op.not]: 'pending',  // Filter untuk hanya data yang statusnya bukan 'pending'
+              [Op.not]: 'pending',  
             },
           },    
         },
@@ -45,7 +45,7 @@ routes.get('/data/:id', async (req, res) => {
           as: 'ayah_kandung',
           where: {
             status_perubahan: {
-              [Op.not]: 'pending',  // Filter untuk hanya data yang statusnya bukan 'pending'
+              [Op.not]: 'pending',  
             },
           },    
         },
@@ -54,7 +54,7 @@ routes.get('/data/:id', async (req, res) => {
           as: 'ibu_kandung',
           where: {
             status_perubahan: {
-              [Op.not]: 'pending',  // Filter untuk hanya data yang statusnya bukan 'pending'
+              [Op.not]: 'pending',  
             },
           },    
         },
@@ -63,7 +63,7 @@ routes.get('/data/:id', async (req, res) => {
           as: 'kesehatan',
           where: {
             status_perubahan: {
-              [Op.not]: 'pending',  // Filter untuk hanya data yang statusnya bukan 'pending'
+              [Op.not]: 'pending',  
             },
           },    
         },
@@ -72,7 +72,7 @@ routes.get('/data/:id', async (req, res) => {
           as: 'pendidikan',
           where: {
             status_perubahan: {
-              [Op.not]: 'pending',  // Filter untuk hanya data yang statusnya bukan 'pending'
+              [Op.not]: 'pending',  
             },
           },    
         },
@@ -81,7 +81,7 @@ routes.get('/data/:id', async (req, res) => {
           as: 'setelah_pendidikan',
           where: {
             status_perubahan: {
-              [Op.not]: 'pending',  // Filter untuk hanya data yang statusnya bukan 'pending'
+              [Op.not]: 'pending',  
             },
           },    
         },
@@ -90,7 +90,7 @@ routes.get('/data/:id', async (req, res) => {
           as: 'tempat_tinggal',
           where: {
             status_perubahan: {
-              [Op.not]: 'pending',  // Filter untuk hanya data yang statusnya bukan 'pending'
+              [Op.not]: 'pending',  
             },
           },    
         },
@@ -99,7 +99,7 @@ routes.get('/data/:id', async (req, res) => {
           as: 'wali',
           where: {
             status_perubahan: {
-              [Op.not]: 'pending',  // Filter untuk hanya data yang statusnya bukan 'pending'
+              [Op.not]: 'pending',  
             },
           },    
         },
@@ -108,7 +108,7 @@ routes.get('/data/:id', async (req, res) => {
           as: 'hobi_siswa',
           where: {
             status_perubahan: {
-              [Op.not]: 'pending',  // Filter untuk hanya data yang statusnya bukan 'pending'
+              [Op.not]: 'pending',  
             },
           },    
         },

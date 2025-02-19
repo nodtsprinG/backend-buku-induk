@@ -9,7 +9,7 @@
 */
 
 const { Router } = require('express')
-const { Models } = require('../../models') // Adjust the path as necessary
+const { Models } = require('../../models') 
 const { where } = require('sequelize')
 
 const router = Router()
@@ -64,12 +64,12 @@ router.post('/nilai', async (req, res) => {
   try {
     const { semester, user_id, data, sia } = req.body
 
-    // Ensure data is an array
+    
     if (!Array.isArray(data) || data.length === 0) {
       return res.status(400).json({ error: 'Invalid data format' })
     }
 
-    // Map data to include semester and user_id
+    
     const nilaiEntries = data.map((item) => ({
       semester,
       user_id,
@@ -88,7 +88,7 @@ router.post('/nilai', async (req, res) => {
       })
     }
 
-    // Bulk insert into the database
+    
     const newNilai = await nilai.bulkCreate(nilaiEntries)
 
     res.status(201).json(newNilai)
@@ -186,7 +186,7 @@ router.get('/nilai/:id', async (req, res) => {
         ],
       })
 
-      // Initialize all semesters with empty arrays
+      
       let groupedBySemester = {
         'Semester 1': [],
         'Semester 2': [],
@@ -196,7 +196,7 @@ router.get('/nilai/:id', async (req, res) => {
         'Semester 6': [],
       }
 
-      // Use for...of to properly await each async operation
+      
       for (const item of oneNilai) {
         const tahun_pelajaran = user.angkatan
           ? parseInt(user.angkatan.tahun) +
@@ -208,7 +208,7 @@ router.get('/nilai/:id', async (req, res) => {
 
         const semesterKey = `Semester ${item.semester}`
 
-        // Get SIA data properly with await
+        
         const SIA = await Models.sia.findOne({
           where: {
             user_id: req.params.id,
@@ -225,7 +225,7 @@ router.get('/nilai/:id', async (req, res) => {
 
       res.status(200).json(groupedBySemester)
     } else {
-      // If no data found, return an empty structure for all semesters
+      
       res.status(200).json({
         'Semester 1': [],
         'Semester 2': [],
