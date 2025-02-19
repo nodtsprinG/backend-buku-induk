@@ -56,20 +56,16 @@ router.put('/data-diri/:id', async (req, res) => {
   } = req.body
 
   try {
-    await Models.ayah_kandung.update(ayah_kandung, { where: { user_id } })
-    await Models.ibu_kandung.update(ibu_kandung, { where: { user_id } })
-    await Models.data_diri.update(data_diri, { where: { user_id } })
-    await Models.hobi_siswa.update(hobi, { where: { user_id } })
-    await Models.kesehatan.update(kesehatan, { where: { user_id } })
-    await Models.pendidikan.update(pendidikan, { where: { user_id } })
-    await Models.perkembangan.update(perkembangan, { where: { user_id } })
-    await Models.setelah_pendidikan.update(setelah_pendidikan, {
-      where: { user_id },
-    })
-    await Models.tempat_tinggal.update(tempat_tinggal, {
-      where: { user_id },
-    })
-    await Models.wali.update(wali, { where: { user_id } })
+    await Models.ayah_kandung.update(ayah_kandung, { where: { user_id, status_perubahan: { [Op.ne]: 'pending' } } });
+    await Models.ibu_kandung.update(ibu_kandung, { where: { user_id, status_perubahan: { [Op.ne]: 'pending' } } });
+    await Models.data_diri.update(data_diri, { where: { user_id, status_perubahan: { [Op.ne]: 'pending' } } });
+    await Models.hobi_siswa.update(hobi, { where: { user_id, status_perubahan: { [Op.ne]: 'pending' } } });
+    await Models.kesehatan.update(kesehatan, { where: { user_id, status_perubahan: { [Op.ne]: 'pending' } } });
+    await Models.pendidikan.update(pendidikan, { where: { user_id, status_perubahan: { [Op.ne]: 'pending' } } });
+    await Models.perkembangan.update(perkembangan, { where: { user_id, status_perubahan: { [Op.ne]: 'pending' } } });
+    await Models.setelah_pendidikan.update(setelah_pendidikan, { where: { user_id, status_perubahan: { [Op.ne]: 'pending' } } });
+    await Models.tempat_tinggal.update(tempat_tinggal, { where: { user_id, status_perubahan: { [Op.ne]: 'pending' } } });
+    await Models.wali.update(wali, { where: { user_id, status_perubahan: { [Op.ne]: 'pending' } } });
 
     return res.json({ message: 'Data updated successfully' })
   } catch (error) {
@@ -79,6 +75,312 @@ router.put('/data-diri/:id', async (req, res) => {
       .json({ error: 'An error occurred while updating the data' })
   }
 })
+
+/**
+ * GET /data-diri/pending
+ * @summary Admin melihat data siswa yang status perubahan-nya "pending"
+ * @tags admin
+ * @return {object} 200 - Data siswa yang status perubahan-nya "pending" - application/json
+ * @return {object} 500 - Terjadi kesalahan saat mendapatkan data - application/json
+ */
+router.get('/data-diri/pending', async (req, res) => {
+  try {
+    // Menemukan semua data siswa yang status_perubahan-nya 'pending' di berbagai tabel terkait
+    const pendingData = await Models.user.findAll({
+      include: [
+        {
+          model: Models.jurusan,
+          as: 'jurusan',
+          attributes: ['nama'],
+        },
+        {
+          model: Models.angkatan,
+          as: 'angkatan',
+          attributes: ['tahun'],
+        },
+        {
+          model: Models.data_diri,
+          as: 'data_diri',
+          where: { status_perubahan: 'pending' },
+        },
+        {
+          model: Models.perkembangan,
+          as: 'perkembangan',
+          where: { status_perubahan: 'pending' },
+        },
+        {
+          model: Models.ayah_kandung,
+          as: 'ayah_kandung',
+          where: { status_perubahan: 'pending' },
+        },
+        {
+          model: Models.ibu_kandung,
+          as: 'ibu_kandung',
+          where: { status_perubahan: 'pending' },
+        },
+        {
+          model: Models.kesehatan,
+          as: 'kesehatan',
+          where: { status_perubahan: 'pending' },
+        },
+        {
+          model: Models.pendidikan,
+          as: 'pendidikan',
+          where: { status_perubahan: 'pending' },
+        },
+        {
+          model: Models.setelah_pendidikan,
+          as: 'setelah_pendidikan',
+          where: { status_perubahan: 'pending' },
+        },
+        {
+          model: Models.tempat_tinggal,
+          as: 'tempat_tinggal',
+          where: { status_perubahan: 'pending' },
+        },
+        {
+          model: Models.wali,
+          as: 'wali',
+          where: { status_perubahan: 'pending' },
+        },
+        {
+          model: Models.hobi_siswa,
+          as: 'hobi_siswa',
+          where: { status_perubahan: 'pending' },
+        },
+      ],
+    });
+
+    if (pendingData.length === 0) {
+      return res.status(404).json({ error: 'Tidak ada data siswa dengan status pending' });
+    }
+
+    return res.json({ data: pendingData });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: 'Terjadi kesalahan saat mendapatkan data siswa' });
+  }
+});
+
+/**
+ * POST /data-diri/pending/{id-siswa}
+ * @summary Admin menyetujui dan mengubah status data diri siswa yang pending menjadi approved
+ * @tags admin
+ * @param {integer} id.path.required - ID siswa yang datanya ingin disetujui
+ * @return {object} 200 - Data berhasil disetujui - application/json
+ * @return {object} 500 - Terjadi kesalahan saat menyetujui data - application/json
+ */
+router.post('/data-diri/pending/:id', async (req, res) => {
+  const user_id = req.params.id;
+
+  try {
+    // 1. Hapus data yang tidak memiliki status 'pending' (misalnya 'approved' atau null)
+    await Models.data_diri.destroy({
+      where: {
+        user_id,
+        status_perubahan: {
+          [Op.not]: 'pending' // Hapus data dengan status selain 'pending'
+        }
+      }
+    });
+
+    await Models.ayah_kandung.destroy({
+      where: {
+        user_id,
+        status_perubahan: {
+          [Op.not]: 'pending' // Hapus data dengan status selain 'pending'
+        }
+      }
+    });
+
+    await Models.ibu_kandung.destroy({
+      where: {
+        user_id,
+        status_perubahan: {
+          [Op.not]: 'pending' // Hapus data dengan status selain 'pending'
+        }
+      }
+    });
+
+    await Models.hobi_siswa.destroy({
+      where: {
+        user_id,
+        status_perubahan: {
+          [Op.not]: 'pending' // Hapus data dengan status selain 'pending'
+        }
+      }
+    });
+
+    await Models.kesehatan.destroy({
+      where: {
+        user_id,
+        status_perubahan: {
+          [Op.not]: 'pending' // Hapus data dengan status selain 'pending'
+        }
+      }
+    });
+
+    await Models.pendidikan.destroy({
+      where: {
+        user_id,
+        status_perubahan: {
+          [Op.not]: 'pending' // Hapus data dengan status selain 'pending'
+        }
+      }
+    });
+
+    await Models.perkembangan.destroy({
+      where: {
+        user_id,
+        status_perubahan: {
+          [Op.not]: 'pending' // Hapus data dengan status selain 'pending'
+        }
+      }
+    });
+
+    await Models.setelah_pendidikan.destroy({
+      where: {
+        user_id,
+        status_perubahan: {
+          [Op.not]: 'pending' // Hapus data dengan status selain 'pending'
+        }
+      }
+    });
+
+    await Models.tempat_tinggal.destroy({
+      where: {
+        user_id,
+        status_perubahan: {
+          [Op.not]: 'pending' // Hapus data dengan status selain 'pending'
+        }
+      }
+    });
+
+    await Models.wali.destroy({
+      where: {
+        user_id,
+        status_perubahan: {
+          [Op.not]: 'pending' // Hapus data dengan status selain 'pending'
+        }
+      }
+    });
+
+    // 2. Update status data yang masih 'pending' menjadi 'approved'
+    await Models.data_diri.update({ status_perubahan: 'approved' }, { where: { user_id, status_perubahan: 'pending' } });
+    await Models.ayah_kandung.update({ status_perubahan: 'approved' }, { where: { user_id, status_perubahan: 'pending' } });
+    await Models.ibu_kandung.update({ status_perubahan: 'approved' }, { where: { user_id, status_perubahan: 'pending' } });
+    await Models.hobi_siswa.update({ status_perubahan: 'approved' }, { where: { user_id, status_perubahan: 'pending' } });
+    await Models.kesehatan.update({ status_perubahan: 'approved' }, { where: { user_id, status_perubahan: 'pending' } });
+    await Models.pendidikan.update({ status_perubahan: 'approved' }, { where: { user_id, status_perubahan: 'pending' } });
+    await Models.perkembangan.update({ status_perubahan: 'approved' }, { where: { user_id, status_perubahan: 'pending' } });
+    await Models.setelah_pendidikan.update({ status_perubahan: 'approved' }, { where: { user_id, status_perubahan: 'pending' } });
+    await Models.tempat_tinggal.update({ status_perubahan: 'approved' }, { where: { user_id, status_perubahan: 'pending' } });
+    await Models.wali.update({ status_perubahan: 'approved' }, { where: { user_id, status_perubahan: 'pending' } });
+
+    return res.json({ message: 'Data successfully approved' });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: 'An error occurred while approving the data' });
+  }
+});
+
+/**
+ * DELETE /data-diri/pending/{id-siswa}
+ * @summary Admin menolak permintaan perubahan data dan menghapus data dengan status pending
+ * @tags admin
+ * @param {integer} id.path.required - ID siswa yang datanya ingin ditolak
+ * @return {object} 200 - Data berhasil dihapus - application/json
+ * @return {object} 500 - Terjadi kesalahan saat menghapus data - application/json
+ * @example response - 200 - Data berhasil diperbarui
+ * { message: 'Data berhasil ditolak' }
+ * @example response - 500 - Terjadi kesalahan pada server
+ * {
+ *   "error": "An error occurred while updating the data"
+ * }
+ */
+router.delete('/data-diri/pending/:id', async (req, res) => {
+  const user_id = req.params.id;
+
+  try {
+    // Hapus semua data yang status_perubahannya 'pending'
+    await Models.data_diri.destroy({
+      where: {
+        user_id,
+        status_perubahan: 'pending',
+      }
+    });
+
+    await Models.ayah_kandung.destroy({
+      where: {
+        user_id,
+        status_perubahan: 'pending',
+      }
+    });
+
+    await Models.ibu_kandung.destroy({
+      where: {
+        user_id,
+        status_perubahan: 'pending',
+      }
+    });
+
+    await Models.hobi_siswa.destroy({
+      where: {
+        user_id,
+        status_perubahan: 'pending',
+      }
+    });
+
+    await Models.kesehatan.destroy({
+      where: {
+        user_id,
+        status_perubahan: 'pending',
+      }
+    });
+
+    await Models.pendidikan.destroy({
+      where: {
+        user_id,
+        status_perubahan: 'pending',
+      }
+    });
+
+    await Models.perkembangan.destroy({
+      where: {
+        user_id,
+        status_perubahan: 'pending',
+      }
+    });
+
+    await Models.setelah_pendidikan.destroy({
+      where: {
+        user_id,
+        status_perubahan: 'pending',
+      }
+    });
+
+    await Models.tempat_tinggal.destroy({
+      where: {
+        user_id,
+        status_perubahan: 'pending',
+      }
+    });
+
+    await Models.wali.destroy({
+      where: {
+        user_id,
+        status_perubahan: 'pending',
+      }
+    });
+
+    // Return success message after deletion
+    return res.json({ message: 'Data berhasil ditolak' });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: 'An error occurred while deleting the pending data' });
+  }
+});
+
 
 /**
  * GET /admin/dashboard
