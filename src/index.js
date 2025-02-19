@@ -23,6 +23,7 @@ const nilaiController = require('./routes/Admin/AdminNilaiSiswa')
 const mapelController = require('./routes/Admin/AdminMapel')
 
 //* Route siswa
+const daftarDataController = require("./routes/Siswa/SiswaDaftar")
 const ubahDataController = require('./routes/Siswa/SiswaDataDiri')
 
 //* DEV MODE
@@ -86,6 +87,7 @@ app.use('/admin', AuthMiddlewareAdmin, nilaiController)
 app.use('/admin', AuthMiddlewareAdmin, mapelController)
 
 // ------ Siswa
+app.use('/siswa', daftarDataController)
 app.use('/siswa', AuthMiddlewareSiswa, ubahDataController)
 
 // app.use("/", )
