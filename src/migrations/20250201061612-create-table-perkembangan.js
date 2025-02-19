@@ -48,6 +48,10 @@ module.exports = {
           key: 'id',
         },
       },
+      status_perubahan: {
+        type: Sequelize.ENUM('pending', 'approved'),
+        allowNull: true
+      }
     })
   },
 
