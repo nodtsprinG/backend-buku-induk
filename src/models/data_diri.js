@@ -100,6 +100,10 @@ module.exports = function (sequelize, DataTypes) {
         type: DataTypes.DATEONLY,
         allowNull: false,
       },
+      status_perubahan: {
+        type: DataTypes.ENUM('pending', 'approved'),
+        allowNull: true
+      }
     },
     {
       sequelize,
