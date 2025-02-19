@@ -34,7 +34,8 @@ if (process.env.NODE_ENV === 'development') {
     info: {
       version: package.version,
       title: 'Buku Induk',
-      description: "Aplikasi Buku Induk untuk melakukan pencatatan data siswa, jurusan, angkatan dan lainnya. API Ini dibangun diatas Nodejs dengan sistem autentikasi bearer. Gunakan API ini sebaik mungkin",
+      description:
+        'Aplikasi Buku Induk untuk melakukan pencatatan data siswa, jurusan, angkatan dan lainnya. API Ini dibangun diatas Nodejs dengan sistem autentikasi bearer. Gunakan API ini sebaik mungkin',
       license: {
         name: 'MIT',
       },
