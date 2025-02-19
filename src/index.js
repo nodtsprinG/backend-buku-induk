@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const express = require('express')
 const cors = require('cors')
 const bodyParser = require('body-parser')
@@ -16,12 +17,17 @@ const akunControllers = require('./routes/Admin/AdminAccountController')
 const dataSiswaController = require('./routes/Admin/AdminDataSiswaController')
 const jurusanController = require('./routes/Admin/AdminJurusan')
 const angkatanController = require('./routes/Admin/AdminAngkatan')
+const mapelController = require('./routes/Admin/AdminMapel')
+const nilaiController = require('./routes/Admin/AdminNilaiSiswa')
 const tahunpelajaranController = require('./routes/Admin/AdminTahunPelajaran')
 const getExport = require('./routes/Admin/AdminExport')
 
+<<<<<<< HEAD
 const nilaiController = require('./routes/Admin/AdminNilaiSiswa')
 const mapelController = require('./routes/Admin/AdminMapel')
 
+=======
+>>>>>>> 6289d77650a35b0c98e5af546a2894a4660a3f06
 //* Route siswa
 const daftarDataController = require("./routes/Siswa/SiswaDaftar")
 const ubahDataController = require('./routes/Siswa/SiswaDataDiri')
@@ -82,9 +88,13 @@ app.use('/admin', AuthMiddlewareAdmin, jurusanController)
 app.use('/admin', AuthMiddlewareAdmin, angkatanController)
 app.use('/admin', AuthMiddlewareAdmin, getExport)
 app.use('/admin', AuthMiddlewareAdmin, tahunpelajaranController)
+<<<<<<< HEAD
 
 app.use('/admin', AuthMiddlewareAdmin, nilaiController)
+=======
+>>>>>>> 6289d77650a35b0c98e5af546a2894a4660a3f06
 app.use('/admin', AuthMiddlewareAdmin, mapelController)
+app.use('/admin', AuthMiddlewareAdmin, nilaiController)
 
 // ------ Siswa
 app.use('/siswa', daftarDataController)
@@ -101,7 +111,7 @@ app.get('/view-pdf/:id', async (req, res) => {
       {
         model: Models.jurusan,
         as: 'jurusan',
-        attributes: ['nama'],
+        attributes: ['id'],
       },
       {
         model: Models.angkatan,
@@ -228,9 +238,16 @@ app.post('/import-excel', upload.single('file'), async (req, res) => {
     }
 
     // Read the Excel file
+<<<<<<< HEAD
     const workbook = XLSX.read(req.file.buffer, { type: 'buffer' })
     const sheetName = workbook.SheetNames[0] // Get first sheet
     const data = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName])
+=======
+    const workbook = XLSX.read(req.file.buffer, { type: 'buffer' });
+    const sheetName = workbook.SheetNames[0]; // Get first sheet
+    const data = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
+    console.log(data)
+>>>>>>> 6289d77650a35b0c98e5af546a2894a4660a3f06
 
     // Process each row
     for (const row of data) {
@@ -250,6 +267,8 @@ app.post('/import-excel', upload.single('file'), async (req, res) => {
 
       const newUser = await Models.user.create(siswa)
 
+      console.log("creating")
+
       await Models.data_diri.create({
         user_id: newUser.id,
         nama_lengkap: row['Nama Lengkap'],
@@ -267,6 +286,9 @@ app.post('/import-excel', upload.single('file'), async (req, res) => {
         bahasa_sehari_hari: row['Bahasa Sehari-hari'],
       })
 
+      console.log("creating")
+
+
       await Models.perkembangan.create({
         user_id: newUser.id,
         menerima_bea_siswa_tahun_kelas_dari:
@@ -274,6 +296,7 @@ app.post('/import-excel', upload.single('file'), async (req, res) => {
         meninggalkan_sekolah_ini_tanggal:
           row['Meninggalkan Sekolah Ini Tanggal'],
         meninggalkan_sekolah_ini_alasan: row['Meninggalkan Sekolah Ini Alasan'],
+<<<<<<< HEAD
         akhir_pendidikan_tamat_belajar_lulus_tahun:
           row['Akhir Pendidikan Tamat Belajar Lulus Tahun'],
         akhir_pendidikan_no_tanggal_ijazah:
@@ -281,6 +304,14 @@ app.post('/import-excel', upload.single('file'), async (req, res) => {
         akhir_pendidikan_no_tanggal_skhun:
           row['Akhir Pendidikan No/Tanggal SKHUN'],
       })
+=======
+        akhir_pendidikan_tamat_belajar_lulus_tahun: row['Akhir Pendidikan Tamat Belajar Lulus Tahun'],
+        akhir_pendidikan_no_tanggal_ijazah: row['Akhir Pendidikan No/Tanggal Ijazah'],
+        akhir_pendidikan_no_tanggal_skhun: row['Akhir Pendidikan No/Tanggal SKHUN'],
+      });
+      console.log("creating")
+
+>>>>>>> 6289d77650a35b0c98e5af546a2894a4660a3f06
 
       await Models.ayah_kandung.create({
         user_id: newUser.id,
@@ -294,7 +325,13 @@ app.post('/import-excel', upload.single('file'), async (req, res) => {
         pengeluaran_per_bulan: row['Pengeluaran per Bulan Ayah'],
         alamat_dan_no_telepon: row['Alamat dan No. Telepon Ayah'],
         status: row['Status Ayah'],
+<<<<<<< HEAD
       })
+=======
+      });
+      console.log("creating")
+
+>>>>>>> 6289d77650a35b0c98e5af546a2894a4660a3f06
 
       await Models.ibu_kandung.create({
         user_id: newUser.id,
@@ -308,7 +345,13 @@ app.post('/import-excel', upload.single('file'), async (req, res) => {
         pengeluaran_per_bulan: row['Pengeluaran per Bulan Ibu'],
         alamat_dan_no_telepon: row['Alamat dan No. Telepon Ibu'],
         status: row['Status Ibu'],
+<<<<<<< HEAD
       })
+=======
+      });
+      console.log("creating")
+
+>>>>>>> 6289d77650a35b0c98e5af546a2894a4660a3f06
 
       await Models.kesehatan.create({
         user_id: newUser.id,
@@ -317,7 +360,13 @@ app.post('/import-excel', upload.single('file'), async (req, res) => {
         kelainan_jasmani: row['Kelainan Jasmani'],
         tinggi: row.Tinggi,
         berat_badan: row['Berat Badan'],
+<<<<<<< HEAD
       })
+=======
+      });
+      console.log("creating")
+
+>>>>>>> 6289d77650a35b0c98e5af546a2894a4660a3f06
 
       await Models.wali.create({
         user_id: newUser.id,
@@ -330,7 +379,13 @@ app.post('/import-excel', upload.single('file'), async (req, res) => {
         pekerjaan: row['Pekerjaan Wali'],
         pengeluaran_per_bulan: row['Pengeluaran per Bulan Wali'],
         alamat_dan_no_telepon: row['Alamat dan No. Telepon Wali'],
+<<<<<<< HEAD
       })
+=======
+      });
+      console.log("creating")
+
+>>>>>>> 6289d77650a35b0c98e5af546a2894a4660a3f06
 
       await Models.hobi_siswa.create({
         user_id: newUser.id,
@@ -338,7 +393,13 @@ app.post('/import-excel', upload.single('file'), async (req, res) => {
         olahraga: row.Olahraga,
         organisasi: row.Organisasi,
         lain_lain: row['Lain-lain'],
+<<<<<<< HEAD
       })
+=======
+      });
+      console.log("creating")
+
+>>>>>>> 6289d77650a35b0c98e5af546a2894a4660a3f06
 
       await Models.pendidikan.create({
         user_id: newUser.id,
@@ -351,8 +412,14 @@ app.post('/import-excel', upload.single('file'), async (req, res) => {
         diterima_di_program_keahlian: row['Diterima di Program Keahlian'],
         diterima_di_paket_keahlian: row['Diterima di Paket Keahlian'],
         diterima_tanggal: row['Diterima Tanggal'],
+<<<<<<< HEAD
         user_id: newUser.id,
       })
+=======
+      });
+      console.log("creating")
+
+>>>>>>> 6289d77650a35b0c98e5af546a2894a4660a3f06
 
       await Models.tempat_tinggal.create({
         user_id: newUser.id,
