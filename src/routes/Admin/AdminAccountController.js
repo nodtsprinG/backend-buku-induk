@@ -40,7 +40,7 @@ const routes = Router()
  *   }
  * ]
  */
-routes.get('/admin/akun', async (req, res) => {
+routes.get('/akun', async (req, res) => {
   const { jurusan, angkatan, search } = req.query
 
   const userData = await Models.user.findAll({
@@ -103,7 +103,7 @@ routes.get('/admin/akun', async (req, res) => {
  *   "message": "NISN sudah digunakan"
  * }
  */
-routes.post('/admin/akun', akunRequest, async (req, res) => {
+routes.post('/akun', akunRequest, async (req, res) => {
   try {
     const data = await Models.user.create(req.body)
     return res.status(201).json(data)
@@ -176,7 +176,7 @@ routes.post('/admin/akun', akunRequest, async (req, res) => {
  *   "message": "Internal server error"
  * }
  */
-routes.get('/admin/akun/:id', async (req, res) => {
+routes.get('/akun/:id', async (req, res) => {
   try {
     const userInstance = await Models.user.findOne({
       include: [
@@ -287,7 +287,7 @@ routes.get('/admin/akun/:id', async (req, res) => {
  *   "message": "User not found"
  * }
  */
-routes.put('/admin/akun/:id', async (req, res) => {
+routes.put('/akun/:id', async (req, res) => {
   try {
     const data = await Models.user.findOne({
       where: {

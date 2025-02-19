@@ -40,7 +40,7 @@ const router = Router()
  *   "error": "An error occurred while updating the data"
  * }
  */
-router.put('/admin/data-diri/:id', async (req, res) => {
+router.put('/data-diri/:id', async (req, res) => {
   const user_id = req.params.id
   const {
     ayah_kandung,
@@ -98,7 +98,7 @@ router.put('/admin/data-diri/:id', async (req, res) => {
  *   "error": "Internal server error"
  * }
  */
-router.get('/admin/dashboard', async (req, res) => {
+router.get('/dashboard', async (req, res) => {
   const count_siswa = await Models.user.count()
   const count_laki = await Models.data_diri.count({
     where: {
