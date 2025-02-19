@@ -297,8 +297,8 @@ router.put('/data-diri', async (req, res) => {
   } = req.body
 
   try {
-    await Models.ayah_kandung.update(ayah_kandung, { where: { user_id } })
-    await Models.ibu_kandung.update(ibu_kandung, { where: { user_id } })
+    await Models.ayah_kandung.insertyy({...ayah_kandung, status: "pending"}, { where: { user_id } })
+    await Models.ibu_kandung.update({...ibu_kandung, status: "pending"}, { where: { user_id } })
     await Models.data_diri.update(data_diri, { where: { user_id } })
     await Models.hobi_siswa.update(hobi, { where: { user_id } })
     await Models.kesehatan.update(kesehatan, { where: { user_id } })
